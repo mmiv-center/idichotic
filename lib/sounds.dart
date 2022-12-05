@@ -69,6 +69,12 @@ class ListenAppState extends State<ListenApp> {
     //}
   }
 
+  void updateIndex(){
+    setState(() {
+      this.sound_index++;
+    });
+  }
+
   void testFinished(){
     List<Data> data = [
       Data(amount: Right_correct, id: Types.rightCorrect),
@@ -111,6 +117,12 @@ class ListenAppState extends State<ListenApp> {
        child: Column( children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("${this.sound_index} out of ${sounds.length}",  style: TextStyle(fontSize: 25)),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
         //crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget> [
           Column(
@@ -133,7 +145,6 @@ class ListenAppState extends State<ListenApp> {
             text1: Text("KA", style: TextStyle(color: Colors.black, fontSize: 24)),
             containerHeight: (screenHeight-appBarHeight-statusBarHeight) * 0.28,
             containerWidth: screenWidth * 0.4)]),
-
           Column(
           children: <Widget> [
           CustomContainer(
@@ -214,7 +225,7 @@ class CustomContainer extends StatelessWidget {
             onPressed: () {
               if (app.sound_index < app.sounds.length) {
                 scoreLogic();
-                app.sound_index++;
+                app.updateIndex();
               }
               if (app.sound_index < app.sounds.length) {
                 String filepath = app.sounds[app.sound_index];
@@ -299,11 +310,12 @@ class _TimelineWidgetState extends State<TimelineWidget>
               }
               app.wrong++;
               if(app.sound_index != app.sounds.length-1) {
-                app.sound_index++;
+                app.updateIndex();
                 app.play(app.sounds[app.sound_index], app.player);
                 controller.reset();
                 controller.forward();
               }else{
+                app.updateIndex();
                 app.testFinished();
               }
             }
