@@ -93,11 +93,9 @@ class ConcentrateAppState extends State<ConcentrateApp> {
       this.sound_index = 0;
       String filepath = sounds[sound_index];
       print("Success");
-      //Promt a Concentrate on Left/Right ear.
-      //Remodel the loading_cons to do the same thing..
       var pageroute_cons = () => MaterialPageRoute(builder: (context) => const ConschangeearApp(title: "Loading", ear: false));
       Navigator.push(context, pageroute_cons.call());
-      player.play(AssetSource(filepath));
+      //player.play(AssetSource(filepath));
       _TimelineWidgetState.reset();
     }
   }
@@ -124,6 +122,13 @@ class ConcentrateAppState extends State<ConcentrateApp> {
     }else{
       Left_wrong++;
     }
+  }
+
+
+  void updateIndex(){
+    setState(() {
+      this.sound_index++;
+    });
   }
 
   @override
@@ -155,6 +160,12 @@ class ConcentrateAppState extends State<ConcentrateApp> {
         //
         //crossAxisAlignment: CrossAxisAlignment.center,
           child: Column( children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("${this.sound_index + 36*this.testnr} out of ${sounds.length *2}",  style: TextStyle(fontSize: 25)),
+              ],
+            ),
             Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 //crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -260,7 +271,7 @@ class CustomContainer extends StatelessWidget {
             onPressed: () {
               if (app.sound_index < app.sounds.length) {
                 scoreLogic();
-                app.sound_index++;
+                app.updateIndex();
               }
               if (app.sound_index < app.sounds.length) {
                 String filepath = app.sounds[app.sound_index];
@@ -291,9 +302,9 @@ class CustomContainer extends StatelessWidget {
     if (sound.contains(name)) {
       if (sound[0] == sound[1]) {
         app.Same_sound_correct++;
-      }else if(app.rightEar && sound[0] == name){
+      }else if(app.testnr == 0 && sound[0] == name){
         app.correct();
-      } else if(!app.rightEar && sound[1] == name){
+      } else if(app.testnr == 1 && sound[1] == name){
         app.correct();
       }else{
         app.incorrect();
@@ -347,11 +358,12 @@ class _TimelineWidgetState extends State<TimelineWidget>
           }
 
           if(app.sound_index != app.sounds.length-1) {
-            app.sound_index++;
+            app.updateIndex();
             app.play(app.sounds[app.sound_index], app.player);
             controller.reset();
             controller.forward();
           }else{
+            app.updateIndex();
             app.testFinished();
           }
         }
