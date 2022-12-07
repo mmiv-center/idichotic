@@ -19,6 +19,9 @@ jobs:
           - os: windows-latest
             id: Windows
 
+    # a push event from the origin repo, or a PR from external repo
+    if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name }}
+
     name: Test ${{ matrix.config.id }}
     runs-on: ${{ matrix.config.os }}
 

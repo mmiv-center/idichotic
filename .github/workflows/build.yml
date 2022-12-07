@@ -6,39 +6,31 @@ name: Build
 
 on:
   push:
+  pull_request:
 
 jobs:
-  build-android:
-    name: Build Android
-    runs-on: ubuntu-latest
+  build:
+    strategy:
+      matrix:
+        config:
+          - os: ubuntu-latest
+            name: Android
+            cmd: flutter build appbundle
+          - os: macos-latest
+            name: iOS
+            cmd: flutter build ios --release --no-codesign
+          - os: ubuntu-latest
+            name: Web
+            cmd: flutter build web
 
+    # a push event from the origin repo, or a PR from external repo
+    if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name }}
+
+    name: Build ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
     steps:
       - uses: nschloe/action-cached-lfs-checkout@v1.2.0
       - uses: subosito/flutter-action@v2.8.0
         with:
           cache: true
-      - run: flutter build appbundle
-
-  build-ios:
-    name: Build iOS
-    runs-on: macos-latest
-
-    steps:
-      - uses: nschloe/action-cached-lfs-checkout@v1.2.0
-      - uses: subosito/flutter-action@v2.8.0
-        with:
-          cache:
-            true
-      - run: flutter build ios --release --no-codesign
-
-  build-web:
-    name: Build Web
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: nschloe/action-cached-lfs-checkout@v1.2.0
-      - uses: subosito/flutter-action@v2.8.0
-        with:
-          cache:
-            true
-      - run: flutter build web
+      - run: ${{ matrix.config.cmd }}
