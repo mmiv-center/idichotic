@@ -3,29 +3,21 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:audioplayers/audioplayers.dart';
-import 'package:dichotic/cons_change_ear.dart';
 import 'package:dichotic/data/exampledata.dart';
-import 'package:dichotic/data/types.dart';
-import 'package:dichotic/results_cons.dart';
+import 'package:dichotic/results.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ConcentrateApp extends StatefulWidget {
-  const ConcentrateApp({super.key, required this.title, required this.rightEar});
+class Practice extends StatefulWidget {
+  const Practice({super.key, required this.title});
   final String title;
-  final bool rightEar;
+
   @override
-  State<ConcentrateApp> createState() => ConcentrateAppState(rightEar : rightEar);
+  State<Practice> createState() => PracticeState();
 }
 
-var pageroute_results = (List<Data> data) => MaterialPageRoute(builder: (context) => ResultsCons(title: "Results", data: data));
-
-class ConcentrateAppState extends State<ConcentrateApp> {
-  ConcentrateAppState({
-    required this.rightEar
-});
-  final bool rightEar;
-
+var pageroute_results = (List<Data> data) => MaterialPageRoute(builder: (context) => Results(title: "Results", data: data));
+class PracticeState extends State<Practice> {
   AudioPlayer player = AudioPlayer();
   List<String> sounds = ["audio/Ba-Ba.wav", "audio/Ba-Da.wav",
     "audio/Ba-Ga.wav", "audio/Ba-Ka.wav", "audio/Ba-Pa.wav",
@@ -41,13 +33,6 @@ class ConcentrateAppState extends State<ConcentrateApp> {
     "audio/Ta-Ga.wav", "audio/Ta-Ka.wav", "audio/Ta-Pa.wav",
     "audio/Ta-Ta.wav"];
   int sound_index = 0;
-  int Same_sound_correct = 0;
-  int Same_sound_incorrect = 0;
-  int Left_Correct = 0;
-  int Left_wrong = 0;
-  int Right_Correct = 0;
-  int Right_wrong = 0;
-  int testnr = 0;
   TimelineWidget? timeline;
   Widget appBar(context) {
     return AppBar(
@@ -58,7 +43,6 @@ class ConcentrateAppState extends State<ConcentrateApp> {
       actions: [
         TextButton(
             onPressed: () {
-              testFinished();
             },
             child: const Text("Results"))
       ],);
@@ -76,60 +60,12 @@ class ConcentrateAppState extends State<ConcentrateApp> {
     //}
   }
 
-  void testFinished(){
-    if(testnr == 1) {
-      List<Data> data = [
-        Data(amount: Right_Correct, id: Types.rightCorrect),
-        Data(amount: Same_sound_correct, id: Types.homonymCorrect),
-        Data(amount: Same_sound_incorrect, id: Types.homonymIncorrect),
-        Data(amount: Right_wrong, id: Types.rightIncorrect),
-        Data(amount: Left_Correct, id: Types.leftCorrect),
-        Data(amount: Left_wrong, id: Types.leftIncorrect),
-      ];
-      Navigator.push(context, pageroute_results.call(data));
-    }else{
-      this.testnr++;
-      this.sound_index = 0;
-      String filepath = sounds[sound_index];
-      print("Success");
-      var pageroute_cons = () => MaterialPageRoute(builder: (context) => const ConschangeearApp(title: "Loading", ear: false));
-      Navigator.push(context, pageroute_cons.call());
-      //player.play(AssetSource(filepath));
-      //TimelineWidgetState.reset();
-      //TimelineWidgetState.pause();
-    }
-  }
-
-  void correct(){
-    if(testnr == 0 && rightEar){
-      Right_Correct++;
-    }else if(testnr == 0 && !rightEar){
-      Left_Correct++;
-    }else if(testnr == 1 && !rightEar){
-      Right_Correct++;
-    }else{
-      Left_Correct++;
-    }
-  }
-
-  void incorrect(){
-    if(testnr == 0 && rightEar){
-      Right_wrong++;
-    }else if(testnr == 0 && !rightEar){
-      Left_wrong++;
-    }else if(testnr == 1 && !rightEar){
-      Right_wrong++;
-    }else{
-      Left_wrong++;
-    }
-  }
-
-
   void updateIndex(){
     setState(() {
       this.sound_index++;
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -151,7 +87,6 @@ class ConcentrateAppState extends State<ConcentrateApp> {
         actions: [
           TextButton(
               onPressed: () {
-                testFinished();
               },
               child: const Text("Results")),
         ],
@@ -163,7 +98,7 @@ class ConcentrateAppState extends State<ConcentrateApp> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("${this.sound_index + 36*this.testnr} out of ${sounds.length *2}",  style: TextStyle(fontSize: 25)),
+                Text("${this.sound_index}",  style: TextStyle(fontSize: 25)),
               ],
             ),
             Row(
@@ -190,7 +125,6 @@ class ConcentrateAppState extends State<ConcentrateApp> {
                             text1: Text("KA", style: TextStyle(color: Colors.black, fontSize: 24)),
                             containerHeight: (screenHeight-appBarHeight-statusBarHeight) * 0.28,
                             containerWidth: screenWidth * 0.4)]),
-
                   Column(
                     children: <Widget> [
                       CustomContainer(
@@ -255,7 +189,7 @@ class CustomContainer extends StatelessWidget {
   final String name;
   final double containerHeight;
   final double containerWidth;
-  final ConcentrateAppState app;
+  final PracticeState app;
 
   CustomContainer({
     required this.text1, required this.containerHeight, required this.containerWidth, required this.app, required this.name});
@@ -269,17 +203,13 @@ class CustomContainer extends StatelessWidget {
         child:
         OutlinedButton(
             onPressed: () {
-              if (app.sound_index < app.sounds.length) {
-                scoreLogic();
-                app.updateIndex();
-              }
-              if (app.sound_index < app.sounds.length) {
-                String filepath = app.sounds[app.sound_index];
-                app.play(filepath, app.player);
-                TimelineWidgetState.reset();
-              } else {
-                app.testFinished();
-              }
+
+              app.updateIndex();
+
+              String filepath = app.sounds[app.sound_index%app.sounds.length];
+              app.play(filepath, app.player);
+              _TimelineWidgetState.reset();
+
             },
             style: OutlinedButton.styleFrom(
               //backgroundColor: Colors.white,
@@ -291,49 +221,26 @@ class CustomContainer extends StatelessWidget {
             child: Container(child: text1))
     );
   }
-
-  void scoreLogic() {
-    String oldfilepath = app.sounds[app.sound_index];
-    List<String> sounds = oldfilepath.split("/");
-    String filename = sounds[sounds.length - 1];
-    List<String> sounds_2 = filename.split(".");
-    String sound_2 = sounds_2[0];
-    List<String> sound = sound_2.split("-");
-    if (sound.contains(name)) {
-      if (sound[0] == sound[1]) {
-        app.Same_sound_correct++;
-      }else if(app.testnr == 0 && sound[0] == name){
-        app.correct();
-      } else if(app.testnr == 1 && sound[1] == name){
-        app.correct();
-      }else{
-        app.incorrect();
-      }
-    } else if (sound[0] != sound[1]) {
-      app.incorrect();
-    } else {
-      app.Same_sound_incorrect++;
-    }
-  }
 }
 
 
 class TimelineWidget extends StatefulWidget {
-  final ConcentrateAppState app;
+  final PracticeState app;
   TimelineWidget({required this.app});
+  //const TimelineWidget({super.key});
   @override
-  State<TimelineWidget> createState() => TimelineWidgetState(app: app);
+  State<TimelineWidget> createState() => _TimelineWidgetState(app: app);
 
 }
 
 
 /// AnimationControllers can be created with `vsync: this` because of TickerProviderStateMixin.
-class TimelineWidgetState extends State<TimelineWidget>
+class _TimelineWidgetState extends State<TimelineWidget>
 
     with TickerProviderStateMixin {
   static late AnimationController controller;
-  final ConcentrateAppState app;
-  TimelineWidgetState({required  this.app});
+  final PracticeState app;
+  _TimelineWidgetState({required  this.app});
 
 
   @override
@@ -342,29 +249,18 @@ class TimelineWidgetState extends State<TimelineWidget>
       vsync: this,
       duration: const Duration(seconds: 3),
     )..addListener(() {
-      if (app.sound_index < app.sounds.length){
-        if (controller.status == AnimationStatus.completed) {
-          String oldfilepath = app.sounds[app.sound_index];
-          List<String> sounds = oldfilepath.split("/");
-          String filename = sounds[sounds.length - 1];
-          List<String> sounds_2 = filename.split(".");
-          String sound_2 = sounds_2[0];
-          List<String> sound = sound_2.split("-");
-          if(sound[0]!= sound[1]){
-            app.incorrect();
-          }else{
-            app.Same_sound_incorrect++;
-          }
-          if(app.sound_index != app.sounds.length-1) {
-            app.updateIndex();
-            app.play(app.sounds[app.sound_index], app.player);
-            controller.reset();
-            controller.forward();
-          }else{
-            app.updateIndex();
-            app.testFinished();
-          }
-        }
+
+      if (controller.status == AnimationStatus.completed) {
+        String oldfilepath = app.sounds[app.sound_index%app.sounds.length];
+        List<String> sounds = oldfilepath.split("/");
+        String filename = sounds[sounds.length - 1];
+        List<String> sounds_2 = filename.split(".");
+        String sound_2 = sounds_2[0];
+        List<String> sound = sound_2.split("-");
+        app.updateIndex();
+        app.play(app.sounds[app.sound_index%app.sounds.length], app.player);
+        controller.reset();
+        controller.forward();
       }
       setState(() {});
     });
@@ -376,10 +272,6 @@ class TimelineWidgetState extends State<TimelineWidget>
   static void reset(){
     controller.reset();
     controller.forward();
-  }
-
-  static void pause(){
-    controller.stop();
   }
 
   @override
