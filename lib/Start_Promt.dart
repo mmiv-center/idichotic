@@ -41,6 +41,8 @@ class Start_Page extends State<Start_Promt> {
     });
   }
 
+  var pageroute_startapp = () => MaterialPageRoute(builder: (context) => const StartApp(title: "StartAppp"));
+
   void initItems() async {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
@@ -90,13 +92,17 @@ class Start_Page extends State<Start_Promt> {
               || prefs.age == null
               || prefs.handedness == Handedness.unspecified)) {
         Widget ok = OutlinedButton(
-          child: Text(L10n.of(context)!.dismiss, style: TextStyle(color: Colors.black)),
-          style: const ButtonStyle(
-            backgroundColor: MaterialStatePropertyAll<Color>(Colors.white),
-            shadowColor: MaterialStatePropertyAll<Color>(Colors.black),
-          ),
-          onPressed: () {
-            Navigator.of(context).pop();
+          child: Container(
+            width: 65,
+            child: Text(L10n.of(context)!.dismiss, style: TextStyle(color: Colors.black), textAlign: TextAlign.center,)),
+          style: OutlinedButton.styleFrom(
+        backgroundColor: Colors.white, 
+        elevation: 3, 
+        shadowColor: Colors.black, 
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0))),
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(
+        builder: (context) => const StartApp(title: "Start page")));
             warned++;
           },
         );
@@ -118,6 +124,15 @@ class Start_Page extends State<Start_Promt> {
                       Text(L10n.of(context)!.canContinue, style: Theme.of(context).textTheme.bodyMedium, textAlign: TextAlign.center),
                 ]),
                 actions: [
+                  OutlinedButton(onPressed: () => {Navigator.of(context).pop()},
+                    style: OutlinedButton.styleFrom(
+                    backgroundColor: Colors.white, 
+                    elevation: 3, 
+                    shadowColor: Colors.black, 
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0))),
+                  child: Container(
+                    width: 65,
+                    child: Text("Go back", style: TextStyle(color: Colors.black), textAlign: TextAlign.center,))),
                   ok,
                 ],
                 elevation: 5

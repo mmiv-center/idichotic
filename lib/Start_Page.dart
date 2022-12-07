@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'package:dichotic/learn_more.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dichotic/listen.dart';
@@ -23,7 +24,7 @@ class StartApp extends StatefulWidget {
 
 var pageroute_settings = () => MaterialPageRoute(builder: (context) => const SettingsPage());
 var pageroute_tests = () => MaterialPageRoute(builder: (context) => const TestApp(title: "Test"));
-var pageroute_learn = () => MaterialPageRoute(builder: (context) => const SettingsPage());
+var pageroute_learn = () => MaterialPageRoute(builder: (context) => LearnMore());
 
 class StartAppState extends State<StartApp> {
   
