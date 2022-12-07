@@ -1,0 +1,11 @@
+name: Validate
+
+on:
+  push:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: REUSE Compliance Check
+        uses: fsfe/reuse-action@v1.2.0

@@ -1,0 +1,26 @@
+name: Test
+
+on:
+  push:
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        config:
+          - os: ubuntu-latest
+            id: Linux
+          - os: macos-latest
+            id: macOS
+          - os: windows-latest
+            id: Windows
+
+    name: Test ${{ matrix.config.id }}
+    runs-on: ${{ matrix.config.os }}
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2.8.0
+        with:
+          cache: true
+      - run: flutter test
