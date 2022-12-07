@@ -6,6 +6,7 @@ import 'dart:ui';
 
 import 'package:dichotic/loading_cons.dart';
 import 'package:dichotic/loading_listen.dart';
+import 'package:dichotic/loading_practice.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +31,7 @@ class TestAppState extends State<TestApp> {
 
   var pageroute_listen = () => MaterialPageRoute(builder: (context) => const LoadingListenApp(title: "Loading"));
   var pageroute_cons = () => MaterialPageRoute(builder: (context) => const LoadingConsApp(title: "Loading"));
-
+  var pageroute_practice = () => MaterialPageRoute(builder: (context) => const LoadingPracticeApp(title: "Loading"));
   @override
   Widget build(BuildContext context) {
 
@@ -50,7 +51,7 @@ class TestAppState extends State<TestApp> {
                   text1: const Text("Listen", style: TextStyle(fontSize: 20, color: Colors.black)),
                   text2: const Text("Duration: 3 minutes", style: TextStyle(fontSize: 12, color: Colors.black)), 
                   text3: const Text("In this test you get presented mutliple sounds with one so and you have three seconds to press the button with the sound you hear the best.", textAlign: TextAlign.center, style: TextStyle(fontSize: 14, color: Colors.black)), 
-                  icon: const Icon(Icons.arrow_forward_ios, color: Colors.black, size: 16), 
+                  icon: const Icon(Icons.arrow_forward_ios, color: Colors.black, size: 16),
                   pageroute: pageroute_listen),
 
                 Container(
@@ -61,7 +62,7 @@ class TestAppState extends State<TestApp> {
                   text1: const Text("Concentrate", style: TextStyle(fontSize: 20, color: Colors.black)),
                   text2: const Text("Duration: 5 minutes", style: TextStyle(fontSize: 12, color: Colors.black)), 
                   text3: const Text("In this test you get presented multiple sounds and you have three seconds to press the button with the sound you hear the best.", textAlign: TextAlign.center, style: TextStyle(fontSize: 14, color: Colors.black)), 
-                  icon: const Icon(Icons.arrow_forward_ios, color: Colors.black, size: 16), 
+                  icon: const Icon(Icons.arrow_forward_ios, color: Colors.black, size: 16),
                   pageroute: pageroute_cons),
 
                                   Container(
@@ -69,11 +70,11 @@ class TestAppState extends State<TestApp> {
                 ),
 
                 CustomButton(
-                  text1: const Text("Tutorial", style: TextStyle(fontSize: 20, color: Colors.black)),
-                  text2: const Text("Duration: 3 minutes", style: TextStyle(fontSize: 12, color: Colors.black)), 
-                  text3: const Text("If you have not taken the tests before we recommend you to go through this tutorial before you do. You will get a score based on how well you do.", textAlign: TextAlign.center, style: TextStyle(fontSize: 14, color: Colors.black)), 
+                  text1: const Text("Practise", style: TextStyle(fontSize: 20, color: Colors.black)),
+                  text2: const Text("Duration: infinite", style: TextStyle(fontSize: 12, color: Colors.black)),
+                  text3: const Text("If you have not taken the tests before we recommend you to go through this practice before you do.", textAlign: TextAlign.center, style: TextStyle(fontSize: 14, color: Colors.black)),
                   icon: const Icon(Icons.arrow_forward_ios, color: Colors.black, size: 16), 
-                  pageroute: pageroute_cons),
+                  pageroute: pageroute_practice),
             ],)
         )
     );
