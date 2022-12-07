@@ -9,7 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dichotic/sounds.dart';
 import 'package:dichotic/listen.dart';
-import 'package:dichotic/concentrate.dart';
+import 'package:dichotic/concentrate.dart' as concentrate;
 
 
 
@@ -30,7 +30,7 @@ class ConschangeearAppState extends State<ConschangeearApp>  {
   void setEar(){
     if(ear){
       Ear = "Right";
-  }else{
+    }else{
       Ear = "Left";
     }
   }
@@ -49,6 +49,8 @@ class ConschangeearAppState extends State<ConschangeearApp>  {
 
   route(){
     Navigator.pop(context);
+    concentrate.TimelineWidgetState.reset();
+    //concentrate.TimelineWidgetState.controller.forward();
   }
 
   @override
@@ -70,7 +72,7 @@ class ConschangeearAppState extends State<ConschangeearApp>  {
                     Text(Ear, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold))),
                 Container(
                   child:
-                  Icon(Icons.arrow_forward, size: 70),),
+                  Icon(Icons.arrow_back, size: 70),),
               ] ,
             )
         )

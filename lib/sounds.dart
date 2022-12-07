@@ -308,7 +308,6 @@ class _TimelineWidgetState extends State<TimelineWidget>
               }else{
                 app.Same_sound_incorrect++;
               }
-              app.wrong++;
               if(app.sound_index != app.sounds.length-1) {
                 app.updateIndex();
                 app.play(app.sounds[app.sound_index], app.player);
