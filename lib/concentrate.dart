@@ -4,8 +4,10 @@
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:dichotic/cons_change_ear.dart';
-import 'package:dichotic/exampledata.dart';
+import 'package:dichotic/data/exampledata.dart';
+import 'package:dichotic/data/types.dart';
 import 'package:dichotic/results.dart';
+import 'package:dichotic/results_cons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +19,7 @@ class ConcentrateApp extends StatefulWidget {
   State<ConcentrateApp> createState() => ConcentrateAppState(rightEar : rightEar);
 }
 
-var pageroute_results = (List<ExampleData> data) => MaterialPageRoute(builder: (context) => Results(title: "Results", data: data));
+var pageroute_results = (List<Data> data) => MaterialPageRoute(builder: (context) => ResultsCons(title: "Results", data: data));
 
 class ConcentrateAppState extends State<ConcentrateApp> {
   ConcentrateAppState({
@@ -77,14 +79,13 @@ class ConcentrateAppState extends State<ConcentrateApp> {
 
   void testFinished(){
     if(testnr == 1) {
-      List<ExampleData> data = [
-        ExampleData(amount: Right_Correct, id: "Right correct"),
-        ExampleData(
-            amount: Same_sound_correct, id: "Homogen correct"),
-        ExampleData(amount: Same_sound_incorrect, id: "Homogen incorrect"),
-        ExampleData(amount: Right_wrong, id: "Right Inorrect"),
-        ExampleData(amount: Left_Correct, id: "Left correct"),
-        ExampleData(amount: Right_wrong, id: "Left Inorrect"),
+      List<Data> data = [
+        Data(amount: Right_Correct, id: Types.rightCorrect),
+        Data(amount: Same_sound_correct, id: Types.homonymCorrect),
+        Data(amount: Same_sound_incorrect, id: Types.homonymIncorrect),
+        Data(amount: Right_wrong, id: Types.rightIncorrect),
+        Data(amount: Left_Correct, id: Types.leftCorrect),
+        Data(amount: Left_wrong, id: Types.leftIncorrect),
       ];
       Navigator.push(context, pageroute_results.call(data));
     }else{

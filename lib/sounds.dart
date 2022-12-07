@@ -3,10 +3,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:audioplayers/audioplayers.dart';
-import 'package:dichotic/exampledata.dart';
+import 'package:dichotic/data/exampledata.dart';
+import 'package:dichotic/data/exampledata.dart';
 import 'package:dichotic/results.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'data/types.dart';
 
 class ListenApp extends StatefulWidget {
   const ListenApp({super.key, required this.title});
@@ -16,7 +19,7 @@ class ListenApp extends StatefulWidget {
   State<ListenApp> createState() => ListenAppState();
 }
 
-var pageroute_results = (List<ExampleData> data) => MaterialPageRoute(builder: (context) => Results(title: "Results", data: data));
+var pageroute_results = (List<Data> data) => MaterialPageRoute(builder: (context) => Results(title: "Results", data: data));
 class ListenAppState extends State<ListenApp> {
   AudioPlayer player = AudioPlayer();
   List<String> sounds = ["audio/Ba-Ba.wav", "audio/Ba-Da.wav",
@@ -67,12 +70,12 @@ class ListenAppState extends State<ListenApp> {
   }
 
   void testFinished(){
-    List<ExampleData> data = [
-      ExampleData(amount: Right_correct, id: "Right correct"),
-      ExampleData(amount: Left_correct, id: "Left correct"),
-      ExampleData(amount: Same_sound_correct, id: "Homogen correct"),
-      ExampleData(amount: Same_sound_incorrect, id: "Homogen incorrect"),
-      ExampleData(amount: wrong, id: "Inorrect"),
+    List<Data> data = [
+      Data(amount: Right_correct, id: Types.rightCorrect),
+      Data(amount: Left_correct, id: Types.leftCorrect),
+      Data(amount: Same_sound_correct, id: Types.homonymCorrect),
+      Data(amount: Same_sound_incorrect, id: Types.homonymIncorrect),
+      Data(amount: wrong, id: Types.incorrect),
     ];
     Navigator.push(context, pageroute_results.call(data));
   }

@@ -3,15 +3,16 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:dichotic/data/types.dart';
 //import 'package:flutter/foundation.dart';
 
-class ExampleData {
+class Data {
   final int amount;
   //final int n;
-  final String id;
+  final Types id;
   //final charts.Color barColor;
 
-  ExampleData(
+  Data(
       {
         required this.amount,
         //required this.n,

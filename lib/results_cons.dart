@@ -3,12 +3,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:dichotic/data/exampledata.dart';
-import 'package:dichotic/charts/resultschart.dart';
+import 'package:dichotic/data/types.dart';
+import 'package:dichotic/charts/resultschart_cons_right.dart';
+import 'package:dichotic/charts/resultschart_cons_left.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-
-import 'data/types.dart';
 /*
 class Results extends StatelessWidget {
   const Results({super.key});
@@ -34,15 +34,14 @@ class Results extends StatelessWidget {
   }
 }*/
 
-class Results extends StatefulWidget {
-  Results({super.key, required this.title, required this.data});
+class ResultsCons extends StatefulWidget {
+  ResultsCons({super.key, required this.title, required this.data});
 
-  final List<Data> data; 
-
+  final List<Data> data;
   final String title;
 
   @override
-  State<Results> createState() => _MyHomePageState(data:data);
+  State<ResultsCons> createState() => _MyHomePageState(data: data);
 }
 
 class VideoPlayerExample extends StatefulWidget{
@@ -85,24 +84,18 @@ class _VideoPlayerScreenState extends State{
 
 }
 
-class _MyHomePageState extends State<Results> {
-
+class _MyHomePageState extends State<ResultsCons> {
   _MyHomePageState({required this.data});
+
+
   final List<Data> data;
+
 
   List<Widget> _pages(BuildContext context) {
 
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     final statusBarHeight = MediaQuery.of(context).padding.top;
-
-    var rightCorrect = data.where((element) => element.id == Types.rightCorrect).toList();
-    var leftCorrect = data.where((element) => element.id == Types.leftCorrect).toList();
-    var error = data.where((element) => element.id == Types.incorrect).toList();
-
-    //var direction =  data.rightCorrect.amount < data.leftrCorrect.amount ? "Right" : "Left";
-
-
 
     return <Widget> [
     Center(
@@ -119,43 +112,20 @@ class _MyHomePageState extends State<Results> {
             Padding(
               padding: EdgeInsets.fromLTRB(screenHeight*0.03, screenWidth*0.075, screenWidth*0.075, 0 ),
               child:
-              Text("You had more correct answers from the right ear. This indicates that language is processed mainly in the", style: Theme.of(context).textTheme.bodyMedium, textAlign: TextAlign.center)),
+              Text("You were correct 75.5% of the time", style: Theme.of(context).textTheme.bodyMedium, textAlign: TextAlign.center)),
             Padding(
-              padding: EdgeInsets.only(top:screenHeight*0.025),
-              child:
-            Text("LEFT", style: Theme.of(context).textTheme.headlineSmall)),
-            Padding(
-              padding: EdgeInsets.only(top:screenHeight*0.005),
+              padding: EdgeInsets.fromLTRB(0,screenHeight*0.03,0,0),
               child: 
-              Text("side of your brain", style: Theme.of(context).textTheme.bodyMedium)),
-            ResultsChart(data),
-            Padding(
-              padding: EdgeInsets.fromLTRB(screenWidth*0.14,screenHeight*0.03,0,0),
-              child:
-            Row(
+              Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-              Icon(Icons.square, color: Colors.green),
-              Container(width: screenWidth*0.03),
-              Text("% Right", textAlign: TextAlign.center)])),
+              ResultsChartRCons(data)])),
             Padding(
-              padding: EdgeInsets.fromLTRB(screenWidth*0.14,screenHeight*0.02,0,0),
-              child:
-            Row(
-              children: [
-              Icon(Icons.square, color: Colors.red),
-              Container(width: screenWidth*0.03),
-              Text("% Error", textAlign: TextAlign.center)])),
+              padding: EdgeInsets.only(top: 0),
+              child: ResultsChartLCons(data)),
             Padding(
-              padding: EdgeInsets.fromLTRB(screenWidth*0.14,screenHeight*0.02,0,screenHeight*0.11),
-              child:
-            Row(
-              children: [
-              Icon(Icons.square, color: Colors.blue),
-              Container(width: screenWidth*0.03),
-              Text("% Left", textAlign: TextAlign.center)])),
-            //Padding(
-              //padding: EdgeInsets.fromLTRB(0, screenHeight*0.04, 0 ,screenHeight*0.03),
-              //child: const Text("Please help our research by submitting your result", textAlign: TextAlign.center,)),
+              padding: EdgeInsets.fromLTRB(0,screenHeight*0.37,0,0),
+              child: 
             OutlinedButton(
             onPressed: () => {                
               showDialog(
@@ -192,7 +162,7 @@ class _MyHomePageState extends State<Results> {
           Text("Submit results for our research",  style: Theme.of(context).textTheme.bodyMedium) 
           ],)
             
-      ))
+      )))
           ],
         )
       )
@@ -213,24 +183,7 @@ class _MyHomePageState extends State<Results> {
       )
           ),
     )
-  ),
-
-
-
-
-    Center( 
-        child:Column( 
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget> [VideoPlayerExample(), 
-          Padding(padding: EdgeInsets.fromLTRB(screenWidth*0.05 ,screenHeight*0.05, screenWidth*0.05,0),
-          child:
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-            Icon(Icons.square, color: Colors.red), 
-            Container(width: screenWidth*0.05),
-            Text("Shows the location of your basic \n sound processing", textAlign: TextAlign.center,)]))]),
-    )];
+  )];
 
   }
   int _selectedIndex = 0;
@@ -286,14 +239,12 @@ class _MyHomePageState extends State<Results> {
               icon: Icon(Icons.info_outline, size: 45),
               label: 'Details'
           ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.movie_creation_outlined, size: 45),
-              label: 'Animation'
-          ),
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
       ),
+
+
     );
   }
 
