@@ -17,6 +17,7 @@ class ResultsChart extends StatelessWidget{
   Widget build(BuildContext context) {
     int refactor = 0;
     
+    var relevantData = data.where((element) => element.id != Types.homonymCorrect && element.id != Types.homonymIncorrect).toList();
     data.forEach((element) {refactor+=element.amount;});
 
     var rightCorrect = data.where((element) => element.id == Types.rightCorrect).toList();
@@ -62,7 +63,7 @@ class ResultsChart extends StatelessWidget{
       //decoration: BoxDecoration(color: Colors.transparent),
       //height: 200,
       //padding: EdgeInsets.all(20),
-        child: 
+        child:
           Padding(
           padding: const EdgeInsets.all(0.0),
           child: 
@@ -75,8 +76,9 @@ class ResultsChart extends StatelessWidget{
             renderSpec: charts.NoneRenderSpec()),
             defaultRenderer: charts.BarRendererConfig(
               groupingType: charts.BarGroupingType.stacked,
+              maxBarWidthPx: 40,)
               )
-          )),
+          ),
       );
   }
 }

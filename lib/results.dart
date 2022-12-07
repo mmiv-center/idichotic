@@ -6,6 +6,7 @@ import 'package:dichotic/charts/resultschart.dart';
 import 'package:dichotic/data/exampledata.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
 import 'data/types.dart';
 /*
@@ -36,7 +37,7 @@ class Results extends StatelessWidget {
 class Results extends StatefulWidget {
   Results({super.key, required this.title, required this.data});
 
-  final List<Data> data; 
+  final List<Data> data;
 
   final String title;
 
@@ -95,14 +96,6 @@ class _MyHomePageState extends State<Results> {
     final screenWidth = MediaQuery.of(context).size.width;
     final statusBarHeight = MediaQuery.of(context).padding.top;
 
-    var rightCorrect = data.where((element) => element.id == Types.rightCorrect).toList();
-    var leftCorrect = data.where((element) => element.id == Types.leftCorrect).toList();
-    var error = data.where((element) => element.id == Types.incorrect).toList();
-
-    //var direction =  data.rightCorrect.amount < data.leftrCorrect.amount ? "Right" : "Left";
-
-
-
     return <Widget> [
     results(screenWidth, context, screenHeight),
 
@@ -150,7 +143,7 @@ class _MyHomePageState extends State<Results> {
   Container results(double screenWidth, BuildContext context, double screenHeight) {
     return Container(
     alignment: Alignment.center,
-    child: 
+    child:
     Container(
       alignment: Alignment.centerLeft,
       padding: EdgeInsets.fromLTRB(screenWidth*0.04, 0, screenWidth*0.04, 0),
@@ -160,7 +153,7 @@ class _MyHomePageState extends State<Results> {
         children: <Widget> [
           Expanded(
             child:
-            Text("Well done!", 
+            Text("Well done!",
               style: Theme.of(context).textTheme.titleLarge)),
           Expanded(
             child:
@@ -291,6 +284,8 @@ class _MyHomePageState extends State<Results> {
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
       ),
+
+
     );
   }
 
