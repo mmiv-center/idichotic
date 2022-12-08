@@ -9,22 +9,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dichotic/sounds.dart';
 import 'package:dichotic/listen.dart';
-import 'package:dichotic/concentrate.dart' as concentrate;
+import 'package:dichotic/concentrate.dart';
 
 
 
 class ConschangeearApp extends StatefulWidget {
-  const ConschangeearApp({super.key, required this.title, required this.ear});
+  const ConschangeearApp({super.key, required this.title, required this.ear, required this.app});
   final String title;
   final bool ear;
+  final ConcentrateAppState app;
 
   @override
-  State<StatefulWidget> createState() => ConschangeearAppState(ear : ear);
+  State<StatefulWidget> createState() => ConschangeearAppState(ear : ear, app: app);
 }
 
 class ConschangeearAppState extends State<ConschangeearApp>  {
-  ConschangeearAppState({required this.ear});
+  ConschangeearAppState({required this.ear, required this.app});
   final bool ear;
+  final ConcentrateAppState app;
   String Ear = "";
 
   void setEar(){
@@ -49,8 +51,8 @@ class ConschangeearAppState extends State<ConschangeearApp>  {
 
   route(){
     Navigator.pop(context);
-    concentrate.TimelineWidgetState.reset();
-    //concentrate.TimelineWidgetState.controller.forward();
+    app.play(app.sounds[app.sound_index], app.player);
+    TimelineWidgetState.reset();
   }
 
   @override

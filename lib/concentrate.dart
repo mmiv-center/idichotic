@@ -58,7 +58,7 @@ class ConcentrateAppState extends State<ConcentrateApp> {
       actions: [
         TextButton(
             onPressed: () {
-              testFinished();
+              //testFinished();
             },
             child: const Text("Results"))
       ],);
@@ -76,7 +76,11 @@ class ConcentrateAppState extends State<ConcentrateApp> {
     //}
   }
 
-  void testFinished(){
+  void resetTimeline(){
+    TimelineWidgetState.reset();
+  }
+
+  void testFinished(ConcentrateAppState app){
     if(testnr == 1) {
       List<Data> data = [
         Data(amount: Right_Correct, id: Types.rightCorrect),
@@ -92,7 +96,8 @@ class ConcentrateAppState extends State<ConcentrateApp> {
       this.sound_index = 0;
       String filepath = sounds[sound_index];
       print("Success");
-      var pageroute_cons = () => MaterialPageRoute(builder: (context) => const ConschangeearApp(title: "Loading", ear: false));
+
+      var pageroute_cons = () => MaterialPageRoute(builder: (context) => ConschangeearApp(title: "Loading", ear: false, app: app));
       Navigator.push(context, pageroute_cons.call());
       //player.play(AssetSource(filepath));
       //TimelineWidgetState.reset();
@@ -124,7 +129,6 @@ class ConcentrateAppState extends State<ConcentrateApp> {
     }
   }
 
-
   void updateIndex(){
     setState(() {
       this.sound_index++;
@@ -151,7 +155,7 @@ class ConcentrateAppState extends State<ConcentrateApp> {
         actions: [
           TextButton(
               onPressed: () {
-                testFinished();
+                //testFinished();
               },
               child: const Text("Results")),
         ],
@@ -278,7 +282,7 @@ class CustomContainer extends StatelessWidget {
                 app.play(filepath, app.player);
                 TimelineWidgetState.reset();
               } else {
-                app.testFinished();
+                app.testFinished(app);
               }
             },
             style: OutlinedButton.styleFrom(
@@ -362,7 +366,7 @@ class TimelineWidgetState extends State<TimelineWidget>
             controller.forward();
           }else{
             app.updateIndex();
-            app.testFinished();
+            app.testFinished(app);
           }
         }
       }
