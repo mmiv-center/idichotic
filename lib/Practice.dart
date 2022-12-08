@@ -57,13 +57,16 @@ class PracticeState extends State<Practice> {
 
   void play(String filepath, AudioPlayer player) async{
     await player.play(AssetSource(filepath));
-    //}
   }
 
   void updateIndex(){
     setState(() {
       this.sound_index++;
+      sound_index = sound_index%sounds.length;
     });
+    if(sound_index == 0){
+      sounds.shuffle();
+    }
   }
 
 
@@ -75,7 +78,6 @@ class PracticeState extends State<Practice> {
     final statusBarHeight = MediaQuery.of(context).padding.top;
     final appBarHeight = appBar.preferredSize.height;
     timeline = TimelineWidget(app: this);
-    sounds.shuffle();
     sounds.shuffle();
     return Scaffold(
       appBar: AppBar(
@@ -206,7 +208,7 @@ class CustomContainer extends StatelessWidget {
 
               app.updateIndex();
 
-              String filepath = app.sounds[app.sound_index%app.sounds.length];
+              String filepath = app.sounds[app.sound_index];
               app.play(filepath, app.player);
               _TimelineWidgetState.reset();
 
@@ -251,14 +253,14 @@ class _TimelineWidgetState extends State<TimelineWidget>
     )..addListener(() {
 
       if (controller.status == AnimationStatus.completed) {
-        String oldfilepath = app.sounds[app.sound_index%app.sounds.length];
+        String oldfilepath = app.sounds[app.sound_index];
         List<String> sounds = oldfilepath.split("/");
         String filename = sounds[sounds.length - 1];
         List<String> sounds_2 = filename.split(".");
         String sound_2 = sounds_2[0];
         List<String> sound = sound_2.split("-");
         app.updateIndex();
-        app.play(app.sounds[app.sound_index%app.sounds.length], app.player);
+        app.play(app.sounds[app.sound_index], app.player);
         controller.reset();
         controller.forward();
       }
