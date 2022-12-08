@@ -2,12 +2,10 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:dichotic/data/exampledata.dart';
 import 'package:dichotic/data/types.dart';
 import 'package:flutter/material.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
-
-import '../data/exampledata.dart';
 
 class ResultsChart extends StatelessWidget{
   final List<Data> data;
@@ -19,7 +17,6 @@ class ResultsChart extends StatelessWidget{
   Widget build(BuildContext context) {
     int refactor = 0;
     
-    var relevantData = data.where((element) => element.id != Types.homonymCorrect && element.id != Types.homonymIncorrect).toList();
     data.forEach((element) {refactor+=element.amount;});
 
     var rightCorrect = data.where((element) => element.id == Types.rightCorrect).toList();
@@ -62,12 +59,12 @@ class ResultsChart extends StatelessWidget{
 
 
     return Container(
-      decoration: BoxDecoration(color: Colors.transparent),
-      height: 200,
+      //decoration: BoxDecoration(color: Colors.transparent),
+      //height: 200,
       //padding: EdgeInsets.all(20),
         child: 
           Padding(
-          padding: const EdgeInsets.all(9.0),
+          padding: const EdgeInsets.all(0.0),
           child: 
            charts.BarChart(_createSampleData(),
             animate: false,
@@ -78,7 +75,7 @@ class ResultsChart extends StatelessWidget{
             renderSpec: charts.NoneRenderSpec()),
             defaultRenderer: charts.BarRendererConfig(
               groupingType: charts.BarGroupingType.stacked,
-              maxBarWidthPx: 40,)
+              )
           )),
       );
   }

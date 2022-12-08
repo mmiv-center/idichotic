@@ -8,7 +8,7 @@
   "age": "Age",
   "nativeLanguage": "Native Language",
   "soundLanguage": "Sound Language",
-  "unspecified": "Not Answered",
+  "unspecified": "N/A",
 
   "handedness": "Dominant Hand",
   "@handedness": {

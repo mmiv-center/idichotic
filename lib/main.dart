@@ -2,14 +2,18 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-import 'package:dichotic/Start_Page.dart';
 import 'package:dichotic/Start_Promt.dart';
 import 'package:dichotic/db/database.dart';
 import 'package:dichotic/settings/helpers.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 
+import 'Start_Page.dart';
+import 'site/configure_nonweb.dart' if (dart.library.html) 'site/configure_web.dart';
+
 void main() {
+  configureApp();
   runApp(const MyApp());
 }
 
@@ -24,6 +28,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: L10n.supportedLocales,
       title: 'Flutter Demo',
       theme: ThemeData(
+
         // This is the theme of your application.
         //
         // Try running your application with "flutter run". You'll see the
@@ -35,8 +40,8 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
         textTheme: const TextTheme(
-          headlineLarge: TextStyle(fontFamily: 'Inter', color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold), 
-          bodyLarge: TextStyle(fontFamily: 'Inter', color: Colors.black, fontSize: 24),
+          headlineLarge: TextStyle(fontFamily: 'Inter', color: Colors.black, fontSize: 24, fontWeight: FontWeight.bold),
+          bodyLarge: TextStyle(fontFamily: 'Inter', color: Colors.black, fontSize: 20),
           bodyMedium: TextStyle(fontFamily: 'Inter', color: Colors.black, fontSize: 16),
           bodySmall: TextStyle(fontFamily: 'Inter', color: Colors.black, fontSize: 12),
           headlineSmall: TextStyle(fontFamily: 'Inter', color: Colors.black, fontSize: 24, fontWeight: FontWeight.bold),
@@ -85,6 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -93,6 +99,13 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+    if (kIsWeb) {
+      var webWidget = handleWeb();
+      if (webWidget != null) {
+        return webWidget;
+      }
+    }
+
     if (startPrompt == null) {
       return const CircularProgressIndicator();
     }

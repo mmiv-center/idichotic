@@ -28,7 +28,6 @@ final appBar = AppBar(
     );
 
 class Start_Page extends State<Start_Promt> {
-  final _formKey = GlobalKey<FormState>();
 
   List<Widget> items = [];
 
@@ -37,9 +36,7 @@ class Start_Page extends State<Start_Promt> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      setState(() {
-        initItems();
-      });
+      initItems();
 // your code goes here
     });
   }
@@ -47,15 +44,13 @@ class Start_Page extends State<Start_Promt> {
   void initItems() async {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-    items.add(age(context));
-    items.add(sex(context));
-    items.add(handedness(context));
+    var _age = (age(context));
+    var _sex = (sex(context));
+    var _handedness = (handedness(context));
     var nativeLang = nativeLanguage(context);
     var soundLang = soundLanguage(context);
     var sound = await soundLang;
     var native = await nativeLang;
-    items.add(sound);
-    items.add(native);
     var button = Container(
       width: screenWidth*0.7,
       height: screenHeight*0.06,
@@ -74,7 +69,9 @@ class Start_Page extends State<Start_Promt> {
       },
     ));
 
-    items.add(button);
+    setState(() {
+      items.addAll([_age, _sex, _handedness, native, sound, button]);
+    });
   }
   int warned = 0;
 
@@ -84,9 +81,7 @@ class Start_Page extends State<Start_Promt> {
     Preference? prefs = await database.select(database.preferences)
         .getSingleOrNull();
     bool unset = prefs != null
-        && prefs.soundLanguage != null
-        && prefs.sex != null
-        && prefs.handedness != null;
+        && prefs.soundLanguage != null;
 
     if (unset) {
       if (warned == 0 &&
@@ -137,51 +132,27 @@ class Start_Page extends State<Start_Promt> {
   @override
   Widget build(BuildContext context) {
 
-    final screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
       //resizeToAvoidBottomInset: false,
       body: Container(
+        alignment: Alignment.center,
         color: Color.fromARGB(196, 235, 235, 235),
-        padding: EdgeInsets.fromLTRB(3, 65, 3, 65),
+        padding: EdgeInsets.fromLTRB(3, 3, 3, 3),
         child: AlertDialog(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
           content: Stack(
-            alignment: Alignment.topCenter,
             children: <Widget>[
-              SizedBox(
-                height: screenHeight*0.28,
-                //height: screenHeight * 0.2,
+              Container(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget> [
-                    Padding(
-                    padding: EdgeInsets.only(top: screenHeight*0.02),
-                       child: Icon(Icons.headphones_outlined, size: 60)),
-                    //Padding(
-                    //  padding: EdgeInsets.fromLTRB(0, 0, 0, screenHeight*0.03),
+                       Icon(Icons.headphones_outlined, size: 60),
                        Text("iDichotic", style: Theme.of(context).textTheme.headlineLarge),
-                    Padding(
-                      padding: EdgeInsets.only(top: screenHeight*0.02),
-                       child: Text("Before you continue..", style: Theme.of(context).textTheme.bodyLarge)),
-                    //Padding(
-                    //  padding: EdgeInsets.fromLTRB(0, screenHeight*0.02, 0, 0),
-                       Text("Please fill out the following information about yourself. This will only be stored locally to give you correct test results until you send it in.", textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyMedium)
-                    ])),
-              Form(
-                key: _formKey,
-                child: Container(
-                  //height: screenHeight*0.8,
-                  padding: EdgeInsets.only(top:screenHeight*0.35),
-                child:
-                  Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: items,
-                  ),
-                ),
-              )
+                       Text("Before you continue...", style: Theme.of(context).textTheme.bodyMedium),
+                    ].map<Widget>((e) => e)
+                  .followedBy([Text("Please fill out the following information about yourself. This will only be stored locally to give you correct test results until you send it in.", textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall)])
+                 .followedBy(items).toList())),
             ],
           ),
         )
