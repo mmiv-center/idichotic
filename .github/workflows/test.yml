@@ -6,6 +6,7 @@ name: Test
 
 on:
   push:
+  pull_request:
 
 jobs:
   test:
@@ -26,7 +27,7 @@ jobs:
     runs-on: ${{ matrix.config.os }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: nschloe/action-cached-lfs-checkout@v1.2.0
       - uses: subosito/flutter-action@v2.8.0
         with:
           cache: true
