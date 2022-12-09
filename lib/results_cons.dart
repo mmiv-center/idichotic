@@ -194,7 +194,6 @@ class _MyHomePageState extends State<ResultsCons> {
 
   Widget build(BuildContext context) {
 
-    
     var pageroute_tests = () => MaterialPageRoute(builder: (context) =>  TestApp(title: L10n.of(context)!.tests));
     return Scaffold(
       appBar: AppBar(

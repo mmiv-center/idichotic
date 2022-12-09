@@ -359,12 +359,194 @@ class $PreferencesTable extends Preferences
       NullAwareTypeConverter.wrap($converter3);
 }
 
+class StatemanagerData extends DataClass
+    implements Insertable<StatemanagerData> {
+  final int id;
+  final bool? testFinished;
+  const StatemanagerData({required this.id, this.testFinished});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    if (!nullToAbsent || testFinished != null) {
+      map['test_finished'] = Variable<bool>(testFinished);
+    }
+    return map;
+  }
+
+  StatemanagerCompanion toCompanion(bool nullToAbsent) {
+    return StatemanagerCompanion(
+      id: Value(id),
+      testFinished: testFinished == null && nullToAbsent
+          ? const Value.absent()
+          : Value(testFinished),
+    );
+  }
+
+  factory StatemanagerData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return StatemanagerData(
+      id: serializer.fromJson<int>(json['id']),
+      testFinished: serializer.fromJson<bool?>(json['testFinished']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'testFinished': serializer.toJson<bool?>(testFinished),
+    };
+  }
+
+  StatemanagerData copyWith(
+          {int? id, Value<bool?> testFinished = const Value.absent()}) =>
+      StatemanagerData(
+        id: id ?? this.id,
+        testFinished:
+            testFinished.present ? testFinished.value : this.testFinished,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('StatemanagerData(')
+          ..write('id: $id, ')
+          ..write('testFinished: $testFinished')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, testFinished);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is StatemanagerData &&
+          other.id == this.id &&
+          other.testFinished == this.testFinished);
+}
+
+class StatemanagerCompanion extends UpdateCompanion<StatemanagerData> {
+  final Value<int> id;
+  final Value<bool?> testFinished;
+  const StatemanagerCompanion({
+    this.id = const Value.absent(),
+    this.testFinished = const Value.absent(),
+  });
+  StatemanagerCompanion.insert({
+    this.id = const Value.absent(),
+    this.testFinished = const Value.absent(),
+  });
+  static Insertable<StatemanagerData> custom({
+    Expression<int>? id,
+    Expression<bool>? testFinished,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (testFinished != null) 'test_finished': testFinished,
+    });
+  }
+
+  StatemanagerCompanion copyWith({Value<int>? id, Value<bool?>? testFinished}) {
+    return StatemanagerCompanion(
+      id: id ?? this.id,
+      testFinished: testFinished ?? this.testFinished,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (testFinished.present) {
+      map['test_finished'] = Variable<bool>(testFinished.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('StatemanagerCompanion(')
+          ..write('id: $id, ')
+          ..write('testFinished: $testFinished')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $StatemanagerTable extends Statemanager
+    with TableInfo<$StatemanagerTable, StatemanagerData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $StatemanagerTable(this.attachedDatabase, [this._alias]);
+  final VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
+  final VerificationMeta _testFinishedMeta =
+      const VerificationMeta('testFinished');
+  @override
+  late final GeneratedColumn<bool> testFinished = GeneratedColumn<bool>(
+      'test_finished', aliasedName, true,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints: 'CHECK ("test_finished" IN (0, 1))');
+  @override
+  List<GeneratedColumn> get $columns => [id, testFinished];
+  @override
+  String get aliasedName => _alias ?? 'statemanager';
+  @override
+  String get actualTableName => 'statemanager';
+  @override
+  VerificationContext validateIntegrity(Insertable<StatemanagerData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('test_finished')) {
+      context.handle(
+          _testFinishedMeta,
+          testFinished.isAcceptableOrUnknown(
+              data['test_finished']!, _testFinishedMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  StatemanagerData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return StatemanagerData(
+      id: attachedDatabase.options.types
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      testFinished: attachedDatabase.options.types
+          .read(DriftSqlType.bool, data['${effectivePrefix}test_finished']),
+    );
+  }
+
+  @override
+  $StatemanagerTable createAlias(String alias) {
+    return $StatemanagerTable(attachedDatabase, alias);
+  }
+}
+
 abstract class _$SharedDatabase extends GeneratedDatabase {
   _$SharedDatabase(QueryExecutor e) : super(e);
   late final $PreferencesTable preferences = $PreferencesTable(this);
+  late final $StatemanagerTable statemanager = $StatemanagerTable(this);
   @override
   Iterable<TableInfo<Table, dynamic>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [preferences];
+  List<DatabaseSchemaEntity> get allSchemaEntities =>
+      [preferences, statemanager];
 }

@@ -12,6 +12,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 
+import 'db/database.dart';
+
 
 class TestApp extends StatefulWidget {
   const TestApp({super.key, required this.title});
@@ -22,8 +24,45 @@ class TestApp extends StatefulWidget {
 }
 
 
-class TestAppState extends State<TestApp> {  
-  
+class TestAppState extends State<TestApp> {
+
+  Color test2Color = Colors.white24;
+  bool finishedTest2 = false;
+
+  @override
+  void initState(){
+    super.initState();
+    containerLock();
+  }
+
+  Future<bool?> getField() async{
+    StatemanagerData? result = await database.select(database.statemanager).getSingleOrNull();
+    if(result == null){
+      return false;
+    }
+    return result.testFinished;
+  }
+
+  void containerLock() async{
+    bool? testFinished = await getField();
+    if(testFinished != null && testFinished){
+      updateColor(Colors.white);
+      updateTestState();
+    }
+  }
+
+  void updateColor(Color color){
+    setState(() {
+      test2Color = color;
+    });
+  }
+
+  void updateTestState(){
+    setState(() {
+      finishedTest2 = !finishedTest2;
+    });
+  }
+
   AppBar appBar(BuildContext context) {
     return AppBar(
           title: Text(L10n.of(context)!.testChoose, style: TextStyle(color: Colors.black)),
@@ -39,6 +78,7 @@ class TestAppState extends State<TestApp> {
           foregroundColor: Colors.black,
         );
   }
+
   var pageroute_listen = () => MaterialPageRoute(builder: (context) => const LoadingListenApp(title: "Loading"));
   var pageroute_cons = () => MaterialPageRoute(builder: (context) => const LoadingConsApp(title: "Loading"));
   var pageroute_practice = () => MaterialPageRoute(builder: (context) => const LoadingPracticeApp(title: "Loading"));
@@ -72,21 +112,24 @@ class TestAppState extends State<TestApp> {
 
                 CustomButton(
                   text1: Text(L10n.of(context)!.test1, style: TextStyle(fontSize: 20, color: Colors.black)),
-                  text2: Text(L10n.of(context)!.duration_3, style: TextStyle(fontSize: 12, color: Colors.black)), 
-                  text3: Text(L10n.of(context)!.test1Info, textAlign: TextAlign.center, style: TextStyle(fontSize: 14, color: Colors.black)), 
+                  text2: Text(L10n.of(context)!.duration_3, style: TextStyle(fontSize: 12, color: Colors.black)),
+                  text3: Text(L10n.of(context)!.test1Info, textAlign: TextAlign.center, style: TextStyle(fontSize: 14, color: Colors.black)),
+
                   icon: const Icon(Icons.arrow_forward_ios, color: Colors.black, size: 16),
                   pageroute: pageroute_listen),
 
                 Container(
                   height: (screenHeight-appBarHeight-statusBarHeight) * 0.03
                 ),
-
                 CustomButton(
                   text1: Text(L10n.of(context)!.test2, style: TextStyle(fontSize: 20, color: Colors.black)),
-                  text2: Text(L10n.of(context)!.duration_5, style: TextStyle(fontSize: 12, color: Colors.black)), 
-                  text3: Text(L10n.of(context)!.test2Info, textAlign: TextAlign.center, style: TextStyle(fontSize: 14, color: Colors.black)), 
+                  text2: Text(L10n.of(context)!.duration_5, style: TextStyle(fontSize: 12, color: Colors.black)),
+                  text3: Text(L10n.of(context)!.test2Info, textAlign: TextAlign.center, style: TextStyle(fontSize: 14, color: Colors.black)),
                   icon: const Icon(Icons.arrow_forward_ios, color: Colors.black, size: 16),
-                  pageroute: pageroute_cons),
+                  pageroute: pageroute_cons,
+                  backGroundColor: test2Color,
+                  finishedTest: finishedTest2,
+                ),
                 Container(
                   height: (screenHeight-appBarHeight-statusBarHeight) * 0.05
                 ),
@@ -102,17 +145,23 @@ class CustomButton extends StatelessWidget {
   final Text text3;
   final Icon icon;
   final MaterialPageRoute Function() pageroute;
+  final Color backGroundColor;
+  final bool finishedTest;
 
   CustomButton({
-    required this.text1, required this.text2, required this.text3, required this.icon, required this.pageroute});
+    required this.text1, required this.text2, required this.text3, required this.icon, required this.pageroute, this.backGroundColor = Colors.white, this.finishedTest = true});
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: OutlinedButton(
-        onPressed: () {Navigator.push(context, pageroute.call());},
+        onPressed: () {
+          if(finishedTest){
+            Navigator.push(context, pageroute.call());
+          }
+        },
         style: OutlinedButton.styleFrom(
-          backgroundColor: Colors.white,
+          backgroundColor: backGroundColor,
           elevation: 7,
           shadowColor: Colors.black,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0))

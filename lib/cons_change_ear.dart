@@ -4,12 +4,9 @@
 
 import 'dart:async';
 
-import 'package:dichotic/Start_Promt.dart';
+import 'package:dichotic/concentrate.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:dichotic/sounds.dart';
-import 'package:dichotic/listen.dart';
-import 'package:dichotic/concentrate.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 
 
@@ -31,11 +28,10 @@ class ConschangeearAppState extends State<ConschangeearApp>  {
   String Ear = " ";
 
   void setEar(){
-    if(ear){
-      Ear = L10n.of(context)!.left;
-  }else{
-      Ear = L10n.of(context)!.right;
-;
+    if(!ear){
+      Ear = L10n.of(context)!.leftEar;
+    } else {
+      Ear = L10n.of(context)!.rightEar;
     }
   }
   @override
@@ -57,8 +53,8 @@ class ConschangeearAppState extends State<ConschangeearApp>  {
 
   route(){
     if(this.mounted){
-      String title = L10n.of(context)!.concentrateOn + this.Ear;
       Navigator.pop(context);
+      app.updateTitle(ear);
       app.play(app.sounds[app.sound_index], app.player);
       TimelineWidgetState.reset();
     }
