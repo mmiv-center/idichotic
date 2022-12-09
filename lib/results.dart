@@ -106,6 +106,7 @@ Expanded details(double screenWidth, BuildContext context) {
             padding: EdgeInsets.fromLTRB(screenWidth*0.05, 0, screenWidth*0.05, 0),
             child: Column(
               children: <Widget> [
+
                 Text(L10n.of(context)!.learnDichotic, style: Theme.of(context).textTheme.titleLarge, textAlign: TextAlign.left,),
                 Text(L10n.of(context)!.dichoticParagraph),
                 Text(L10n.of(context)!.reference, textAlign: TextAlign.left),
@@ -287,6 +288,7 @@ class _MyHomePageState extends State<Results> {
                       onPressed: (){
                         Navigator.pop(context);
                       },
+
                       child: Text(L10n.of(context)!.back, style: TextStyle(color: Colors.black) )
                   )
                 ],

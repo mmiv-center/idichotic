@@ -4,13 +4,14 @@
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:dichotic/data/exampledata.dart';
-import 'package:dichotic/data/exampledata.dart';
 import 'package:dichotic/results.dart';
+import 'package:drift/drift.dart' hide Column;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 
 import 'data/types.dart';
+import 'db/database.dart';
 
 class ListenApp extends StatefulWidget {
   const ListenApp({super.key, required this.title});
@@ -45,7 +46,7 @@ class ListenAppState extends State<ListenApp> {
   TimelineWidget? timeline;
     Widget appBar(context) {
       return AppBar(
-          title:  Text(L10n.of(context)!.listen, style: TextStyle(color: Colors.black)), 
+          title:  Text(L10n.of(context)!.listen, style: TextStyle(color: Colors.black)),
           centerTitle: true,
           shadowColor: Colors.white,
           backgroundColor: Colors.white,
@@ -67,7 +68,6 @@ class ListenAppState extends State<ListenApp> {
 
   void play(String filepath, AudioPlayer player) async{
     await player.play(AssetSource(filepath));
-    //}
   }
 
   void updateIndex(){
@@ -84,6 +84,7 @@ class ListenAppState extends State<ListenApp> {
       Data(amount: Same_sound_incorrect, id: Types.homonymIncorrect),
       Data(amount: wrong, id: Types.incorrect),
     ];
+    database.into(database.statemanager).insertOnConflictUpdate(StatemanagerCompanion.insert(id: const Value(0), testFinished: const Value(true)));
     Navigator.push(context, pageroute_results.call(data));
   }
 
@@ -347,7 +348,7 @@ class _TimelineWidgetState extends State<TimelineWidget>
             LinearProgressIndicator(
               value: controller.value,
               minHeight: 14,
-              color: Color.fromARGB(255, 241, 153, 182),
+              color: Colors.black54,
               backgroundColor: Color.fromARGB(255, 174, 173, 174),
               semanticsLabel: 'Linear progress indicator',
             ),

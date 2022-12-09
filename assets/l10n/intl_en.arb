@@ -64,7 +64,8 @@
   "prRight": "% Right",
   "prError": "% Error",
   "prLeft" : "% Left",
-  "prCorrect": "% Correct", 
+  "prCorrect": "% Correct",
+
   "rightResults": "Right results:",
   "leftResults": "Left results:",
 

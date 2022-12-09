@@ -49,29 +49,29 @@ class ConcentrateAppState extends State<ConcentrateApp> {
   int Right_Correct = 0;
   int Right_wrong = 0;
   int testnr = 0;
+  String title = "";
   TimelineWidget? timeline;
-  Widget appBar(context) {
-    return AppBar(
-      title: Text(L10n.of(context)!.listen, style: TextStyle(color: Colors.black)),
-      centerTitle: true,
-      shadowColor: Colors.white,
-      backgroundColor: Colors.white,
-      actions: [
-        TextButton(
-            onPressed: () {
-              //testFinished();
-            },
-            child: Text(L10n.of(context)!.results))
-      ],);
-  }
+
   @override
   void initState(){
     // TODO: implement initState
     super.initState();
     String filepath = sounds[sound_index];
     play(filepath, player);
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      updateTitle(rightEar);
+    });
   }
 
+  void updateTitle(bool ear){
+    setState(() {
+      if(ear){
+        title = L10n.of(context)!.concentrateOn + " " + L10n.of(context)!.right;
+      }else{
+        title = L10n.of(context)!.concentrateOn + " " + L10n.of(context)!.left;
+      }
+    });
+  }
   void play(String filepath, AudioPlayer player) async{
     await player.play(AssetSource(filepath));
     //}
@@ -149,7 +149,7 @@ class ConcentrateAppState extends State<ConcentrateApp> {
     sounds.shuffle();
     return Scaffold(
       appBar: AppBar(
-        title: Text(L10n.of(context)!.listen, style: TextStyle(color: Colors.black)),
+        title: Text(title, style: TextStyle(color: Colors.black)),
         centerTitle: true,
         shadowColor: Colors.transparent,
         backgroundColor: Colors.transparent,
@@ -403,8 +403,8 @@ class TimelineWidgetState extends State<TimelineWidget>
           LinearProgressIndicator(
             value: controller.value,
             minHeight: 14,
-            color: Color.fromARGB(255, 241, 153, 182),
-            backgroundColor: Color.fromARGB(255, 174, 173, 174),
+            color: Colors.black54,
+            backgroundColor: Colors.black54,
             semanticsLabel: 'Linear progress indicator',
           ),
         ],

@@ -114,7 +114,7 @@ class _TimelineWidgetState extends State<TimelineWidget>
           CircularProgressIndicator(
             value: controller.value,
             strokeWidth: 7,
-            color: Color.fromARGB(255, 241, 153, 182),
+            color: Colors.black54,
             semanticsLabel: 'Circular progress indicator',
           ),
         ],
