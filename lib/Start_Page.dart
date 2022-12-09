@@ -2,7 +2,6 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-import 'package:dichotic/learn_more.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dichotic/listen.dart';
@@ -24,9 +23,9 @@ AppBar appBar(BuildContext context) { return AppBar(
         );
 }
 
-var pageroute_settings = () => MaterialPageRoute(builder: (context) => const SettingsPage());
+var pageroute_settings = () => MaterialPageRoute(builder: (context) => SettingsPage());
 var pageroute_tests = () => MaterialPageRoute(builder: (context) => const TestApp(title: "Test"));
-var pageroute_learn = () => MaterialPageRoute(builder: (context) => LearnMore());
+var pageroute_learn = () => MaterialPageRoute(builder: (context) => SettingsPage());
 
 class StartAppState extends State<StartApp> {
   
@@ -74,7 +73,8 @@ class StartAppState extends State<StartApp> {
               text1: Text(L10n.of(context)!.learnMore, style: TextStyle(color: Colors.black, fontSize: 16)), 
               pageroute: pageroute_learn,
               containerHeight: (screenHeight-appBarHeight-statusBarHeight)*0.07,
-              containerWidth: screenWidth*0.65,))
+              containerWidth: screenWidth*0.65,)),
+
           ],
         ),
       ),
