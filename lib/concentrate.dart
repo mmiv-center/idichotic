@@ -48,6 +48,7 @@ class ConcentrateAppState extends State<ConcentrateApp> {
   int Right_Correct = 0;
   int Right_wrong = 0;
   int testnr = 0;
+  String ConcEar = "Focus on Right";
   TimelineWidget? timeline;
   Widget appBar(context) {
     return AppBar(
@@ -135,6 +136,12 @@ class ConcentrateAppState extends State<ConcentrateApp> {
     });
   }
 
+  void updateTitle(String title){
+    setState(() {
+      this.ConcEar = title;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final appBar = AppBar();
@@ -147,18 +154,11 @@ class ConcentrateAppState extends State<ConcentrateApp> {
     sounds.shuffle();
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Listen", style: TextStyle(color: Colors.black)),
+        title: Text(ConcEar, style: TextStyle(color: Colors.black)),
         centerTitle: true,
         shadowColor: Colors.transparent,
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.black,
-        actions: [
-          TextButton(
-              onPressed: () {
-                //testFinished();
-              },
-              child: const Text("Results")),
-        ],
       ),
       body: Center(
         //

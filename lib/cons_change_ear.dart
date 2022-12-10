@@ -38,21 +38,29 @@ class ConschangeearAppState extends State<ConschangeearApp>  {
   }
   @override
   void initState() {
-    super.initState();
-    startTimer();
+    try{
+      super.initState();
+      startTimer();
+    }catch(e){
+      print(e);
+    }
   }
 
   startTimer() async {
-    var duration = Duration(seconds: 5);
+    var duration = Duration(seconds: 3);
     //var timer = Timer(duration, route);
     //timer.
     return Timer(duration, route);
   }
 
   route(){
-    Navigator.pop(context);
-    app.play(app.sounds[app.sound_index], app.player);
-    TimelineWidgetState.reset();
+    if(this.mounted){
+      String title = "Focus on the ${this.Ear}";
+      Navigator.pop(context);
+      app.play(app.sounds[app.sound_index], app.player);
+      TimelineWidgetState.reset();
+      app.updateTitle(title);
+    }
   }
 
   @override

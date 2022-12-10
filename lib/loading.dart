@@ -24,19 +24,25 @@ class LoadingAppState extends State<LoadingApp>  {
 
     @override
     void initState() {
-      super.initState();
-      startTimer();
+      try{
+        super.initState();
+        startTimer();
+      }catch(e){
+        print(e);
+      }
     }
 
     startTimer() async {
-      var duration = Duration(seconds: 4);
+      var duration = Duration(seconds: 3);
       return Timer(duration, route);
     }
 
     route(){
-      Navigator.pushReplacement(context, MaterialPageRoute(
-        builder: (context) => ListenApp(title: "listen")
-      ));
+      if(this.mounted){
+        Navigator.pushReplacement(context, MaterialPageRoute(
+            builder: (context) => ListenApp(title: "listen")
+        ));
+      }
     }
 
     @override
