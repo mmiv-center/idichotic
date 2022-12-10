@@ -28,7 +28,6 @@ class TestAppState extends State<TestApp> {
           shadowColor: Colors.transparent,
           foregroundColor: Colors.black,
         );
-
   var pageroute_listen = () => MaterialPageRoute(builder: (context) => const LoadingListenApp(title: "Loading"));
   var pageroute_cons = () => MaterialPageRoute(builder: (context) => const LoadingConsApp(title: "Loading"));
   var pageroute_practice = () => MaterialPageRoute(builder: (context) => const LoadingPracticeApp(title: "Loading"));
@@ -48,7 +47,18 @@ class TestAppState extends State<TestApp> {
               children: <Widget> [
 
                 CustomButton(
-                  text1: const Text("Listen", style: TextStyle(fontSize: 20, color: Colors.black)),
+                    text1: const Text("Practise", style: TextStyle(fontSize: 20, color: Colors.black)),
+                    text2: const Text("Duration: infinite", style: TextStyle(fontSize: 12, color: Colors.black)),
+                    text3: const Text("If you have not taken the tests before we recommend you to go through this practice before you do.", textAlign: TextAlign.center, style: TextStyle(fontSize: 14, color: Colors.black)),
+                    icon: const Icon(Icons.arrow_forward_ios, color: Colors.black, size: 16),
+                    pageroute: pageroute_practice),
+
+                Container(
+                    height: (screenHeight-appBarHeight-statusBarHeight) * 0.05
+                ),
+
+                CustomButton(
+                  text1: const Text("Test 1", style: TextStyle(fontSize: 20, color: Colors.black)),
                   text2: const Text("Duration: 3 minutes", style: TextStyle(fontSize: 12, color: Colors.black)), 
                   text3: const Text("In this test you get presented mutliple sounds with one so and you have three seconds to press the button with the sound you hear the best.", textAlign: TextAlign.center, style: TextStyle(fontSize: 14, color: Colors.black)), 
                   icon: const Icon(Icons.arrow_forward_ios, color: Colors.black, size: 16),
@@ -59,22 +69,11 @@ class TestAppState extends State<TestApp> {
                 ),
 
                 CustomButton(
-                  text1: const Text("Concentrate", style: TextStyle(fontSize: 20, color: Colors.black)),
+                  text1: const Text("Test 2", style: TextStyle(fontSize: 20, color: Colors.black)),
                   text2: const Text("Duration: 5 minutes", style: TextStyle(fontSize: 12, color: Colors.black)), 
                   text3: const Text("In this test you get presented multiple sounds and you have three seconds to press the button with the sound you hear the best.", textAlign: TextAlign.center, style: TextStyle(fontSize: 14, color: Colors.black)), 
                   icon: const Icon(Icons.arrow_forward_ios, color: Colors.black, size: 16),
                   pageroute: pageroute_cons),
-
-                                  Container(
-                  height: (screenHeight-appBarHeight-statusBarHeight) * 0.05
-                ),
-
-                CustomButton(
-                  text1: const Text("Practise", style: TextStyle(fontSize: 20, color: Colors.black)),
-                  text2: const Text("Duration: infinite", style: TextStyle(fontSize: 12, color: Colors.black)),
-                  text3: const Text("If you have not taken the tests before we recommend you to go through this practice before you do.", textAlign: TextAlign.center, style: TextStyle(fontSize: 14, color: Colors.black)),
-                  icon: const Icon(Icons.arrow_forward_ios, color: Colors.black, size: 16), 
-                  pageroute: pageroute_practice),
             ],)
         )
     );

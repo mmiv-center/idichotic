@@ -24,19 +24,25 @@ class LoadingListenAppState extends State<LoadingListenApp>  {
 
     @override
     void initState() {
-      super.initState();
-      startTimer();
+      try{
+        super.initState();
+        startTimer();
+      }catch(e){
+        print(e);
+      }
     }
 
     startTimer() async {
-      var duration = Duration(seconds: 5);
+      var duration = Duration(seconds: 3);
       return Timer(duration, route);
     }
 
     route(){
-      Navigator.pushReplacement(context, MaterialPageRoute(
-        builder: (context) => ListenApp(title: "listen")
-      ));
+      if(this.mounted){
+        Navigator.pushReplacement(context, MaterialPageRoute(
+            builder: (context) => ListenApp(title: "listen")
+        ));
+      }
     }
 
     
@@ -57,7 +63,7 @@ class LoadingListenAppState extends State<LoadingListenApp>  {
             children: <Widget>[
               Container(
               height: (screenHeight-appBarHeight-statusBarHeight) * 0.14,
-              child: Text("Five seconds until\nthe test start", style: TextStyle(fontSize: 20), textAlign: TextAlign.center,)),
+              child: Text("Three seconds until\nthe test start", style: TextStyle(fontSize: 20), textAlign: TextAlign.center,)),
               TimelineWidget(),
             ],
           )
@@ -85,11 +91,11 @@ class _TimelineWidgetState extends State<TimelineWidget>
   void initState() {
     controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 5),
+      duration: const Duration(seconds: 3),
     )..addListener(() {
         setState(() {});
       });
-    controller.repeat(reverse: false);
+    controller.forward();
     super.initState();
   }
 

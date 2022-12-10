@@ -25,19 +25,25 @@ class LoadingConsAppState extends State<LoadingConsApp>  {
 
     @override
     void initState() {
-      super.initState();
-      startTimer();
+      try{
+        super.initState();
+        startTimer();
+      }catch(e){
+        //print(e);
+      }
     }
 
     startTimer() async {
-      var duration = Duration(seconds: 5);
+      var duration = Duration(seconds: 3);
       return Timer(duration, route);
     }
 
     route(){
-      Navigator.pushReplacement(context, MaterialPageRoute(
-        builder: (context) => ConcentrateApp(title: "Concentrate", rightEar: true)
-      ));
+      if(this.mounted) {
+        Navigator.pushReplacement(context, MaterialPageRoute(
+            builder: (context) => ConcentrateApp(title: "Concentrate", rightEar: true)
+        ));
+      }
     }
 
     @override
