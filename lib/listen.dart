@@ -9,6 +9,8 @@ import 'package:dichotic/loading_listen.dart';
 import 'package:dichotic/loading_practice.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/l10n.dart';
+
 
 class TestApp extends StatefulWidget {
   const TestApp({super.key, required this.title});
@@ -21,25 +23,28 @@ class TestApp extends StatefulWidget {
 
 class TestAppState extends State<TestApp> {  
   
-  final appBar = AppBar(
-          title: const Text("Tests", style: TextStyle(color: Colors.black)),
+  AppBar appBar(BuildContext context) {
+    return AppBar(
+          title: Text(L10n.of(context)!.sex, style: TextStyle(color: Colors.black)),
           centerTitle: true,
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
           foregroundColor: Colors.black,
         );
+  }
   var pageroute_listen = () => MaterialPageRoute(builder: (context) => const LoadingListenApp(title: "Loading"));
   var pageroute_cons = () => MaterialPageRoute(builder: (context) => const LoadingConsApp(title: "Loading"));
   var pageroute_practice = () => MaterialPageRoute(builder: (context) => const LoadingPracticeApp(title: "Loading"));
   @override
   Widget build(BuildContext context) {
 
+    final bar = appBar(context);
     final screenHeight = MediaQuery.of(context).size.height;
     final statusBarHeight = MediaQuery.of(context).padding.top;
-    final appBarHeight = appBar.preferredSize.height;
+    final appBarHeight = bar.preferredSize.height;
 
     return Scaffold(
-        appBar: appBar,
+        appBar: bar,
         body: Padding(
             padding: const EdgeInsets.all(40),
             child: Column(

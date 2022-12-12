@@ -34,12 +34,15 @@ class Results extends StatelessWidget {
   }
 }*/
 
+
+
 class Results extends StatefulWidget {
   Results({super.key, required this.title, required this.data});
 
   final List<Data> data;
 
   final String title;
+
 
   @override
   State<Results> createState() => _MyHomePageState(data:data);
@@ -63,6 +66,8 @@ class _VideoPlayerScreenState extends State{
       _videoPlayerController.play();
       _videoPlayerController.setLooping(true);
     });
+
+  
   });
 
   }
@@ -88,13 +93,45 @@ class _VideoPlayerScreenState extends State{
 class _MyHomePageState extends State<Results> {
 
   _MyHomePageState({required this.data});
-  final List<Data> data;
 
+  final List<Data> data;
+  
+    
+  String brain_side = " ";
+  String ear_side = " ";
+  String side = " ";
+
+  
+  void initState(){
+    var rightCorrect = data.where((element) => element.id == Types.rightCorrect).toList();
+    var leftCorrect = data.where((element) => element.id == Types.leftCorrect).toList();
+
+    if(rightCorrect[0].amount > leftCorrect[0].amount){
+      print(rightCorrect);
+      brain_side = "LEFT";
+      ear_side = "You had more correct answers from the right ear. This indicates that language is processed mainly in the"; 
+      side = "side of your brain";
+    }
+    else if(rightCorrect[0].amount == leftCorrect[0].amount){
+            print(rightCorrect);
+      brain_side = "BOTH";
+      ear_side = "You had the same amount of correct answers from the both ears. This indicates that language is processed in";
+      side = "sides of your brain";
+    }
+    else if(rightCorrect[0].amount < leftCorrect[0].amount){
+            print(rightCorrect);
+      brain_side = "RIGHT";
+      ear_side = "You had more correct answers from the left ear. This indicates that language is processed mainly in the";
+      side = "side of your brain";}
+     
+  }
+  
   List<Widget> _pages(BuildContext context) {
 
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     final statusBarHeight = MediaQuery.of(context).padding.top;
+
 
     return <Widget> [
     results(screenWidth, context, screenHeight),
@@ -157,13 +194,13 @@ class _MyHomePageState extends State<Results> {
               style: Theme.of(context).textTheme.titleLarge)),
           Expanded(
             child:
-            Text("You had more correct answers from the right ear. This indicates that language is processed mainly in the", style: Theme.of(context).textTheme.bodyMedium, textAlign: TextAlign.center)),
+            Text(ear_side, style: Theme.of(context).textTheme.bodyMedium, textAlign: TextAlign.center)),
           Expanded(
             child:
-          Text("LEFT", style: Theme.of(context).textTheme.headlineSmall)),
+          Text(brain_side, style: Theme.of(context).textTheme.headlineSmall)),
           Expanded(
             child:
-            Text("side of your brain", style: Theme.of(context).textTheme.bodyMedium)),
+            Text(side, style: Theme.of(context).textTheme.bodyMedium)),
           Expanded(flex: 1, child: ResultsChart(data)),
 
           ].followedBy(

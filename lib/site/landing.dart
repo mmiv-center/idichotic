@@ -18,11 +18,12 @@ class Landing extends StatelessWidget {
         length: 3,
         child: Scaffold(
           appBar: AppBar(
-            leading: Expanded(flex: 3, child: Row(mainAxisAlignment:MainAxisAlignment.spaceEvenly, children: const [
-              Expanded(child: Icon(Icons.warning)),
-              Expanded(child: Text("Beta version")),
+            leading: Expanded(flex: 5, child: Row(mainAxisAlignment:MainAxisAlignment.spaceEvenly, children: const [
+              Expanded(child: Icon(Icons.warning, color: Colors.black)),
+              Expanded(child: Text("Beta version", style: TextStyle(color: Colors.black),)),
             ],)),
             backgroundColor: Colors.transparent,
+            shadowColor: Colors.transparent,
             actions: [
               FittedBox(
                   fit: BoxFit.scaleDown,

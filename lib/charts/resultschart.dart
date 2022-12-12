@@ -30,7 +30,7 @@ class ResultsChart extends StatelessWidget{
     return [
       charts.Series<Data, String>(
           id: "Results",
-          data: leftCorrect,
+          data: rightCorrect,
           domainFn: (Data result, _) => "Data",
           measureFn: (Data result, _) => (result.amount * 100) / refactor,
           colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault
@@ -48,7 +48,7 @@ class ResultsChart extends StatelessWidget{
       
       charts.Series<Data, String>(
           id: "Results",
-          data: rightCorrect,
+          data: leftCorrect,
           domainFn: (Data result, _) => "Data",
           measureFn: (Data result, _) => (result.amount * 100) / refactor,
           colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
