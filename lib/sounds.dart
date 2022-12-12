@@ -8,6 +8,7 @@ import 'package:dichotic/data/exampledata.dart';
 import 'package:dichotic/results.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/l10n.dart';
 
 import 'data/types.dart';
 
@@ -44,7 +45,7 @@ class ListenAppState extends State<ListenApp> {
   TimelineWidget? timeline;
     Widget appBar(context) {
       return AppBar(
-          title: const Text("Listen", style: TextStyle(color: Colors.black)), 
+          title:  Text(L10n.of(context)!.listen, style: TextStyle(color: Colors.black)), 
           centerTitle: true,
           shadowColor: Colors.white,
           backgroundColor: Colors.white,
@@ -53,7 +54,7 @@ class ListenAppState extends State<ListenApp> {
         onPressed: () {
           testFinished();
           },
-        child: const Text("Results"))
+        child: Text(L10n.of(context)!.results))
         ],);
     }
   @override
@@ -98,7 +99,7 @@ class ListenAppState extends State<ListenApp> {
     sounds.shuffle();
     return Scaffold(
         appBar: AppBar(
-            title: const Text("Listen", style: TextStyle(color: Colors.black)),
+            title: Text(L10n.of(context)!.listen, style: TextStyle(color: Colors.black)),
             centerTitle: true,
             shadowColor: Colors.transparent,
             backgroundColor: Colors.transparent,
@@ -108,7 +109,7 @@ class ListenAppState extends State<ListenApp> {
             onPressed: () {
               testFinished();
               },
-        child: const Text("Results")),
+        child:  Text(L10n.of(context)!.results)),
     ],
     ),
         body: Center(

@@ -10,6 +10,72 @@
   "soundLanguage": "Sound Language",
   "unspecified": "N/A",
 
+  "right": "Right",
+  "left": "Left",
+
+  "concentrate": "Concentrate",
+  "listen": "Listen",
+  "results": "Results",
+  "duration_3": "Duration: 3 minutes",
+  "duration_5": "Duration: 5 minutes",
+  "duration_infinite": "Duration: Infinite",
+  
+  "theTests": "The Tests",
+  "iDichotic": "iDichotic",
+
+  "takeTests": "Take the test",
+  "settings": "Settings",
+  "learnMore": "Learn More",
+
+  "testChoose": "Choose a test",
+  "threeSeconds": "Three seconds until\nthe test start",
+
+  "practice": "Practice",
+  "practiceInfo": "If you have not taken this type of test before, we recommend you to practice before you do.",
+
+  "test1": "Test One",
+  "test1Info": "In this test you get presented multiple sound, with different syllables on each ear. You should press the button for the syllable you hear best.",
+
+  "test2": "Test Two",
+  "test2Info": "In this test you also get presented with mulitple sounds with different syllables. But here you should concentrate on one ear at a time and press the button you hear best on that ear.",
+
+  
+  "concentrateOn": "Consentrate on the",
+  "rightEar": "RIGHT EAR",
+  "leftEar": "LEFT EAR",
+
+  "learnDichotic": "Learn more about dichotic listening ",
+  "reference": "\n References: \n",
+  "dichoticReferences": "Broadbent, D. E. (1954). The role of auditory localization in attention and memory span. Journal of experimental psychology, 47(3), 191-196. \n\nBryden, M. P. (1988). An overview of the dichotic listening procedure and its relation to cerebral organization. \n\nIn K. Hugdahl (Ed.), Handbook of dichotic listening: Theory, methods and research (pp.1-43). Chichester, England: Wiley. \n\nFrost, J. A., Binder, J. R., Springer, J. A., Hammeke, T. A., Bellgowan, P. S., Rao, S. M., & Cox, R.W. (1999). Language processing is strongly left lateralized in both sexes. Evidence from functional MRI. Brain, 122(2), 199-208.\n\nHugdahl, K., & Andersson, L. (1986). The \"forced-attention paradigm\" in dichotic listening to CV-syllables: a comparison between adults and children. Cortex, 22(3), 417-432. \n\nHugdahl, K. (2003). Dichotic listening in the study of auditory laterality. \n\nIn K. Hugdahl & R. J. Davidson (Eds.), The asymmetrical brain. Cambridge, Mass.: MIT Press. Kimura, D. (1961a). Cerebral dominance and the perception of verbal stimuli. Canadian journal of psychology, 15(3), 166-171. \n\nKimura, D. (1961b). Some effects of temporal-lobe damage on auditory perception. Canadian journal of psychology, 15, 156-165. \n\nLoring, D. W., Meador, K. J., Lee, G. P., Murro, A. M., Smith, J. R., Flanigin, H. F., Gallagher, B. B., & King, D. W. (1990). Cerebral language lateralization: evidence from intracarotid amobarbital testing. Neuropsychologia, 28(8), 831-838. \n\nRosenzweig, M. R. (1951). Representations of the two ears at the auditory cortex. American journal of physiology, 167(1), 147.\n\nTervaniemi, M. & Hugdahl, K. (2003). Lateralization of auditory-cortex functions. Brain Research Reviews, 43, 231-246.",
+  "dichoticParagraph": "The beginnings of the dichotic listening technique can be traced back to the 1950s and Donald Broadbent, who was interested in testing auditory attention abilities in air traffic controllers. \n \nAbout 10 years later, Doreen Kimura (1961a, 1961b) modified the paradigm and used spoken digits, which were presented simultaneously via headphones, one to each ear, to investigate language lateralization in patients with epilepsy and healthy subjects. The results showed that in both cases subjects with left hemisphere language processing recalled more items from the right ear, yielding what is called the right ear advantage. Subjects with language functions lateralized to the right hemisphere showed a tendency to report items presented to the left ear, yielding a left ear advantage. These findings have been replicated by numerous scientific studies (Hugdahl, 2003; Bryden, 1988). \n \nMore recently, Kenneth Hugdahl and colleagues have developed a consonant-vowel version of the dichotic listening paradigm (Hugdahl & Andersson, 1986), which is the basis of this iDichotic App. There are a few theoretical models that attempt to explain the common bias to report the right ear stimulus. The most widely accepted one goes back to Kimura (1967) and is called the structural model. It is based on the observation that each ear is predominantly connected to the opposite (contralateral) side of the brain (see Rosenzweig, 1951). \n \nAs a result, the stimulus played to the right ear will be more strongly represented in the contralateral left hemisphere, which in most individuals is the hemisphere which processes speech and language (Tervaniemi & Hugdahl, 2003; Frost el al., 1999; Loring et al., 1990). However, stimuli presented to the left ear will first be transferred to the right hemisphere. Since the right hemisphere is not able to fully process speech, the incoming information needs to be transferred to the left hemisphere in order to get processed. The resulting in a delayed processing of the left-ear as compared to the right-ear stimulus is thought to explain the right-ear preference in dichotic listening.",
+
+  "brainLeft": "LEFT",
+  "brainRight": "RIGHT",
+  "brainBoth": "BOTH",
+  "earLeft": "You had more correct answers from the right ear. This indicates that language is processed mainly in the", 
+  "earBoth": "You had the same amount of correct answers from the both ears. This indicates that language is processed in",
+  "earRight": "You had more correct answers from the left ear. This indicates that language is processed mainly in the",
+  "sideSingle": "side of your brain",
+  "sidePlural": "sides of your brain",
+
+  "soundProcessing": "Shows the location of your basic \n sound processing",
+
+  "wellDone": "Well done!",
+  "prRight": "% Right",
+  "prError": "% Error",
+  "prLeft" : "% Left",
+
+  "submitResults": "Submit results for our research",
+  "contribute": "You can contribute to our research by submitting your results to our global dichotic listening databas The transfer of your test results to our database is optional and depends on your consent. The size of the files is very small (< 2kb). Most importantly, the transferred file is completely anonymous. We use a secure file transfer protocol and password protected data storage on a university-owned server. The file cannot be traced to a particular iPhone ID. It includes the settings and test scores. We reserve the rights to use this information for statistical analyses and scientific publications. The average statistics of results received by us can be viewed at www.dichoticlistening.com.\n\nYou can read more about us at http://fmri.uib.no",
+  "submit": "Submit",
+  "back": "Back",
+
+  "mainResults":"Main Results",
+  "details": "Details",
+  "animation": "Animation",
+
+  
+  "tests": "Tests",
   "handedness": "Dominant Hand",
   "@handedness": {
     "description": "An option for the dominant hand of the user"
@@ -36,4 +102,5 @@
     "description": "Tell the user that the warning only shows up one time"
   },
   "dismiss": "Ignore"
+
 }
