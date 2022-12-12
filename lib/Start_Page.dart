@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dichotic/listen.dart';
 import 'package:dichotic/settings/settings.dart';
+import 'package:flutter_gen/gen_l10n/l10n.dart';
 
 class StartApp extends StatefulWidget {
   const StartApp({super.key, required this.title});
@@ -16,11 +17,12 @@ class StartApp extends StatefulWidget {
   State<StartApp> createState() => StartAppState();
 }
 
-  final appBar = AppBar(
-          title: const Text("The Tests", style: TextStyle(color: Colors.black)), 
+AppBar appBar(BuildContext context) { return AppBar(
+          title:  Text(L10n.of(context)!.theTests, style: TextStyle(color: Colors.black)), 
           centerTitle: true,
           backgroundColor: Colors.transparent,
         );
+}
 
 var pageroute_settings = () => MaterialPageRoute(builder: (context) => const SettingsPage());
 var pageroute_tests = () => MaterialPageRoute(builder: (context) => const TestApp(title: "Test"));
@@ -32,10 +34,11 @@ class StartAppState extends State<StartApp> {
   @override
   Widget build(BuildContext context) {
 
+    final bar = appBar(context);
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     final statusBarHeight = MediaQuery.of(context).padding.top;
-    final appBarHeight = appBar.preferredSize.height;
+    final appBarHeight = bar.preferredSize.height;
 
     return Scaffold(
       body: Center(
@@ -47,12 +50,12 @@ class StartAppState extends State<StartApp> {
               child: Icon(Icons.headphones_outlined, size: 60)),
             Padding(
               padding: EdgeInsets.fromLTRB(0, 0, 0, (screenHeight-appBarHeight-statusBarHeight)*0.24),
-              child: Text("iDichotic", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24))),
+              child: Text(L10n.of(context)!.iDichotic, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24))),
             Padding(
               padding: EdgeInsets.fromLTRB(0, (screenHeight-appBarHeight-statusBarHeight)*0.01, 0, (screenHeight-appBarHeight-statusBarHeight)*0.01),
               child:
             CustomButton(
-              text1: Text("Take the test", style: TextStyle(color: Colors.black, fontSize: 16),), 
+              text1: Text(L10n.of(context)!.takeTests, style: TextStyle(color: Colors.black, fontSize: 16),), 
               pageroute: pageroute_tests, 
               containerHeight: (screenHeight-appBarHeight-statusBarHeight)*0.07,
               containerWidth: screenWidth*0.65,)),
@@ -60,7 +63,7 @@ class StartAppState extends State<StartApp> {
               padding: EdgeInsets.fromLTRB(0, (screenHeight-appBarHeight-statusBarHeight)*0.01, 0, (screenHeight-appBarHeight-statusBarHeight)*0.01),
               child:
             CustomButton(
-              text1: Text("Settings", style: TextStyle(color: Colors.black, fontSize: 16)), 
+              text1: Text(L10n.of(context)!.settings, style: TextStyle(color: Colors.black, fontSize: 16)), 
               pageroute: pageroute_settings,
               containerHeight: (screenHeight-appBarHeight-statusBarHeight)*0.07,
               containerWidth: screenWidth*0.65,)),
@@ -68,7 +71,7 @@ class StartAppState extends State<StartApp> {
               padding: EdgeInsets.fromLTRB(0, (screenHeight-appBarHeight-statusBarHeight)*0.01, 0, (screenHeight-appBarHeight-statusBarHeight)*0.13),
               child: 
             CustomButton(
-              text1: Text("Learn More", style: TextStyle(color: Colors.black, fontSize: 16)), 
+              text1: Text(L10n.of(context)!.learnMore, style: TextStyle(color: Colors.black, fontSize: 16)), 
               pageroute: pageroute_learn,
               containerHeight: (screenHeight-appBarHeight-statusBarHeight)*0.07,
               containerWidth: screenWidth*0.65,))

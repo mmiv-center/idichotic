@@ -9,6 +9,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dichotic/sounds.dart';
 import 'package:dichotic/listen.dart';
+import 'package:flutter_gen/gen_l10n/l10n.dart';
+
 
 
 
@@ -40,7 +42,7 @@ class LoadingListenAppState extends State<LoadingListenApp>  {
     route(){
       if(this.mounted){
         Navigator.pushReplacement(context, MaterialPageRoute(
-            builder: (context) => ListenApp(title: "listen")
+            builder: (context) => ListenApp(title: L10n.of(context)!.listen)
         ));
       }
     }
@@ -63,7 +65,7 @@ class LoadingListenAppState extends State<LoadingListenApp>  {
             children: <Widget>[
               Container(
               height: (screenHeight-appBarHeight-statusBarHeight) * 0.14,
-              child: Text("Three seconds until\nthe test start", style: TextStyle(fontSize: 20), textAlign: TextAlign.center,)),
+              child: Text(L10n.of(context)!.threeSeconds, style: TextStyle(fontSize: 20), textAlign: TextAlign.center,)),
               TimelineWidget(),
             ],
           )

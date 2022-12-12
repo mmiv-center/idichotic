@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:dichotic/sounds.dart';
 import 'package:dichotic/listen.dart';
 import 'package:dichotic/concentrate.dart';
+import 'package:flutter_gen/gen_l10n/l10n.dart';
+
 
 
 
@@ -41,7 +43,7 @@ class LoadingConsAppState extends State<LoadingConsApp>  {
     route(){
       if(this.mounted) {
         Navigator.pushReplacement(context, MaterialPageRoute(
-            builder: (context) => ConcentrateApp(title: "Concentrate", rightEar: true)
+            builder: (context) => ConcentrateApp(title: L10n.of(context)!.concentrate, rightEar: true)
         ));
       }
     }
@@ -57,11 +59,11 @@ class LoadingConsAppState extends State<LoadingConsApp>  {
               Container(
                 height: 40,
                 child:
-                Text("Concentrate on the", style: TextStyle(fontSize: 24))),
+                Text(L10n.of(context)!.concentrateOn, style: TextStyle(fontSize: 24))),
               Container(
                 height: 40,
                 child:
-                Text("RIGHT EAR", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold))),
+                Text(L10n.of(context)!.rightEar, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold))),
               Container(
                 child: 
                 Icon(Icons.arrow_forward, size: 70),),

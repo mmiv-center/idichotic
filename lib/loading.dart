@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dichotic/sounds.dart';
 import 'package:dichotic/listen.dart';
+import 'package:flutter_gen/gen_l10n/l10n.dart';
 
 
 
@@ -40,7 +41,7 @@ class LoadingAppState extends State<LoadingApp>  {
     route(){
       if(this.mounted){
         Navigator.pushReplacement(context, MaterialPageRoute(
-            builder: (context) => ListenApp(title: "listen")
+            builder: (context) => ListenApp(title: L10n.of(context)!.listen)
         ));
       }
     }

@@ -8,6 +8,7 @@ import 'package:dichotic/Start_Promt.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dichotic/Practice.dart';
+import 'package:flutter_gen/gen_l10n/l10n.dart';
 
 
 
@@ -39,7 +40,7 @@ class LoadingPracticeAppState extends State<LoadingPracticeApp>  {
   route(){
     if(this.mounted){
       Navigator.pushReplacement(context, MaterialPageRoute(
-          builder: (context) => Practice(title: "listen")
+          builder: (context) => Practice(title: L10n.of(context)!.listen)
       ));
     }
   }
@@ -62,7 +63,7 @@ class LoadingPracticeAppState extends State<LoadingPracticeApp>  {
               children: <Widget>[
                 Container(
                     height: (screenHeight-appBarHeight-statusBarHeight) * 0.14,
-                    child: Text("Three seconds until\nthe practice start", style: TextStyle(fontSize: 20), textAlign: TextAlign.center,)),
+                    child: Text(L10n.of(context)!.threeSeconds, style: TextStyle(fontSize: 20), textAlign: TextAlign.center,)),
                 TimelineWidget(),
               ],
             )

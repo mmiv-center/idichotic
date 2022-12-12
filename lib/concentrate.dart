@@ -9,6 +9,7 @@ import 'package:dichotic/data/types.dart';
 import 'package:dichotic/results_cons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/l10n.dart';
 
 class ConcentrateApp extends StatefulWidget {
   const ConcentrateApp({super.key, required this.title, required this.rightEar});
@@ -48,11 +49,10 @@ class ConcentrateAppState extends State<ConcentrateApp> {
   int Right_Correct = 0;
   int Right_wrong = 0;
   int testnr = 0;
-  String ConcEar = "Focus on Right";
   TimelineWidget? timeline;
   Widget appBar(context) {
     return AppBar(
-      title: const Text("Listen", style: TextStyle(color: Colors.black)),
+      title: Text(L10n.of(context)!.listen, style: TextStyle(color: Colors.black)),
       centerTitle: true,
       shadowColor: Colors.white,
       backgroundColor: Colors.white,
@@ -61,7 +61,7 @@ class ConcentrateAppState extends State<ConcentrateApp> {
             onPressed: () {
               //testFinished();
             },
-            child: const Text("Results"))
+            child: Text(L10n.of(context)!.results))
       ],);
   }
   @override
@@ -136,11 +136,6 @@ class ConcentrateAppState extends State<ConcentrateApp> {
     });
   }
 
-  void updateTitle(String title){
-    setState(() {
-      this.ConcEar = title;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -154,11 +149,18 @@ class ConcentrateAppState extends State<ConcentrateApp> {
     sounds.shuffle();
     return Scaffold(
       appBar: AppBar(
-        title: Text(ConcEar, style: TextStyle(color: Colors.black)),
+        title: Text(L10n.of(context)!.listen, style: TextStyle(color: Colors.black)),
         centerTitle: true,
         shadowColor: Colors.transparent,
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.black,
+        actions: [
+          TextButton(
+              onPressed: () {
+                //testFinished();
+              },
+              child: Text(L10n.of(context)!.results)),
+        ],
       ),
       body: Center(
         //

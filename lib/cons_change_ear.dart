@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:dichotic/sounds.dart';
 import 'package:dichotic/listen.dart';
 import 'package:dichotic/concentrate.dart';
+import 'package:flutter_gen/gen_l10n/l10n.dart';
 
 
 
@@ -31,9 +32,10 @@ class ConschangeearAppState extends State<ConschangeearApp>  {
 
   void setEar(){
     if(ear){
-      Ear = "Right";
-    }else{
-      Ear = "Left";
+      Ear = L10n.of(context)!.left;
+  }else{
+      Ear = L10n.of(context)!.right;
+;
     }
   }
   @override
@@ -55,11 +57,10 @@ class ConschangeearAppState extends State<ConschangeearApp>  {
 
   route(){
     if(this.mounted){
-      String title = "Focus on the ${this.Ear}";
+      String title = L10n.of(context)!.concentrateOn + this.Ear;
       Navigator.pop(context);
       app.play(app.sounds[app.sound_index], app.player);
       TimelineWidgetState.reset();
-      app.updateTitle(title);
     }
   }
 
@@ -75,7 +76,7 @@ class ConschangeearAppState extends State<ConschangeearApp>  {
                 Container(
                     height: 40,
                     child:
-                    Text("Concentrate on the", style: TextStyle(fontSize: 24))),
+                    Text(L10n.of(context)!.concentrateOn, style: TextStyle(fontSize: 24))),
                 Container(
                     height: 40,
                     child:
