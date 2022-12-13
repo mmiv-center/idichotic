@@ -5,9 +5,8 @@
 import 'package:dichotic/charts/resultschart.dart';
 import 'package:dichotic/data/exampledata.dart';
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:video_player/video_player.dart';
 
 import 'data/types.dart';
 /*
@@ -38,7 +37,14 @@ class Results extends StatelessWidget {
 
 
 class Results extends StatefulWidget {
-  Results({super.key, required this.title, required this.data});
+  Results({super.key, required this.title, required this.data}) {
+    rightCorrect = data.where((element) => element.id == Types.rightCorrect).toList();
+    leftCorrect = data.where((element) => element.id == Types.leftCorrect).toList();
+  }
+
+  late List<Data> rightCorrect;
+  late List<Data> leftCorrect;
+
 
   final List<Data> data;
 
@@ -138,26 +144,30 @@ class _MyHomePageState extends State<Results> {
 
 
   void initState(){
-    var rightCorrect = data.where((element) => element.id == Types.rightCorrect).toList();
-    var leftCorrect = data.where((element) => element.id == Types.leftCorrect).toList();
 
-    if(rightCorrect[0].amount > leftCorrect[0].amount){
-      print(rightCorrect);
-      brain_side = L10n.of(context)!.brainLeft;
-      ear_side = L10n.of(context)!.earLeft;
-      side = L10n.of(context)!.sideSingle;
-    }
-    else if(rightCorrect[0].amount == leftCorrect[0].amount){
-            print(rightCorrect);
-      brain_side = L10n.of(context)!.brainBoth;
-      ear_side = L10n.of(context)!.earBoth;
-      side = L10n.of(context)!.sidePlural;
-    }
-    else if(rightCorrect[0].amount < leftCorrect[0].amount){
-            print(rightCorrect);
-      brain_side = L10n.of(context)!.brainRight;
-      ear_side = L10n.of(context)!.earRight;
-      side = L10n.of(context)!.sideSingle;}
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      setState(() {
+
+      if(widget.rightCorrect[0].amount > widget.leftCorrect[0].amount){
+        print(widget.rightCorrect);
+        brain_side = L10n.of(context)!.brainLeft;
+        ear_side = L10n.of(context)!.earLeft;
+        side = L10n.of(context)!.sideSingle;
+      }
+      else if(widget.rightCorrect[0].amount == widget.leftCorrect[0].amount){
+        print(widget.rightCorrect);
+        brain_side = L10n.of(context)!.brainBoth;
+        ear_side = L10n.of(context)!.earBoth;
+        side = L10n.of(context)!.sidePlural;
+      }
+      else if(widget.rightCorrect[0].amount < widget.leftCorrect[0].amount){
+        print(widget.rightCorrect);
+        brain_side = L10n.of(context)!.brainRight;
+        ear_side = L10n.of(context)!.earRight;
+        side = L10n.of(context)!.sideSingle;
+      }
+      });
+    });
 
   }
 
