@@ -64,9 +64,17 @@
   "prRight": "% Right",
   "prError": "% Error",
   "prLeft" : "% Left",
+  "prCorrect": "% Correct", 
+  "rightResults": "Right results:",
+  "leftResults": "Left results:",
+
+  "correct": "You were correct",
+  "prTime": "% of the time",
 
   "submitResults": "Submit results for our research",
-  "contribute": "You can contribute to our research by submitting your results to our global dichotic listening databas The transfer of your test results to our database is optional and depends on your consent. The size of the files is very small (< 2kb). Most importantly, the transferred file is completely anonymous. We use a secure file transfer protocol and password protected data storage on a university-owned server. The file cannot be traced to a particular iPhone ID. It includes the settings and test scores. We reserve the rights to use this information for statistical analyses and scientific publications. The average statistics of results received by us can be viewed at www.dichoticlistening.com.\n\nYou can read more about us at http://fmri.uib.no",
+  "contribute": "By submitting your results, you consent to sending in your personal information and the collected data on your tests. ",
+  "resultsSuccesfully": "Results submitted succesfully to our database",
+  "ok": "OK",
   "submit": "Submit",
   "back": "Back",
 

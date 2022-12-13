@@ -7,11 +7,22 @@ import 'package:dichotic/charts/resultschart_cons_right.dart';
 import 'package:dichotic/data/exampledata.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+import 'package:flutter_gen/gen_l10n/l10n.dart';
 
+import 'data/types.dart';
+import 'listen.dart';
 import 'results.dart';
 
 class ResultsCons extends StatefulWidget {
-  ResultsCons({super.key, required this.title, required this.data});
+  ResultsCons({super.key, required this.title, required this.data}) {
+
+    rightCorrect = data.where((element) => element.id == Types.rightCorrect).toList();
+    leftCorrect = data.where((element) => element.id == Types.leftCorrect).toList();
+  }
+
+  late List<Data> rightCorrect;
+  late List<Data> leftCorrect;
+
 
   final List<Data> data;
   final String title;
@@ -57,12 +68,25 @@ class _VideoPlayerScreenState extends State{
       ): Container()
     );
   }
-
 }
 
 class _MyHomePageState extends State<ResultsCons> {
   _MyHomePageState({required this.data});
 
+
+  double total_correct = 0;
+
+  void initState(){
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      setState(() {
+
+        total_correct = ((widget.rightCorrect[0].amount + widget.leftCorrect[0].amount) / 60 * 100).roundToDouble() ;
+ 
+      });
+    });
+
+  }
 
   final List<Data> data;
 
@@ -88,12 +112,12 @@ class _MyHomePageState extends State<ResultsCons> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget> [
-            Expanded(child: Text("Well done!", style: Theme.of(context).textTheme.titleLarge)),
-            Expanded(child: Text("You were correct 75.5% of the time", style: Theme.of(context).textTheme.bodyMedium, textAlign: TextAlign.left)),
-            Row(children: [const Spacer(flex: 1), Expanded(flex: 6, child: Text("Forced Right Results", style: Theme.of(context).textTheme.bodyMedium, textAlign: TextAlign.left)), const Spacer(flex: 6)]),
+            Expanded(child: Text(L10n.of(context)!.wellDone, style: Theme.of(context).textTheme.titleLarge)),
+            Expanded(child: Text(L10n.of(context)!.correct + "${total_correct}" + L10n.of(context)!.prTime, style: Theme.of(context).textTheme.bodyMedium, textAlign: TextAlign.left)),
+            Row(children: [const Spacer(flex: 1), Expanded(flex: 6, child: Text(L10n.of(context)!.rightResults, style: Theme.of(context).textTheme.bodyMedium, textAlign: TextAlign.left)), const Spacer(flex: 6)]),
             Expanded(flex: 2, child: ResultsChartRCons(data))]
             .followedBy([
-            Row(children: [const Spacer(flex: 1), Expanded(flex: 6, child: Text("Forced Left Results", style: Theme.of(context).textTheme.bodyMedium, textAlign: TextAlign.left)), const Spacer(flex: 6)]),
+            Row(children: [const Spacer(flex: 1), Expanded(flex: 6, child: Text(L10n.of(context)!.leftResults, style: Theme.of(context).textTheme.bodyMedium, textAlign: TextAlign.left)), const Spacer(flex: 6)]),
             Expanded(flex: 2, child: ResultsChartLCons(data))])
             .followedBy(correct_and_wrong())
             .followedBy([Spacer(flex: 1)])
@@ -106,8 +130,8 @@ class _MyHomePageState extends State<ResultsCons> {
 
   Iterable<Widget> correct_and_wrong() {
     return spacify([
-        [Icon(Icons.square, color: Colors.green), Text("% Correct", textAlign: TextAlign.justify)],
-        [Icon(Icons.square, color: Colors.red), Text("% Error", textAlign: TextAlign.justify)],
+        [Icon(Icons.square, color: Colors.green), Text(L10n.of(context)!.prCorrect, textAlign: TextAlign.justify)],
+        [Icon(Icons.square, color: Colors.red), Text(L10n.of(context)!.prError, textAlign: TextAlign.justify)],
       ]);
   }
 
@@ -117,18 +141,27 @@ class _MyHomePageState extends State<ResultsCons> {
           showDialog(
               context: context,
               builder: (context) => AlertDialog(
-                title: const Text("Submit Results"),
-                content: const Text("You can contribute to our research by submitting your results to our global dichotic listening databas The transfer of your test results to our database is optional and depends on your consent. The size of the files is very small (< 2kb). Most importantly, the transferred file is completely anonymous. We use a secure file transfer protocol and password protected data storage on a university-owned server. The file cannot be traced to a particular iPhone ID. It includes the settings and test scores. We reserve the rights to use this information for statistical analyses and scientific publications. The average statistics of results received by us can be viewed at www.dichoticlistening.com.\n\nYou can read more about us at http://fmri.uib.no"),
+                title: Text(L10n.of(context)!.submitResults),
+                content:  Text(L10n.of(context)!.contribute),
                 actions: [
                   TextButton(
-                    onPressed: (){},
-                    child: const Text("Submit"),
+                    onPressed: (){showDialog(context: context, builder: (context) => 
+                    AlertDialog( 
+                    content: Container(
+
+                      child: Text(L10n.of(context)!.resultsSuccesfully, textAlign: TextAlign.center,)),
+                    actions: [TextButton(
+                      onPressed: () {Navigator.pop(context);},
+                      child: Text(L10n.of(context)!.ok, style: TextStyle(color: Colors.black) ),)
+                                       
+                      ]));},
+                    child:  Text(L10n.of(context)!.submit, style: TextStyle(color: Colors.black) ),
                   ),
                   TextButton(
                       onPressed: (){
                         Navigator.pop(context);
                       },
-                      child: const Text("Back")
+                      child: Text(L10n.of(context)!.back, style: TextStyle(color: Colors.black) )
                   )
                 ],
               ),
@@ -145,7 +178,7 @@ class _MyHomePageState extends State<ResultsCons> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-      Text("Submit results for our research",  style: Theme.of(context).textTheme.bodyMedium)
+      Text(L10n.of(context)!.submitResults,  style: Theme.of(context).textTheme.bodyMedium)
       ],)
 
   ));
@@ -160,13 +193,16 @@ class _MyHomePageState extends State<ResultsCons> {
   @override
 
   Widget build(BuildContext context) {
+
+    
+    var pageroute_tests = () => MaterialPageRoute(builder: (context) =>  TestApp(title: L10n.of(context)!.tests));
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Colors.black,
         elevation: 0,
         leading: IconButton(
             onPressed: () {
-              Navigator.of(context).pop(context);
+              Navigator.push(context, pageroute_tests());
               },
             icon: const Icon(Icons.arrow_back_ios)
         ),
@@ -186,14 +222,14 @@ class _MyHomePageState extends State<ResultsCons> {
             backgroundColor: Colors.transparent,
             elevation: 0,
 
-        items: const <BottomNavigationBarItem>[
+        items:  <BottomNavigationBarItem>[
           BottomNavigationBarItem(
               icon: Icon(Icons.bar_chart, size: 45),
-              label: 'Main Results'
+              label: L10n.of(context)!.mainResults
           ),
           BottomNavigationBarItem(
               icon: Icon(Icons.info_outline, size: 45),
-              label: 'Details'
+              label: L10n.of(context)!.details,
           ),
         ],
         currentIndex: _selectedIndex,
