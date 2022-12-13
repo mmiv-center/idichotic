@@ -28,7 +28,7 @@ class ConschangeearAppState extends State<ConschangeearApp>  {
   ConschangeearAppState({required this.ear, required this.app});
   final bool ear;
   final ConcentrateAppState app;
-  String Ear = "";
+  String Ear = " ";
 
   void setEar(){
     if(ear){
@@ -80,7 +80,7 @@ class ConschangeearAppState extends State<ConschangeearApp>  {
                 Container(
                     height: 40,
                     child:
-                    Text(Ear, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold))),
+                    Text(this.Ear, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold))),
                 Container(
                   child:
                   Icon(Icons.arrow_back, size: 70),),

@@ -11,6 +11,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 
+import '../Start_Page.dart';
+
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
 
@@ -107,9 +109,17 @@ class SettingsState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
+    var pageroute_start = () => MaterialPageRoute(builder: (context) => const StartApp(title: "Start"));
+    
     return Scaffold(
         appBar: AppBar(
             shadowColor: Colors.transparent,
+            leading: IconButton(
+            onPressed: () {
+              Navigator.push(context, pageroute_start());
+              },
+            icon: const Icon(Icons.arrow_back_ios, color: Colors.black)
+        ),
             backgroundColor: Colors.transparent,
             title: Text(L10n.of(context)!.settings,
                 style: Theme.of(context).textTheme.headlineLarge)),

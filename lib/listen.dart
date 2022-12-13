@@ -4,6 +4,7 @@
 
 import 'dart:ui';
 
+import 'package:dichotic/Start_Page.dart';
 import 'package:dichotic/loading_cons.dart';
 import 'package:dichotic/loading_listen.dart';
 import 'package:dichotic/loading_practice.dart';
@@ -27,6 +28,12 @@ class TestAppState extends State<TestApp> {
     return AppBar(
           title: Text(L10n.of(context)!.testChoose, style: TextStyle(color: Colors.black)),
           centerTitle: true,
+                  leading: IconButton(
+            onPressed: () {
+              Navigator.push(context, pageroute_start());
+              },
+            icon: const Icon(Icons.arrow_back_ios)
+        ),
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
           foregroundColor: Colors.black,
@@ -35,6 +42,7 @@ class TestAppState extends State<TestApp> {
   var pageroute_listen = () => MaterialPageRoute(builder: (context) => const LoadingListenApp(title: "Loading"));
   var pageroute_cons = () => MaterialPageRoute(builder: (context) => const LoadingConsApp(title: "Loading"));
   var pageroute_practice = () => MaterialPageRoute(builder: (context) => const LoadingPracticeApp(title: "Loading"));
+  var pageroute_start = () => MaterialPageRoute(builder: (context) => const StartApp(title: "Start"));
 
   @override
   Widget build(BuildContext context) {
