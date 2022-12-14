@@ -57,18 +57,23 @@ class Results extends StatefulWidget {
 }
 
 class VideoPlayerExample extends StatefulWidget{
-  const VideoPlayerExample({super.key});
+  String videoPath;
+  VideoPlayerExample({super.key,required this.videoPath});
+
+  //VideoPlayerExample({required this.videoPath});
+
   @override
-  State<StatefulWidget> createState() => _VideoPlayerScreenState();
+  State<StatefulWidget> createState() => _VideoPlayerScreenState(videoPath: videoPath);
 
 }
 class _VideoPlayerScreenState extends State{
   late VideoPlayerController _videoPlayerController;
   //late Future<void> _initVideoPlayerFuture;
-
+  _VideoPlayerScreenState({required this.videoPath});
+  String videoPath;
   void initState(){
     super.initState();
-    _videoPlayerController = VideoPlayerController.asset("assets/video/NL.mp4");
+    _videoPlayerController = VideoPlayerController.asset(videoPath);
     //_initVideoPlayerFuture = _videoPlayerController.initialize();
     _videoPlayerController.initialize().then((_) {setState(() {
       _videoPlayerController.play();
@@ -143,6 +148,7 @@ class _MyHomePageState extends State<Results> {
   String brain_side = " ";
   String ear_side = " ";
   String side = " ";
+  String videoPath = "";
 
 
   void initState(){
@@ -152,18 +158,21 @@ class _MyHomePageState extends State<Results> {
 
       if(widget.rightCorrect[0].amount > widget.leftCorrect[0].amount){
         print(widget.rightCorrect);
+        videoPath = "assets/video/NL.mp4";
         brain_side = L10n.of(context)!.brainLeft;
         ear_side = L10n.of(context)!.earLeft;
         side = L10n.of(context)!.sideSingle;
       }
       else if(widget.rightCorrect[0].amount == widget.leftCorrect[0].amount){
         print(widget.rightCorrect);
+        videoPath = "assets/video/NLR.mp4";
         brain_side = L10n.of(context)!.brainBoth;
         ear_side = L10n.of(context)!.earBoth;
         side = L10n.of(context)!.sidePlural;
       }
       else if(widget.rightCorrect[0].amount < widget.leftCorrect[0].amount){
         print(widget.rightCorrect);
+        videoPath = "assets/video/NR.mp4";
         brain_side = L10n.of(context)!.brainRight;
         ear_side = L10n.of(context)!.earRight;
         side = L10n.of(context)!.sideSingle;
@@ -191,7 +200,7 @@ class _MyHomePageState extends State<Results> {
     return Center(
       child:Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget> [VideoPlayerExample(),
+        children: <Widget> [VideoPlayerExample(videoPath: videoPath),
         Padding(padding: EdgeInsets.fromLTRB(screenWidth*0.05 ,screenHeight*0.05, screenWidth*0.05,0),
         child:
         Row(
@@ -272,15 +281,15 @@ class _MyHomePageState extends State<Results> {
                 content:  Text(L10n.of(context)!.contribute),
                 actions: [
                   TextButton(
-                    onPressed: (){showDialog(context: context, builder: (context) => 
-                    AlertDialog( 
+                    onPressed: (){showDialog(context: context, builder: (context) =>
+                    AlertDialog(
                     content: Container(
 
                       child: Text(L10n.of(context)!.resultsSuccesfully, textAlign: TextAlign.center,)),
                     actions: [TextButton(
                       onPressed: () {Navigator.pop(context);},
                       child: Text(L10n.of(context)!.ok, style: TextStyle(color: Colors.black) ),)
-                                       
+
                       ]));},
                     child:  Text(L10n.of(context)!.submit, style: TextStyle(color: Colors.black) ),
                   ),
@@ -322,9 +331,9 @@ class _MyHomePageState extends State<Results> {
   @override
 
   Widget build(BuildContext context) {
-    
+
     var pageroute_tests = () => MaterialPageRoute(builder: (context) => const TestApp(title: "Test"));
-    
+
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Colors.black,
