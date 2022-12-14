@@ -292,7 +292,7 @@ class _TimelineWidgetState extends State<TimelineWidget>
           LinearProgressIndicator(
             value: controller.value,
             minHeight: 14,
-            color: Color.fromARGB(255, 241, 153, 182),
+            color: Colors.black54,
             backgroundColor: Color.fromARGB(255, 174, 173, 174),
             semanticsLabel: 'Linear progress indicator',
           ),
