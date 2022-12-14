@@ -49,8 +49,8 @@ class LeftEarCalibrateState extends State<LeftEarCalibrate>{
 
 @override
   void dispose() {
+    super.dispose();
     player.dispose();
-
   }
 
   @override

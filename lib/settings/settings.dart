@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 
 import '../Start_Page.dart';
+import '../calibration/leftearcalibrate.dart';
 
 class SettingsPage extends StatefulWidget {
   SettingsPage({super.key});
@@ -90,7 +91,7 @@ class SettingsState extends State<SettingsPage> {
           child: ValueListenableBuilder<double?>(valueListenable: widget.calibrationLeft, builder: (context, value, child) {
             return settingsButton(context, () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => RightEarCalibrate(rightValue: widget.calibrationLeft))),
+                MaterialPageRoute(builder: (context) => LeftEarCalibrate(leftValue: widget.calibrationLeft))),
                 L10n.of(context)!.left,
                 value != null ? Text(value.toString()) : Container());
           },)),
