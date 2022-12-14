@@ -2,6 +2,8 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'package:dichotic/calibration/rightearcalibrate.dart';
+import 'package:dichotic/db/database.dart';
 import 'package:dichotic/settings/dropdown.dart';
 import 'package:dichotic/settings/languages.dart';
 import 'package:dichotic/settings/types/handedness.dart';
@@ -12,9 +14,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 
 import '../Start_Page.dart';
+import '../calibration/leftearcalibrate.dart';
 
 class SettingsPage extends StatefulWidget {
-  const SettingsPage({super.key});
+  SettingsPage({super.key});
+
+  ValueNotifier<double?> calibrationLeft = ValueNotifier(null);
+  ValueNotifier<double?> calibrationRight = ValueNotifier(null);
 
   @override
   State<StatefulWidget> createState() => SettingsState();
@@ -33,12 +39,31 @@ var icons = [
 
 class SettingsState extends State<SettingsPage> {
   final List<Widget> items = [];
+
+
+  Future<Preference?> getCalibration() async{
+    return database.select(database.preferences).getSingleOrNull();
+  }
+
+  void setCalibration() async{
+    Preference? result = await getCalibration();
+    if(result != null){
+      widget.calibrationLeft.value = result.leftCalibrate;
+      widget.calibrationRight.value = result.rightCalibrate;
+    }
+  }
+
+
+
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       setState(() {
         initItems();
+        setCalibration();
+
       });
     });
   }
@@ -49,6 +74,8 @@ class SettingsState extends State<SettingsPage> {
     var lang = await nativeLanguage(context);
     var soundLang = await sound;
 
+
+
     var widgets = <Widget>[
       (Row(mainAxisAlignment: MainAxisAlignment.start, children: [
         Container(
@@ -56,6 +83,30 @@ class SettingsState extends State<SettingsPage> {
             child: Text("Hearing",
                 style: Theme.of(context).textTheme.headlineMedium))
       ])),
+      Container(
+          decoration: const BoxDecoration(
+              border: Border(
+                top: BorderSide(width: 1.5, color: Colors.black),
+              )),
+          child: ValueListenableBuilder<double?>(valueListenable: widget.calibrationLeft, builder: (context, value, child) {
+            return settingsButton(context, () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LeftEarCalibrate(leftValue: widget.calibrationLeft))),
+                L10n.of(context)!.left,
+                value != null ? Text(value.toString()) : Container());
+          },)),
+      Container(
+          decoration: const BoxDecoration(
+              border: Border(
+                top: BorderSide(width: 1.5, color: Colors.black),
+              )),
+          child: ValueListenableBuilder<double?>(valueListenable: widget.calibrationRight, builder: (context, value, child) {
+            return settingsButton(context, () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => RightEarCalibrate(rightValue: widget.calibrationRight))),
+              L10n.of(context)!.right,
+                value != null ? Text(value.toString()) : Container());
+          },)),
       Container(
           decoration: const BoxDecoration(
             border: Border(
@@ -98,8 +149,9 @@ class SettingsState extends State<SettingsPage> {
               border: Border(
             top: BorderSide(width: 1.5, color: Colors.black),
             bottom: BorderSide(width: 1.5, color: Colors.black),
+
           )),
-          child: lang)
+          child: lang),
     ];
 
     setState(() {
@@ -110,7 +162,7 @@ class SettingsState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     var pageroute_start = () => MaterialPageRoute(builder: (context) => const StartApp(title: "Start"));
-    
+
     return Scaffold(
         appBar: AppBar(
             shadowColor: Colors.transparent,
@@ -193,3 +245,22 @@ Widget age(context) {
       description: L10n.of(context)!.age,
       options: map);
 }
+
+Future<Preference?> getCalibration() async{
+  return database.select(database.preferences).getSingleOrNull();
+}
+
+Future<double> getRight() async {
+  return Future.value((await (database.select(database.preferences).getSingleOrNull()))?.rightCalibrate);
+}
+/*
+Widget leftCalibrate(context,ValueNotifier<double?> left){
+  var button = settingsButton(context, () => Navigator.push(context, MaterialPageRoute(builder: (context) => LeftEarCalibrate())),
+      L10n.of(context)!.left, ValueListenableBuilder<double?>(valueListenable: left, builder: (context, value, child) {
+        return value != null ? Text(value.toString()) : Container();
+      }));
+
+  return button;
+
+}
+*/

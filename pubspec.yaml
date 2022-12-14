@@ -89,7 +89,11 @@ flutter:
     - assets/languages.txt
     #- images/a_dot_ham.jpeg
     - assets/video/NL.mp4
+    - assets/video/NLR.mp4
+    - assets/video/NR.mp4
     - assets/audio/
+    - assets/calibration/
+
     - assets/logos/
 
   # An image asset can refer to one or more resolution-specific "variants", see

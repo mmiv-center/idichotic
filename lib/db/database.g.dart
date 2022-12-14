@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2022 iDichotic+ Authors <https://dichotic.app>
-//
-// SPDX-License-Identifier: AGPL-3.0-or-later
-
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'database.dart';
@@ -16,6 +12,8 @@ class Preference extends DataClass implements Insertable<Preference> {
   final Sex? sex;
   final Handedness? handedness;
   final int? age;
+  final double? leftCalibrate;
+  final double? rightCalibrate;
   final Language? nativeLanguage;
   final Language? soundLanguage;
   const Preference(
@@ -23,6 +21,8 @@ class Preference extends DataClass implements Insertable<Preference> {
       this.sex,
       this.handedness,
       this.age,
+      this.leftCalibrate,
+      this.rightCalibrate,
       this.nativeLanguage,
       this.soundLanguage});
   @override
@@ -39,6 +39,12 @@ class Preference extends DataClass implements Insertable<Preference> {
     }
     if (!nullToAbsent || age != null) {
       map['age'] = Variable<int>(age);
+    }
+    if (!nullToAbsent || leftCalibrate != null) {
+      map['left_calibrate'] = Variable<double>(leftCalibrate);
+    }
+    if (!nullToAbsent || rightCalibrate != null) {
+      map['right_calibrate'] = Variable<double>(rightCalibrate);
     }
     if (!nullToAbsent || nativeLanguage != null) {
       final converter = $PreferencesTable.$converter2n;
@@ -60,6 +66,12 @@ class Preference extends DataClass implements Insertable<Preference> {
           ? const Value.absent()
           : Value(handedness),
       age: age == null && nullToAbsent ? const Value.absent() : Value(age),
+      leftCalibrate: leftCalibrate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(leftCalibrate),
+      rightCalibrate: rightCalibrate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(rightCalibrate),
       nativeLanguage: nativeLanguage == null && nullToAbsent
           ? const Value.absent()
           : Value(nativeLanguage),
@@ -77,6 +89,8 @@ class Preference extends DataClass implements Insertable<Preference> {
       sex: serializer.fromJson<Sex?>(json['sex']),
       handedness: serializer.fromJson<Handedness?>(json['handedness']),
       age: serializer.fromJson<int?>(json['age']),
+      leftCalibrate: serializer.fromJson<double?>(json['leftCalibrate']),
+      rightCalibrate: serializer.fromJson<double?>(json['rightCalibrate']),
       nativeLanguage: serializer.fromJson<Language?>(json['nativeLanguage']),
       soundLanguage: serializer.fromJson<Language?>(json['soundLanguage']),
     );
@@ -89,6 +103,8 @@ class Preference extends DataClass implements Insertable<Preference> {
       'sex': serializer.toJson<Sex?>(sex),
       'handedness': serializer.toJson<Handedness?>(handedness),
       'age': serializer.toJson<int?>(age),
+      'leftCalibrate': serializer.toJson<double?>(leftCalibrate),
+      'rightCalibrate': serializer.toJson<double?>(rightCalibrate),
       'nativeLanguage': serializer.toJson<Language?>(nativeLanguage),
       'soundLanguage': serializer.toJson<Language?>(soundLanguage),
     };
@@ -99,6 +115,8 @@ class Preference extends DataClass implements Insertable<Preference> {
           Value<Sex?> sex = const Value.absent(),
           Value<Handedness?> handedness = const Value.absent(),
           Value<int?> age = const Value.absent(),
+          Value<double?> leftCalibrate = const Value.absent(),
+          Value<double?> rightCalibrate = const Value.absent(),
           Value<Language?> nativeLanguage = const Value.absent(),
           Value<Language?> soundLanguage = const Value.absent()}) =>
       Preference(
@@ -106,6 +124,10 @@ class Preference extends DataClass implements Insertable<Preference> {
         sex: sex.present ? sex.value : this.sex,
         handedness: handedness.present ? handedness.value : this.handedness,
         age: age.present ? age.value : this.age,
+        leftCalibrate:
+            leftCalibrate.present ? leftCalibrate.value : this.leftCalibrate,
+        rightCalibrate:
+            rightCalibrate.present ? rightCalibrate.value : this.rightCalibrate,
         nativeLanguage:
             nativeLanguage.present ? nativeLanguage.value : this.nativeLanguage,
         soundLanguage:
@@ -118,6 +140,8 @@ class Preference extends DataClass implements Insertable<Preference> {
           ..write('sex: $sex, ')
           ..write('handedness: $handedness, ')
           ..write('age: $age, ')
+          ..write('leftCalibrate: $leftCalibrate, ')
+          ..write('rightCalibrate: $rightCalibrate, ')
           ..write('nativeLanguage: $nativeLanguage, ')
           ..write('soundLanguage: $soundLanguage')
           ..write(')'))
@@ -125,8 +149,8 @@ class Preference extends DataClass implements Insertable<Preference> {
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, sex, handedness, age, nativeLanguage, soundLanguage);
+  int get hashCode => Object.hash(id, sex, handedness, age, leftCalibrate,
+      rightCalibrate, nativeLanguage, soundLanguage);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -135,6 +159,8 @@ class Preference extends DataClass implements Insertable<Preference> {
           other.sex == this.sex &&
           other.handedness == this.handedness &&
           other.age == this.age &&
+          other.leftCalibrate == this.leftCalibrate &&
+          other.rightCalibrate == this.rightCalibrate &&
           other.nativeLanguage == this.nativeLanguage &&
           other.soundLanguage == this.soundLanguage);
 }
@@ -144,6 +170,8 @@ class PreferencesCompanion extends UpdateCompanion<Preference> {
   final Value<Sex?> sex;
   final Value<Handedness?> handedness;
   final Value<int?> age;
+  final Value<double?> leftCalibrate;
+  final Value<double?> rightCalibrate;
   final Value<Language?> nativeLanguage;
   final Value<Language?> soundLanguage;
   const PreferencesCompanion({
@@ -151,6 +179,8 @@ class PreferencesCompanion extends UpdateCompanion<Preference> {
     this.sex = const Value.absent(),
     this.handedness = const Value.absent(),
     this.age = const Value.absent(),
+    this.leftCalibrate = const Value.absent(),
+    this.rightCalibrate = const Value.absent(),
     this.nativeLanguage = const Value.absent(),
     this.soundLanguage = const Value.absent(),
   });
@@ -159,6 +189,8 @@ class PreferencesCompanion extends UpdateCompanion<Preference> {
     this.sex = const Value.absent(),
     this.handedness = const Value.absent(),
     this.age = const Value.absent(),
+    this.leftCalibrate = const Value.absent(),
+    this.rightCalibrate = const Value.absent(),
     this.nativeLanguage = const Value.absent(),
     this.soundLanguage = const Value.absent(),
   });
@@ -167,6 +199,8 @@ class PreferencesCompanion extends UpdateCompanion<Preference> {
     Expression<int>? sex,
     Expression<int>? handedness,
     Expression<int>? age,
+    Expression<double>? leftCalibrate,
+    Expression<double>? rightCalibrate,
     Expression<String>? nativeLanguage,
     Expression<String>? soundLanguage,
   }) {
@@ -175,6 +209,8 @@ class PreferencesCompanion extends UpdateCompanion<Preference> {
       if (sex != null) 'sex': sex,
       if (handedness != null) 'handedness': handedness,
       if (age != null) 'age': age,
+      if (leftCalibrate != null) 'left_calibrate': leftCalibrate,
+      if (rightCalibrate != null) 'right_calibrate': rightCalibrate,
       if (nativeLanguage != null) 'native_language': nativeLanguage,
       if (soundLanguage != null) 'sound_language': soundLanguage,
     });
@@ -185,6 +221,8 @@ class PreferencesCompanion extends UpdateCompanion<Preference> {
       Value<Sex?>? sex,
       Value<Handedness?>? handedness,
       Value<int?>? age,
+      Value<double?>? leftCalibrate,
+      Value<double?>? rightCalibrate,
       Value<Language?>? nativeLanguage,
       Value<Language?>? soundLanguage}) {
     return PreferencesCompanion(
@@ -192,6 +230,8 @@ class PreferencesCompanion extends UpdateCompanion<Preference> {
       sex: sex ?? this.sex,
       handedness: handedness ?? this.handedness,
       age: age ?? this.age,
+      leftCalibrate: leftCalibrate ?? this.leftCalibrate,
+      rightCalibrate: rightCalibrate ?? this.rightCalibrate,
       nativeLanguage: nativeLanguage ?? this.nativeLanguage,
       soundLanguage: soundLanguage ?? this.soundLanguage,
     );
@@ -214,6 +254,12 @@ class PreferencesCompanion extends UpdateCompanion<Preference> {
     if (age.present) {
       map['age'] = Variable<int>(age.value);
     }
+    if (leftCalibrate.present) {
+      map['left_calibrate'] = Variable<double>(leftCalibrate.value);
+    }
+    if (rightCalibrate.present) {
+      map['right_calibrate'] = Variable<double>(rightCalibrate.value);
+    }
     if (nativeLanguage.present) {
       final converter = $PreferencesTable.$converter2n;
       map['native_language'] =
@@ -234,6 +280,8 @@ class PreferencesCompanion extends UpdateCompanion<Preference> {
           ..write('sex: $sex, ')
           ..write('handedness: $handedness, ')
           ..write('age: $age, ')
+          ..write('leftCalibrate: $leftCalibrate, ')
+          ..write('rightCalibrate: $rightCalibrate, ')
           ..write('nativeLanguage: $nativeLanguage, ')
           ..write('soundLanguage: $soundLanguage')
           ..write(')'))
@@ -271,6 +319,18 @@ class $PreferencesTable extends Preferences
   late final GeneratedColumn<int> age = GeneratedColumn<int>(
       'age', aliasedName, true,
       type: DriftSqlType.int, requiredDuringInsert: false);
+  final VerificationMeta _leftCalibrateMeta =
+      const VerificationMeta('leftCalibrate');
+  @override
+  late final GeneratedColumn<double> leftCalibrate = GeneratedColumn<double>(
+      'left_calibrate', aliasedName, true,
+      type: DriftSqlType.double, requiredDuringInsert: false);
+  final VerificationMeta _rightCalibrateMeta =
+      const VerificationMeta('rightCalibrate');
+  @override
+  late final GeneratedColumn<double> rightCalibrate = GeneratedColumn<double>(
+      'right_calibrate', aliasedName, true,
+      type: DriftSqlType.double, requiredDuringInsert: false);
   final VerificationMeta _nativeLanguageMeta =
       const VerificationMeta('nativeLanguage');
   @override
@@ -287,8 +347,16 @@ class $PreferencesTable extends Preferences
               type: DriftSqlType.string, requiredDuringInsert: false)
           .withConverter<Language?>($PreferencesTable.$converter3n);
   @override
-  List<GeneratedColumn> get $columns =>
-      [id, sex, handedness, age, nativeLanguage, soundLanguage];
+  List<GeneratedColumn> get $columns => [
+        id,
+        sex,
+        handedness,
+        age,
+        leftCalibrate,
+        rightCalibrate,
+        nativeLanguage,
+        soundLanguage
+      ];
   @override
   String get aliasedName => _alias ?? 'preferences';
   @override
@@ -306,6 +374,18 @@ class $PreferencesTable extends Preferences
     if (data.containsKey('age')) {
       context.handle(
           _ageMeta, age.isAcceptableOrUnknown(data['age']!, _ageMeta));
+    }
+    if (data.containsKey('left_calibrate')) {
+      context.handle(
+          _leftCalibrateMeta,
+          leftCalibrate.isAcceptableOrUnknown(
+              data['left_calibrate']!, _leftCalibrateMeta));
+    }
+    if (data.containsKey('right_calibrate')) {
+      context.handle(
+          _rightCalibrateMeta,
+          rightCalibrate.isAcceptableOrUnknown(
+              data['right_calibrate']!, _rightCalibrateMeta));
     }
     context.handle(_nativeLanguageMeta, const VerificationResult.success());
     context.handle(_soundLanguageMeta, const VerificationResult.success());
@@ -327,6 +407,10 @@ class $PreferencesTable extends Preferences
           .read(DriftSqlType.int, data['${effectivePrefix}handedness'])),
       age: attachedDatabase.options.types
           .read(DriftSqlType.int, data['${effectivePrefix}age']),
+      leftCalibrate: attachedDatabase.options.types
+          .read(DriftSqlType.double, data['${effectivePrefix}left_calibrate']),
+      rightCalibrate: attachedDatabase.options.types
+          .read(DriftSqlType.double, data['${effectivePrefix}right_calibrate']),
       nativeLanguage: $PreferencesTable.$converter2n.fromSql(
           attachedDatabase.options.types.read(
               DriftSqlType.string, data['${effectivePrefix}native_language'])),

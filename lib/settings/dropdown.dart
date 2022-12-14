@@ -197,30 +197,35 @@ class DropdownState extends State<Dropdown> {
     );
   }
 
+
+
+
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<int>(
         builder: (BuildContext context, int value, Widget? child) {
-          return CupertinoButton(
-            //child: Text(choices.keys.toList()[value]),
-            onPressed: () => showPicker(picker(description)),
-            //padding: EdgeInsets.zero,
-              child: Row(
-                children: <Widget> [
-                  Expanded(
-
-                    child: Text(description, style: Theme.of(context).textTheme.titleMedium, textAlign: TextAlign.left)
-                  ),
-                  Expanded(child: Align(alignment: Alignment.bottomRight,
-                    child: value != -1 ?
-                        Text(choices.keys.toList()[value], style: Theme.of(context).textTheme.titleMedium, textAlign: TextAlign.right)
-                        : const Icon(Icons.arrow_forward_ios_rounded, color: Colors.black, size: 16)
-                    ))
-                  ],
-                ),
-            );
-          },
+          return settingsButton(context, () => showPicker(picker(description)), description,
+            value != -1 ?
+              Text(choices.keys.toList()[value], style: Theme.of(context).textTheme.titleMedium, textAlign: TextAlign.right)
+              : const Icon(Icons.arrow_forward_ios_rounded, color: Colors.black, size: 16)
+          );},
         valueListenable: selection,
     );
   }
+
+}
+
+
+Widget settingsButton(BuildContext context, Function() onPressed, String description, Widget? selection) {
+  var row = Row(
+    children: <Widget> [
+      Expanded(child: Text(description, style: Theme.of(context).textTheme.titleMedium, textAlign: TextAlign.left,)),
+      Expanded(child: Align(alignment: Alignment.bottomRight,
+          child: selection ?? Icon(Icons.arrow_forward_ios_rounded, color: Colors.black, size: 16)
+      ))
+    ],
+  );
+  return CupertinoButton(
+      child: row,
+      onPressed: onPressed);
 }

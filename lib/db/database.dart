@@ -17,7 +17,24 @@ class SharedDatabase extends _$SharedDatabase {
   SharedDatabase(QueryExecutor e): super(e);
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
+
+  @override
+  MigrationStrategy get migration {
+    return MigrationStrategy(
+      onCreate: (Migrator m) async {
+        await m.createAll();
+      },
+      onUpgrade: (Migrator m, int from, int to) async {
+        if (from < 2) {
+          // We added calibration in version 2, and the state manager table
+          await m.addColumn(preferences, preferences.leftCalibrate);
+          await m.addColumn(preferences, preferences.rightCalibrate);
+          await m.createTable(statemanager);
+        }
+      },
+    );
+  }
 }
 
 SharedDatabase database = constructDb();
