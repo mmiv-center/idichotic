@@ -154,24 +154,11 @@ class ConcentrateAppState extends State<ConcentrateApp> {
         shadowColor: Colors.transparent,
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.black,
-        actions: [
-          TextButton(
-              onPressed: () {
-                //testFinished();
-              },
-              child: Text(L10n.of(context)!.results)),
-        ],
       ),
       body: Center(
         //
         //crossAxisAlignment: CrossAxisAlignment.center,
           child: Column( children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("${this.sound_index + 36*this.testnr} out of ${sounds.length *2}",  style: TextStyle(fontSize: 25)),
-              ],
-            ),
             Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 //crossAxisAlignment: CrossAxisAlignment.stretch,

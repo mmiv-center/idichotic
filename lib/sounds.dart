@@ -105,24 +105,11 @@ class ListenAppState extends State<ListenApp> {
             shadowColor: Colors.transparent,
             backgroundColor: Colors.transparent,
             foregroundColor: Colors.black,
-            actions: [
-            TextButton(
-            onPressed: () {
-              testFinished();
-              },
-        child:  Text(L10n.of(context)!.results)),
-    ],
     ),
         body: Center(
         //
         //crossAxisAlignment: CrossAxisAlignment.center,
        child: Column( children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("${this.sound_index} out of ${sounds.length}",  style: TextStyle(fontSize: 25)),
-          ],
-        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
         //crossAxisAlignment: CrossAxisAlignment.stretch,

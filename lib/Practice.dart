@@ -87,12 +87,6 @@ class PracticeState extends State<Practice> {
         shadowColor: Colors.transparent,
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.black,
-        actions: [
-          TextButton(
-              onPressed: () {
-              },
-              child: Text(L10n.of(context)!.results)),
-        ],
       ),
       body: Center(
         //
