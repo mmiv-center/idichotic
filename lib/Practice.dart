@@ -10,9 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 
 class Practice extends StatefulWidget {
-  const Practice({super.key, required this.title});
+  Practice({super.key, required this.title});
   final String title;
 
+  ValueNotifier<String> selection = ValueNotifier("");
   @override
   State<Practice> createState() => PracticeState();
 }
@@ -35,6 +36,7 @@ class PracticeState extends State<Practice> {
     "audio/Ta-Ta.wav"];
   int sound_index = 0;
   TimelineWidget? timeline;
+
   Widget appBar(context) {
     return AppBar(
       title: Text(L10n.of(context)!.listen, style: TextStyle(color: Colors.black)),
@@ -48,24 +50,25 @@ class PracticeState extends State<Practice> {
             child: Text(L10n.of(context)!.results))
       ],);
   }
+
   @override
-  void initState(){
-    // TODO: implement initState
+  void initState() {
     super.initState();
+    sounds.shuffle();
     String filepath = sounds[sound_index];
     play(filepath, player);
   }
 
-  void play(String filepath, AudioPlayer player) async{
+  void play(String filepath, AudioPlayer player) async {
     await player.play(AssetSource(filepath));
   }
 
-  void updateIndex(){
+  void updateIndex() {
     setState(() {
       this.sound_index++;
-      sound_index = sound_index%sounds.length;
+      sound_index = sound_index % sounds.length;
     });
-    if(sound_index == 0){
+    if (sound_index == 0) {
       sounds.shuffle();
     }
   }
@@ -79,111 +82,55 @@ class PracticeState extends State<Practice> {
     final statusBarHeight = MediaQuery.of(context).padding.top;
     final appBarHeight = appBar.preferredSize.height;
     timeline = TimelineWidget(app: this);
-    sounds.shuffle();
     return Scaffold(
-      appBar: AppBar(
-        title: Text(L10n.of(context)!.listen, style: TextStyle(color: Colors.black)),
-        centerTitle: true,
-        shadowColor: Colors.transparent,
-        backgroundColor: Colors.transparent,
-        foregroundColor: Colors.black,
-        leading: IconButton(
+        appBar: AppBar(
+          title: Text(L10n.of(context)!.listen, style: TextStyle(color: Colors.black)),
+          centerTitle: true,
+          shadowColor: Colors.transparent,
+          backgroundColor: Colors.transparent,
+          foregroundColor: Colors.black,
+          leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
-            },
-            icon: const Icon(Icons.arrow_back_ios)
+              },
+              icon: const Icon(Icons.arrow_back_ios)
+          ),
         ),
-      ),
-      body: Center(
-        //
-        //crossAxisAlignment: CrossAxisAlignment.center,
-          child: Column( children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("${this.sound_index}",  style: TextStyle(fontSize: 25)),
-              ],
-            ),
-            Row(
+        body: buildButtons(
+            screenHeight, appBarHeight, statusBarHeight, screenWidth));
+  }
+
+  Widget createContainer(String name, PracticeState app, Text text1, double containerHeight, double containerWidth, bool highlight) {
+    return CustomContainer(text1: text1, containerHeight: containerHeight, containerWidth: containerWidth, app: app, name: name, highlight: highlight,);
+  }
+
+  ValueListenableBuilder<String> buildButtons(double screenHeight,
+      double appBarHeight, double statusBarHeight, double screenWidth)
+  {
+
+    return ValueListenableBuilder<String>(
+        valueListenable: widget.selection,
+        builder: (context, value, child) {
+          return Center(
+              //
+              //crossAxisAlignment: CrossAxisAlignment.center,
+              child: Column(
+            children: [
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                //crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget> [
-                  Column(
-                      children: <Widget> [
-                        CustomContainer(
-                            name: "Ta",
-                            app: this,
-                            text1: Text("TA", style: TextStyle(color: Colors.black, fontSize: 24)),
-                            containerHeight: (screenHeight-appBarHeight-statusBarHeight) * 0.28,
-                            containerWidth: screenWidth * 0.4),
-                        CustomContainer(
-                            name: "Ga",
-                            app: this,
-                            text1: Text("GA", style: TextStyle(color: Colors.black, fontSize: 24)),
-                            containerHeight: (screenHeight-appBarHeight-statusBarHeight) * 0.28,
-                            containerWidth: screenWidth * 0.4),
-                        CustomContainer(
-                            name: "Ka",
-                            app: this,
-                            text1: Text("KA", style: TextStyle(color: Colors.black, fontSize: 24)),
-                            containerHeight: (screenHeight-appBarHeight-statusBarHeight) * 0.28,
-                            containerWidth: screenWidth * 0.4)]),
-                  Column(
-                    children: <Widget> [
-                      CustomContainer(
-                          name: "Ba",
-                          app: this,
-                          text1: Text("BA", style: TextStyle(color: Colors.black, fontSize: 24)),
-                          containerHeight: (screenHeight-appBarHeight-statusBarHeight) * 0.28,
-                          containerWidth: screenWidth * 0.4),
-                      CustomContainer(
-                          name: "Da",
-                          app: this,
-                          text1: Text("DA", style: TextStyle(color: Colors.black, fontSize: 24)),
-                          containerHeight: (screenHeight-appBarHeight-statusBarHeight) * 0.28,
-                          containerWidth: screenWidth * 0.4),
-                      CustomContainer(
-                        text1: Text("PA", style: TextStyle(color: Colors.black, fontSize: 24)),
-                        containerHeight: (screenHeight-appBarHeight-statusBarHeight) * 0.28,
-                        containerWidth: screenWidth * 0.4,
-                        name: "Pa",
-                        app: this,)
-
-                    ],)
-                ]
-            ),
-
-            Padding(
-                padding: EdgeInsets.fromLTRB(screenWidth*0.13, screenHeight*0.05, screenWidth*0.13,0),
-
-                child:   timeline)
-
-          ],)
-      ),
-      /*
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.shifting,
-        unselectedItemColor: Colors.black,
-        selectedItemColor: Colors.black,
-        elevation: 0,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-              icon: Icon(Icons.construction),
-              label: 'Main Results'
-
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.access_alarm),
-              label: 'Details'
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.ac_unit_outlined),
-              label: 'Animation'
-          ),
-        ],
-      ),*/
-    );
-
+                children: [
+                  Text("$sound_index", style: TextStyle(fontSize: 25)),
+                ],
+              ),
+              buildClickable<Practice, PracticeState>(createContainer, this, screenHeight, appBarHeight,
+                  statusBarHeight, screenWidth, value),
+              Padding(
+                  padding: EdgeInsets.fromLTRB(screenWidth * 0.13,
+                      screenHeight * 0.05, screenWidth * 0.13, 0),
+                  child: timeline)
+            ],
+          ));
+        });
   }
 }
 
@@ -192,10 +139,16 @@ class CustomContainer extends StatelessWidget {
   final String name;
   final double containerHeight;
   final double containerWidth;
+  final bool highlight;
   final PracticeState app;
 
-  CustomContainer({
-    required this.text1, required this.containerHeight, required this.containerWidth, required this.app, required this.name});
+  CustomContainer(
+      {this.highlight = false,
+      required this.text1,
+      required this.containerHeight,
+      required this.containerWidth,
+      required this.app,
+      required this.name});
 
   @override
   Widget build(BuildContext context) {
@@ -203,29 +156,24 @@ class CustomContainer extends StatelessWidget {
         padding: EdgeInsets.all(10.0),
         height: containerHeight,
         width: containerWidth,
-        child:
-        OutlinedButton(
+        child: OutlinedButton(
             onPressed: () {
-
-              app.updateIndex();
-
-              String filepath = app.sounds[app.sound_index];
-              app.play(filepath, app.player);
-              _TimelineWidgetState.reset();
-
+              app.widget.selection.value = name;
             },
-            style: OutlinedButton.styleFrom(
-              //backgroundColor: Colors.white,
-                elevation: 3,
-                shadowColor: Colors.black,
-                backgroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0))),
-            child: Container(child: text1))
-    );
+            style: style(highlight),
+            child: Container(child: text1)));
   }
 }
 
+ButtonStyle style(bool highlight) {
+  return OutlinedButton.styleFrom(
+    //backgroundColor: Colors.white,
+      elevation: 3,
+      shadowColor: Colors.black,
+      backgroundColor: highlight ? Colors.grey : Colors.white,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0)));
+}
 
 class TimelineWidget extends StatefulWidget {
   final PracticeState app;
@@ -233,18 +181,14 @@ class TimelineWidget extends StatefulWidget {
   //const TimelineWidget({super.key});
   @override
   State<TimelineWidget> createState() => _TimelineWidgetState(app: app);
-
 }
-
 
 /// AnimationControllers can be created with `vsync: this` because of TickerProviderStateMixin.
 class _TimelineWidgetState extends State<TimelineWidget>
-
     with TickerProviderStateMixin {
   static late AnimationController controller;
   final PracticeState app;
-  _TimelineWidgetState({required  this.app});
-
+  _TimelineWidgetState({required this.app});
 
   @override
   void initState() {
@@ -252,29 +196,17 @@ class _TimelineWidgetState extends State<TimelineWidget>
       vsync: this,
       duration: const Duration(seconds: 3),
     )..addListener(() {
-
-      if (controller.status == AnimationStatus.completed) {
-        String oldfilepath = app.sounds[app.sound_index];
-        List<String> sounds = oldfilepath.split("/");
-        String filename = sounds[sounds.length - 1];
-        List<String> sounds_2 = filename.split(".");
-        String sound_2 = sounds_2[0];
-        List<String> sound = sound_2.split("-");
-        app.updateIndex();
-        app.play(app.sounds[app.sound_index], app.player);
-        controller.reset();
-        controller.forward();
-      }
-      setState(() {});
-    });
+        if (controller.status == AnimationStatus.completed) {
+          app.updateIndex();
+          app.play(app.sounds[app.sound_index], app.player);
+          controller.reset();
+          controller.forward();
+        }
+        setState(() {});
+      });
     //controller.repeat(reverse: false);
     controller.forward();
     super.initState();
-  }
-
-  static void reset(){
-    controller.reset();
-    controller.forward();
   }
 
   @override
@@ -300,4 +232,72 @@ class _TimelineWidgetState extends State<TimelineWidget>
       ),
     );
   }
+}
+
+Row buildClickable<T extends StatefulWidget, E extends State<T>>(
+    Function(String name, E, Text, double, double, bool) container,
+    E state,
+    double screenHeight,
+    double appBarHeight,
+    double statusBarHeight,
+    double screenWidth,
+    String value) {
+  return Row(mainAxisAlignment: MainAxisAlignment.center,
+      //crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Column(children: <Widget>[
+          container(
+            "Ta",
+            state,
+            const Text("TA", style: TextStyle(color: Colors.black, fontSize: 24)),
+            (screenHeight - appBarHeight - statusBarHeight) * 0.28,
+            screenWidth * 0.4,
+            value == "Ta" ? true : false,
+          ),
+          container(
+              "Ga",
+              state,
+              Text("GA",
+              style: TextStyle(color: Colors.black, fontSize: 24)),
+              (screenHeight - appBarHeight - statusBarHeight) * 0.28,
+              screenWidth * 0.4,
+              value == "Ga" ? true : false),
+          container(
+              "Ka",
+              state,
+              Text("KA",
+              style: TextStyle(color: Colors.black, fontSize: 24)),
+              (screenHeight - appBarHeight - statusBarHeight) * 0.28,
+              screenWidth * 0.4,
+              value == "Ka" ? true : false)
+        ]),
+        Column(
+          children: <Widget>[
+            container(
+                "Ba",
+                state,
+                Text("BA",
+                    style: TextStyle(color: Colors.black, fontSize: 24)),
+                    (screenHeight - appBarHeight - statusBarHeight) * 0.28,
+                screenWidth * 0.4,
+                value == "Ba" ? true : false),
+            container(
+                "Da",
+                state,
+                Text("DA",
+                    style: TextStyle(color: Colors.black, fontSize: 24)),
+                    (screenHeight - appBarHeight - statusBarHeight) * 0.28,
+                screenWidth * 0.4,
+                value == "Da" ? true : false),
+            container(
+                "Pa",
+                state,
+                Text("PA",
+                  style: TextStyle(color: Colors.black, fontSize: 24)),
+                (screenHeight - appBarHeight - statusBarHeight) * 0.28,
+                screenWidth * 0.4,
+                value == "Pa" ? true : false)
+          ],
+        )
+      ]);
 }
