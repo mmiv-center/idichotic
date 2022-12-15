@@ -87,14 +87,14 @@ class Landing extends StatelessWidget {
           Spacer(flex: 8),
           Expanded(flex: 10, child: Linkify(text:
                   "Contribute or view the code on our GitHub https://github.com/mmiv-center/idichotic")),
-          Expanded(flex: 1, child: Image(image: AssetImage('logos/github.png'))),
+          Expanded(flex: 1, child: Image(image: AssetImage('assets/logos/github.png'))),
           Spacer(flex: 8),
         ])),
         Expanded(flex: 1, child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           Spacer(flex: 8),
           const Expanded(flex: 10, child: Linkify(text:
                   "Help translate the app in your language! https://hosted.weblate.org/projects/idichotic/")),
-          Expanded(flex: 1, child: SvgPicture.asset("logos/weblate.svg")),
+          Expanded(flex: 1, child: SvgPicture.asset("assets/logos/weblate.svg")),
           Spacer(flex: 8)
         ])),
         footer()
@@ -107,9 +107,9 @@ class Landing extends StatelessWidget {
         flex: 3,
         child: Row(
             children: <Widget>[
-          const Image(image: AssetImage('logos/uib.png')),
-          const Image(image: AssetImage('logos/mmiv.png')),
-          const Image(image: AssetImage('logos/fmri.png'))
+          const Image(image: AssetImage('assets/logos/uib.png')),
+          const Image(image: AssetImage('assets/logos/mmiv.png')),
+          const Image(image: AssetImage('assets/logos/fmri.png'))
         ].map((e) => Expanded(child: e)).toList()));
   }
 
