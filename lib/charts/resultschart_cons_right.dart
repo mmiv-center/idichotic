@@ -17,8 +17,10 @@ class ResultsChartRCons extends StatelessWidget{
   Widget build(BuildContext context) {
     int refactor = 0;
     
-    var relevantData = data.where((element) => element.id != Types.homonymCorrect && element.id != Types.homonymIncorrect).toList();
-    data.forEach((element) {refactor+=element.amount;});
+    var relevantData = data.where((element) => element.id == Types.rightCorrect || element.id == Types.rightIncorrect).toList();
+    for (var element in relevantData) {
+      refactor+=element.amount;
+    }
 
     var rightCorrect = data.where((element) => element.id == Types.rightCorrect).toList();
     var rightIncorrect = data.where((element) => element.id == Types.rightIncorrect).toList();

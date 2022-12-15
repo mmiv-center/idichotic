@@ -17,14 +17,17 @@ class ResultsChart extends StatelessWidget{
     int refactor = 0;
     
     var relevantData = data.where((element) => element.id != Types.homonymCorrect && element.id != Types.homonymIncorrect).toList();
-    data.forEach((element) {refactor+=element.amount;});
+
+    for (var element in relevantData) {
+      refactor+=element.amount;
+    }
 
     var rightCorrect = data.where((element) => element.id == Types.rightCorrect).toList();
     var leftCorrect = data.where((element) => element.id == Types.leftCorrect).toList();
     var error = data.where((element) => element.id == Types.incorrect).toList();
 
 
-    List<charts.Series<Data, String>> _createSampleData() {
+    List<charts.Series<Data, String>> createChart() {
 
     return [
       charts.Series<Data, String>(
@@ -66,7 +69,7 @@ class ResultsChart extends StatelessWidget{
           Padding(
           padding: const EdgeInsets.all(0.0),
           child: 
-           charts.BarChart(_createSampleData(),
+           charts.BarChart(createChart(),
             animate: false,
             vertical: false,
             primaryMeasureAxis: new charts.NumericAxisSpec(renderSpec: new charts.NoneRenderSpec()),

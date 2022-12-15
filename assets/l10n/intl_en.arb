@@ -21,7 +21,7 @@
   "duration_infinite": "Duration: Infinite",
   
   "theTests": "The Tests",
-  "iDichotic": "iDichotic",
+  "iDichotic": "iDichotic+",
 
   "takeTests": "Take the test",
   "settings": "Settings",
@@ -31,16 +31,16 @@
   "threeSeconds": "Three seconds until\nthe test start",
 
   "practice": "Practice",
-  "practiceInfo": "If you have not taken this type of test before, we recommend you to practice before you do.",
+  "practiceInfo": "If you have not taken a test like this before, we recommend you to practice before you start",
 
   "test1": "Test One",
-  "test1Info": "In this test you get presented multiple sound, with different syllables on each ear. You should press the button for the syllable you hear best.",
+  "test1Info": "In this test you get presented with multiple sounds, with different syllables on each ear. You should press the button for the syllable you hear best.",
 
   "test2": "Test Two",
-  "test2Info": "In this test you also get presented with mulitple sounds with different syllables. But here you should concentrate on one ear at a time and press the button you hear best on that ear.",
+  "test2Info": "In this test you also get presented with multiple sounds with different syllables. But here you should concentrate on one ear at a time and press the button you heard best on that ear.",
 
   
-  "concentrateOn": "Consentrate on the",
+  "concentrateOn": "Concentrate on the",
   "rightEar": "RIGHT EAR",
   "leftEar": "LEFT EAR",
 
@@ -72,9 +72,9 @@
   "correct": "You were correct",
   "prTime": "% of the time",
 
-  "submitResults": "Submit results for our research",
+  "submitResults": "Submit results for research",
   "contribute": "By submitting your results, you consent to sending in your personal information and the collected data on your tests. ",
-  "resultsSuccesfully": "Results submitted succesfully to our database",
+  "resultsSuccessfully": "Results submitted successfully to our database",
   "ok": "OK",
   "submit": "Submit",
   "back": "Back",
@@ -110,6 +110,9 @@
   "@canContinue": {
     "description": "Tell the user that the warning only shows up one time"
   },
-  "dismiss": "Ignore"
+  "dismiss": "Ignore",
 
+  "before_continue": "Before you continue...",
+  "start_prompt": "Please fill out the following information about yourself, this will help with research if you choose to submit your results",
+  "warning": "Warning"
 }
