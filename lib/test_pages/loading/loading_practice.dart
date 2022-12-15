@@ -4,10 +4,10 @@
 
 import 'dart:async';
 
-import 'package:dichotic/Start_Promt.dart';
+import 'package:dichotic/start_prompt.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:dichotic/Practice.dart';
+import 'package:dichotic/test_pages/practice.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 
 
@@ -51,7 +51,6 @@ class LoadingPracticeAppState extends State<LoadingPracticeApp>  {
   Widget build(BuildContext context) {
 
     final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
     final statusBarHeight = MediaQuery.of(context).padding.top;
     final appBarHeight = appBar.preferredSize.height;
 

@@ -9,33 +9,7 @@ import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:video_player/video_player.dart';
 
 import 'data/types.dart';
-import 'listen.dart';
-/*
-class Results extends StatelessWidget {
-  const Results({super.key});
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-
-      ),
-      home: const MyHomePage(title: 'Results'),
-    );
-  }
-}*/
-
-
+import 'test_pages/test_list.dart';
 
 class Results extends StatefulWidget {
   Results({super.key, required this.title, required this.data}) {
@@ -68,23 +42,17 @@ class VideoPlayerExample extends StatefulWidget{
 }
 class _VideoPlayerScreenState extends State{
   late VideoPlayerController _videoPlayerController;
-  //late Future<void> _initVideoPlayerFuture;
   _VideoPlayerScreenState({required this.videoPath});
   String videoPath;
   void initState(){
     super.initState();
     _videoPlayerController = VideoPlayerController.asset(videoPath);
-    //_initVideoPlayerFuture = _videoPlayerController.initialize();
     _videoPlayerController.initialize().then((_) {setState(() {
       _videoPlayerController.play();
       _videoPlayerController.setLooping(true);
     });
-
-
   });
-
   }
-
 
   @override
   void dispose() {
@@ -285,7 +253,7 @@ class _MyHomePageState extends State<Results> {
                     AlertDialog(
                     content: Container(
 
-                      child: Text(L10n.of(context)!.resultsSuccesfully, textAlign: TextAlign.center,)),
+                      child: Text(L10n.of(context)!.resultsSuccessfully, textAlign: TextAlign.center,)),
                     actions: [TextButton(
                       onPressed: () {Navigator.pop(context);},
                       child: Text(L10n.of(context)!.ok, style: TextStyle(color: Colors.black) ),)
@@ -332,7 +300,7 @@ class _MyHomePageState extends State<Results> {
 
   Widget build(BuildContext context) {
 
-    var pageroute_tests = () => MaterialPageRoute(builder: (context) => const TestApp(title: "Test"));
+    var pageroute_tests = () => MaterialPageRoute(builder: (context) => const TestList(title: "Test"));
 
     return Scaffold(
       appBar: AppBar(

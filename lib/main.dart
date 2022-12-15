@@ -2,14 +2,14 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-import 'package:dichotic/Start_Promt.dart';
+import 'package:dichotic/start_prompt.dart';
 import 'package:dichotic/db/database.dart';
 import 'package:dichotic/settings/helpers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 
-import 'Start_Page.dart';
+import 'home_page.dart';
 import 'site/configure_nonweb.dart' if (dart.library.html) 'site/configure_web.dart';
 
 void main() {

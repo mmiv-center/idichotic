@@ -4,11 +4,10 @@
 
 import 'dart:async';
 
-import 'package:dichotic/Start_Promt.dart';
+import 'package:dichotic/start_prompt.dart';
+import 'package:dichotic/test_pages/listen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:dichotic/sounds.dart';
-import 'package:dichotic/listen.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 
 
@@ -53,7 +52,6 @@ class LoadingListenAppState extends State<LoadingListenApp>  {
     Widget build(BuildContext context) {
 
     final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
     final statusBarHeight = MediaQuery.of(context).padding.top;
     final appBarHeight = appBar.preferredSize.height;
 

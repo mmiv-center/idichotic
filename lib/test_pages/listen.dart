@@ -4,15 +4,15 @@
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:dichotic/data/exampledata.dart';
-import 'Practice.dart' show buildClickable, style;
+import 'practice.dart' show buildClickable, style;
 import 'package:dichotic/results.dart';
 import 'package:drift/drift.dart' hide Column;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 
-import 'data/types.dart';
-import 'db/database.dart';
+import '../data/types.dart';
+import '../db/database.dart';
 
 class ListenApp extends StatefulWidget {
   ListenApp({super.key, required this.title});
@@ -156,13 +156,6 @@ class ListenAppState extends State<ListenApp> {
             //
             //crossAxisAlignment: CrossAxisAlignment.center,
               child: Column(children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("${this.sound_index} out of ${sounds.length}",
-                        style: TextStyle(fontSize: 25)),
-                  ],
-                ),
                 buildClickable(
                     createContainer,
                     this,

@@ -4,27 +4,27 @@
 
 import 'dart:ui';
 
-import 'package:dichotic/Start_Page.dart';
-import 'package:dichotic/loading_cons.dart';
-import 'package:dichotic/loading_listen.dart';
-import 'package:dichotic/loading_practice.dart';
+import 'package:dichotic/home_page.dart';
+import 'package:dichotic/test_pages/loading/loading_cons.dart';
+import 'loading/loading_listen.dart';
+import 'package:dichotic/test_pages/loading/loading_practice.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 
-import 'db/database.dart';
+import '../db/database.dart';
 
 
-class TestApp extends StatefulWidget {
-  const TestApp({super.key, required this.title});
+class TestList extends StatefulWidget {
+  const TestList({super.key, required this.title});
   final String title;
 
   @override
-  State<TestApp> createState() => TestAppState();
+  State<TestList> createState() => TestListState();
 }
 
 
-class TestAppState extends State<TestApp> {
+class TestListState extends State<TestList> {
 
   Color test2Color = Colors.white24;
   bool finishedTest2 = false;
@@ -97,7 +97,8 @@ class TestAppState extends State<TestApp> {
         body: Padding(
             padding: const EdgeInsets.fromLTRB(40,10,40,0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget> [
                 CustomButton(
                     text1: Text(L10n.of(context)!.practice, style: TextStyle(fontSize: 20, color: Colors.black)),
@@ -107,7 +108,7 @@ class TestAppState extends State<TestApp> {
                     pageroute: pageroute_practice),
 
                 Container(
-                    height: (screenHeight-appBarHeight-statusBarHeight) * 0.03
+                    height: (screenHeight-appBarHeight-statusBarHeight) * 0.05
                 ),
 
                 CustomButton(
@@ -119,7 +120,7 @@ class TestAppState extends State<TestApp> {
                   pageroute: pageroute_listen),
 
                 Container(
-                  height: (screenHeight-appBarHeight-statusBarHeight) * 0.03
+                  height: (screenHeight-appBarHeight-statusBarHeight) * 0.05
                 ),
                 CustomButton(
                   text1: Text(L10n.of(context)!.test2, style: TextStyle(fontSize: 20, color: Colors.black)),

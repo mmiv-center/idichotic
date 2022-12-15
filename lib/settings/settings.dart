@@ -13,7 +13,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 
-import '../Start_Page.dart';
+import '../home_page.dart';
 import '../calibration/leftearcalibrate.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -245,22 +245,3 @@ Widget age(context) {
       description: L10n.of(context)!.age,
       options: map);
 }
-
-Future<Preference?> getCalibration() async{
-  return database.select(database.preferences).getSingleOrNull();
-}
-
-Future<double> getRight() async {
-  return Future.value((await (database.select(database.preferences).getSingleOrNull()))?.rightCalibrate);
-}
-/*
-Widget leftCalibrate(context,ValueNotifier<double?> left){
-  var button = settingsButton(context, () => Navigator.push(context, MaterialPageRoute(builder: (context) => LeftEarCalibrate())),
-      L10n.of(context)!.left, ValueListenableBuilder<double?>(valueListenable: left, builder: (context, value, child) {
-        return value != null ? Text(value.toString()) : Container();
-      }));
-
-  return button;
-
-}
-*/

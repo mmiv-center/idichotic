@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:audioplayers/audioplayers.dart';
-import 'package:dichotic/cons_change_ear.dart';
+import 'package:dichotic/switch_focus_ear.dart';
 import 'package:dichotic/data/exampledata.dart';
 import 'package:dichotic/data/types.dart';
 import 'package:dichotic/results_cons.dart';
@@ -11,7 +11,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 
-import 'Practice.dart';
+import 'practice.dart';
 
 class ConcentrateApp extends StatefulWidget {
   ConcentrateApp({super.key, required this.title, required this.rightEar});
@@ -103,7 +103,7 @@ class ConcentrateAppState extends State<ConcentrateApp> {
       this.testnr++;
       this.sound_index = 0;
 
-      var pageroute_cons = () => MaterialPageRoute(builder: (context) => ConschangeearApp(title: "Loading", ear: false, app: app));
+      var pageroute_cons = () => MaterialPageRoute(builder: (context) => SwitchFocusEar(title: "Loading", ear: false, app: app));
       Navigator.push(context, pageroute_cons.call());
       //player.play(AssetSource(filepath));
       //TimelineWidgetState.reset();
@@ -176,12 +176,6 @@ class ConcentrateAppState extends State<ConcentrateApp> {
     return ValueListenableBuilder(valueListenable: widget.selection, builder: (context, value, child) {
       return Center(
         child: Column( children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("${this.sound_index + 36*this.testnr} out of ${sounds.length *2}",  style: TextStyle(fontSize: 25)),
-            ],
-          ),
           buildClickable(createContainer, this, screenHeight, appBarHeight, statusBarHeight, screenWidth, value),
 
           Padding(

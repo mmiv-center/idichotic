@@ -10,8 +10,7 @@ import 'package:flutter/material.dart';
 class ResultsChart extends StatelessWidget{
   final List<Data> data;
 
-  ResultsChart(@required this.data);
-
+  ResultsChart(this.data);
 
   @override
   Widget build(BuildContext context) {

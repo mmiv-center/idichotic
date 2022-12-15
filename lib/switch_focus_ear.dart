@@ -4,25 +4,25 @@
 
 import 'dart:async';
 
-import 'package:dichotic/concentrate.dart';
+import 'package:dichotic/test_pages/concentrate.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 
 
 
-class ConschangeearApp extends StatefulWidget {
-  const ConschangeearApp({super.key, required this.title, required this.ear, required this.app});
+class SwitchFocusEar extends StatefulWidget {
+  const SwitchFocusEar({super.key, required this.title, required this.ear, required this.app});
   final String title;
   final bool ear;
   final ConcentrateAppState app;
 
   @override
-  State<StatefulWidget> createState() => ConschangeearAppState(ear : ear, app: app);
+  State<StatefulWidget> createState() => SwitchFocusEarState(ear : ear, app: app);
 }
 
-class ConschangeearAppState extends State<ConschangeearApp>  {
-  ConschangeearAppState({required this.ear, required this.app});
+class SwitchFocusEarState extends State<SwitchFocusEar>  {
+  SwitchFocusEarState({required this.ear, required this.app});
   final bool ear;
   final ConcentrateAppState app;
   String Ear = " ";

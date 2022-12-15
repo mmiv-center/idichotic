@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-import 'package:dichotic/Start_Page.dart';
+import 'package:dichotic/home_page.dart';
 import 'package:dichotic/settings/settings.dart';
 import 'package:dichotic/settings/types/handedness.dart';
 import 'package:flutter/cupertino.dart';
@@ -114,7 +114,7 @@ class Start_Page extends State<Start_Promt> {
               AlertDialog(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                title: Text("Warning", style: Theme.of(context).textTheme.bodyLarge, textAlign: TextAlign.center,),
+                title: Text(L10n.of(context)!.warning, style: Theme.of(context).textTheme.bodyLarge, textAlign: TextAlign.center,),
                 alignment: Alignment.center,
                 actionsAlignment: MainAxisAlignment.center,
                 content: Column(mainAxisSize: MainAxisSize.min,
@@ -132,7 +132,7 @@ class Start_Page extends State<Start_Promt> {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0))),
                   child: Container(
                     width: 65,
-                    child: Text("Go back", style: TextStyle(color: Colors.black), textAlign: TextAlign.center,))),
+                    child: Text(L10n.of(context)!.back, style: const TextStyle(color: Colors.black), textAlign: TextAlign.center,))),
                   ok,
                 ],
                 elevation: 5
@@ -151,23 +151,22 @@ class Start_Page extends State<Start_Promt> {
       //resizeToAvoidBottomInset: false,
       body: Container(
         alignment: Alignment.center,
-        color: Color.fromARGB(196, 235, 235, 235),
-        padding: EdgeInsets.fromLTRB(3, 3, 3, 3),
+        color: const Color.fromARGB(196, 235, 235, 235),
+        padding: const EdgeInsets.fromLTRB(3, 3, 3, 3),
         child: AlertDialog(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
           content: Stack(
             children: <Widget>[
-              Container(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget> [
-                       Icon(Icons.headphones_outlined, size: 60),
-                       Text("iDichotic", style: Theme.of(context).textTheme.headlineLarge),
-                       Text("Before you continue...", style: Theme.of(context).textTheme.bodyMedium),
-                    ].map<Widget>((e) => e)
-                  .followedBy([Text("Please fill out the following information about yourself. This will only be stored locally to give you correct test results until you send it in.", textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall)])
-                 .followedBy(items).toList())),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget> [
+                     const Icon(Icons.headphones_outlined, size: 60),
+                     Text("iDichotic", style: Theme.of(context).textTheme.headlineLarge),
+                     Text(L10n.of(context)!.before_continue, style: Theme.of(context).textTheme.bodyMedium),
+                  ].map<Widget>((e) => e)
+                .followedBy([Text(L10n.of(context)!.start_prompt, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall)])
+               .followedBy(items).toList()),
             ],
           ),
         )

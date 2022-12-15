@@ -4,9 +4,11 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:dichotic/listen.dart';
+import 'package:dichotic/test_pages/test_list.dart';
 import 'package:dichotic/settings/settings.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
+
+import 'learn_more.dart';
 
 class StartApp extends StatefulWidget {
   const StartApp({super.key, required this.title});
@@ -24,8 +26,8 @@ AppBar appBar(BuildContext context) { return AppBar(
 }
 
 var pageroute_settings = () => MaterialPageRoute(builder: (context) => SettingsPage());
-var pageroute_tests = () => MaterialPageRoute(builder: (context) => const TestApp(title: "Test"));
-var pageroute_learn = () => MaterialPageRoute(builder: (context) => SettingsPage());
+var pageroute_tests = () => MaterialPageRoute(builder: (context) => const TestList(title: "Test"));
+var pageroute_learn = () => MaterialPageRoute(builder: (context) => LearnMore());
 
 class StartAppState extends State<StartApp> {
   

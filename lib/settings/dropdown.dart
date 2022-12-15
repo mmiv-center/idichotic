@@ -4,7 +4,7 @@
 
 import 'dart:developer';
 
-import 'package:dichotic/scroll.dart';
+import 'package:dichotic/settings/scroll.dart';
 import 'package:dichotic/settings/languages.dart';
 import 'package:dichotic/settings/settings.dart';
 import 'package:dichotic/settings/types/handedness.dart';

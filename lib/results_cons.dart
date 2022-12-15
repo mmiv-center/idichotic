@@ -10,7 +10,7 @@ import 'package:video_player/video_player.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 
 import 'data/types.dart';
-import 'listen.dart';
+import 'test_pages/test_list.dart';
 import 'results.dart';
 
 class ResultsCons extends StatefulWidget {
@@ -149,7 +149,7 @@ class _MyHomePageState extends State<ResultsCons> {
                     AlertDialog( 
                     content: Container(
 
-                      child: Text(L10n.of(context)!.resultsSuccesfully, textAlign: TextAlign.center,)),
+                      child: Text(L10n.of(context)!.resultsSuccessfully, textAlign: TextAlign.center,)),
                     actions: [TextButton(
                       onPressed: () {Navigator.pop(context);},
                       child: Text(L10n.of(context)!.ok, style: TextStyle(color: Colors.black) ),)
@@ -194,7 +194,7 @@ class _MyHomePageState extends State<ResultsCons> {
 
   Widget build(BuildContext context) {
 
-    var pageroute_tests = () => MaterialPageRoute(builder: (context) =>  TestApp(title: L10n.of(context)!.tests));
+    var pageroute_tests = () => MaterialPageRoute(builder: (context) =>  TestList(title: L10n.of(context)!.tests));
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Colors.black,
