@@ -114,5 +114,6 @@
 
   "before_continue": "Before you continue...",
   "start_prompt": "Please fill out the following information about yourself, this will help with research if you choose to submit your results",
-  "warning": "Warning"
+  "warning": "Warning",
+  "generate": "Generate"
 }

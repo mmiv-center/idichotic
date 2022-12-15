@@ -2,8 +2,11 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'dart:convert';
+
 import 'package:dichotic/charts/resultschart.dart';
 import 'package:dichotic/data/exampledata.dart';
+import 'package:dichotic/matrix/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:video_player/video_player.dart';
@@ -25,6 +28,7 @@ class Results extends StatefulWidget {
 
   final String title;
 
+  String selection = "";
 
   @override
   State<Results> createState() => _MyHomePageState(data:data);
@@ -238,6 +242,14 @@ class _MyHomePageState extends State<Results> {
   }
 
 
+  void submission() async {
+    var decoded = utf8.decode(base64Decode(widget.selection));
+    var matrix = decoded.split('::');
+    var session = MatrixSession();
+    await session.login(matrix[1], matrix[2]);
+    var roomId = await session.join(matrix[0]);
+    await session.sendResults(roomId, {"results": widget.data});
+  }
 
   OutlinedButton submit(BuildContext context, double screenHeight, double screenWidth) {
     return OutlinedButton(
@@ -245,12 +257,15 @@ class _MyHomePageState extends State<Results> {
           showDialog(
               context: context,
               builder: (context) => AlertDialog(
+                icon: Icon(Icons.save_alt_outlined),
                 title: Text(L10n.of(context)!.submitResults),
-                content:  Text(L10n.of(context)!.contribute),
+                content:  Column(children: [TextField(onChanged: (value) => widget.selection = value,), Text(L10n.of(context)!.contribute)]),
                 actions: [
                   TextButton(
-                    onPressed: (){showDialog(context: context, builder: (context) =>
-                    AlertDialog(
+                    onPressed: (){showDialog(context: context, builder: (context) {
+                      submission();
+
+                    return AlertDialog(
                     content: Container(
 
                       child: Text(L10n.of(context)!.resultsSuccessfully, textAlign: TextAlign.center,)),
@@ -258,7 +273,7 @@ class _MyHomePageState extends State<Results> {
                       onPressed: () {Navigator.pop(context);},
                       child: Text(L10n.of(context)!.ok, style: TextStyle(color: Colors.black) ),)
 
-                      ]));},
+                      ]);});},
                     child:  Text(L10n.of(context)!.submit, style: TextStyle(color: Colors.black) ),
                   ),
                   TextButton(

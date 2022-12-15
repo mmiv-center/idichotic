@@ -4,6 +4,7 @@
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:dichotic/data/exampledata.dart';
+import 'package:flutter/foundation.dart';
 import '../constants.dart';
 import 'practice.dart' show buildClickable, style;
 import 'package:dichotic/results.dart';
@@ -86,6 +87,13 @@ class ListenAppState extends State<ListenApp> {
     Navigator.push(context, pageroute_results.call(data));
   }
 
+  List<Widget> create() {
+      if (kDebugMode) {
+        return [TextButton(onPressed: () {if(kDebugMode) testFinished();}, child: Text("Skip"))];
+      }
+      return [];
+  }
+
   @override
   Widget build(BuildContext context) {
     final appBar = AppBar();
@@ -107,6 +115,7 @@ class ListenAppState extends State<ListenApp> {
                 },
                 icon: const Icon(Icons.arrow_back_ios)
             ),
+          actions: create(),
     ),
 
       body: buildButtons(

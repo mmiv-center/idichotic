@@ -55,6 +55,10 @@ dependencies:
   url_launcher: ^6.1.7
   flutter_linkify: ^5.0.2
   flutter_svg: ^1.1.6
+  matrix: ^0.15.9
+  flutter_olm: ^1.2.0
+  flutter_openssl_crypto: ^0.1.0
+  uuid: ^3.0.7
 
 dev_dependencies:
   flutter_test:

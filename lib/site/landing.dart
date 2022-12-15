@@ -2,7 +2,9 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'dart:convert';
 import 'dart:html';
+import 'package:flutter_gen/gen_l10n/l10n.dart';
 
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:dichotic/main.dart';
@@ -58,7 +60,7 @@ class Landing extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyLarge)),
           ),
           body: TabBarView(
-            children: [home(context), feedback(), qr_generator()],
+            children: [home(context), feedback(), QrGenerator()],
           ),
         ));
   }
@@ -132,13 +134,56 @@ class Landing extends StatelessWidget {
     );
   }
 
-  Widget qr_generator() {
-    return Column(children: const [
-      Expanded(child: Icon(Icons.construction, size: 160)),
-      Expanded(child: Text("Under construction")),
-      Expanded(
-          child: Text(
-              "The plan is for this page to generate a QR code, and a token, which you can then send to users you want data from"))
-    ]);
+  ValueNotifier<String> server = ValueNotifier("");
+  ValueNotifier<String> token = ValueNotifier("");
+
+}
+
+class QrGenerator extends StatefulWidget {
+  ValueNotifier<String> result = ValueNotifier("");
+  String token = "";
+  String server = "";
+  String user = "";
+
+  @override
+  State<StatefulWidget> createState() {
+    return QrGeneratorState();
+  }
+}
+
+class QrGeneratorState extends State<QrGenerator> {
+  @override
+  void initState() {
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder(valueListenable: widget.result,
+    builder: (context, value, child) {
+      return Column(crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+
+        Expanded(child: Text("Under construction")),
+        Expanded(
+            child: Text(
+                "The plan is for this page to generate a QR code, and a token, which you can then send to users you want data from")),
+        Expanded(child: Text("Username")),
+        Expanded(child: TextField(textAlign: TextAlign.center, onChanged: ((value) => widget.user = value),)),
+        Expanded(child: Text("Server")),
+        Expanded(child: TextField(textAlign: TextAlign.center, onChanged: ((value) => widget.server = value),)),
+        Expanded(child: Text("Token")),
+        Expanded(child: TextField(textAlign: TextAlign.center, onChanged: ((value) => widget.token = value),)),
+        ElevatedButton(onPressed: () => generate(), child: Text(L10n.of(context)!.generate)),
+        Expanded(child: SelectableText(widget.result.value))
+      ]
+    );
+    }
+    );
+   }
+
+  void generate() {
+    widget.result.value = base64.encode(utf8.encode("${widget.user}::${widget.server}::${widget.token}"));
   }
 }
