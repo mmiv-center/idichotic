@@ -15,6 +15,9 @@ class Preferences extends Table {
   IntColumn get handedness => intEnum<Handedness>().nullable()();
   IntColumn get age => integer().nullable()();
 
+  RealColumn get leftCalibrate => real().nullable()();//withDefault(const Constant(1.0))();
+  RealColumn get rightCalibrate => real().nullable()();//(const Constant(1.0))();
+
   TextColumn get nativeLanguage => text().map(const LanguageConverter()).nullable()();
   TextColumn get soundLanguage => text().map(const LanguageConverter()).nullable()();
 

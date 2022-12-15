@@ -11,10 +11,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 
+import 'Practice.dart';
+
 class ConcentrateApp extends StatefulWidget {
-  const ConcentrateApp({super.key, required this.title, required this.rightEar});
+  ConcentrateApp({super.key, required this.title, required this.rightEar});
   final String title;
   final bool rightEar;
+
+  ValueNotifier<String> selection = ValueNotifier("");
+
   @override
   State<ConcentrateApp> createState() => ConcentrateAppState(rightEar : rightEar);
 }
@@ -55,6 +60,8 @@ class ConcentrateAppState extends State<ConcentrateApp> {
   @override
   void initState(){
     // TODO: implement initState
+    sounds.shuffle();
+    sounds.shuffle();
     super.initState();
     String filepath = sounds[sound_index];
     play(filepath, player);
@@ -95,8 +102,6 @@ class ConcentrateAppState extends State<ConcentrateApp> {
     }else{
       this.testnr++;
       this.sound_index = 0;
-      String filepath = sounds[sound_index];
-      print("Success");
 
       var pageroute_cons = () => MaterialPageRoute(builder: (context) => ConschangeearApp(title: "Loading", ear: false, app: app));
       Navigator.push(context, pageroute_cons.call());
@@ -145,8 +150,6 @@ class ConcentrateAppState extends State<ConcentrateApp> {
     final statusBarHeight = MediaQuery.of(context).padding.top;
     final appBarHeight = appBar.preferredSize.height;
     timeline = TimelineWidget(app: this);
-    sounds.shuffle();
-    sounds.shuffle();
     return Scaffold(
       appBar: AppBar(
         title: Text(title, style: TextStyle(color: Colors.black)),
@@ -161,91 +164,34 @@ class ConcentrateAppState extends State<ConcentrateApp> {
             icon: const Icon(Icons.arrow_back_ios)
         ),
       ),
-      body: Center(
-        //
-        //crossAxisAlignment: CrossAxisAlignment.center,
-          child: Column( children: [
-            Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                //crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget> [
-                  Column(
-                      children: <Widget> [
-                        CustomContainer(
-                            name: "Ta",
-                            app: this,
-                            text1: Text("TA", style: TextStyle(color: Colors.black, fontSize: 24)),
-                            containerHeight: (screenHeight-appBarHeight-statusBarHeight) * 0.28,
-                            containerWidth: screenWidth * 0.4),
-                        CustomContainer(
-                            name: "Ga",
-                            app: this,
-                            text1: Text("GA", style: TextStyle(color: Colors.black, fontSize: 24)),
-                            containerHeight: (screenHeight-appBarHeight-statusBarHeight) * 0.28,
-                            containerWidth: screenWidth * 0.4),
-                        CustomContainer(
-                            name: "Ka",
-                            app: this,
-                            text1: Text("KA", style: TextStyle(color: Colors.black, fontSize: 24)),
-                            containerHeight: (screenHeight-appBarHeight-statusBarHeight) * 0.28,
-                            containerWidth: screenWidth * 0.4)]),
-
-                  Column(
-                    children: <Widget> [
-                      CustomContainer(
-                          name: "Ba",
-                          app: this,
-                          text1: Text("BA", style: TextStyle(color: Colors.black, fontSize: 24)),
-                          containerHeight: (screenHeight-appBarHeight-statusBarHeight) * 0.28,
-                          containerWidth: screenWidth * 0.4),
-                      CustomContainer(
-                          name: "Da",
-                          app: this,
-                          text1: Text("DA", style: TextStyle(color: Colors.black, fontSize: 24)),
-                          containerHeight: (screenHeight-appBarHeight-statusBarHeight) * 0.28,
-                          containerWidth: screenWidth * 0.4),
-                      CustomContainer(
-                        text1: Text("PA", style: TextStyle(color: Colors.black, fontSize: 24)),
-                        containerHeight: (screenHeight-appBarHeight-statusBarHeight) * 0.28,
-                        containerWidth: screenWidth * 0.4,
-                        name: "Pa",
-                        app: this,)
-
-                    ],)
-                ]
-            ),
-
-            Padding(
-                padding: EdgeInsets.fromLTRB(screenWidth*0.13, screenHeight*0.05, screenWidth*0.13,0),
-
-                child:   timeline)
-
-          ],)
-      ),
-      /*
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.shifting,
-        unselectedItemColor: Colors.black,
-        selectedItemColor: Colors.black,
-        elevation: 0,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-              icon: Icon(Icons.construction),
-              label: 'Main Results'
-
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.access_alarm),
-              label: 'Details'
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.ac_unit_outlined),
-              label: 'Animation'
-          ),
-        ],
-      ),*/
+      body: buildButtons(screenHeight, appBarHeight, statusBarHeight, screenWidth),
     );
+  }
 
+  Widget createContainer(String name, ConcentrateAppState app, Text text1, double containerHeight, double containerWidth, bool highlight) {
+    return CustomContainer(text1: text1, containerHeight: containerHeight, containerWidth: containerWidth, app: app, name: name, highlight: highlight,);
+  }
+
+  ValueListenableBuilder buildButtons(double screenHeight, double appBarHeight, double statusBarHeight, double screenWidth) {
+    return ValueListenableBuilder(valueListenable: widget.selection, builder: (context, value, child) {
+      return Center(
+        child: Column( children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("${this.sound_index + 36*this.testnr} out of ${sounds.length *2}",  style: TextStyle(fontSize: 25)),
+            ],
+          ),
+          buildClickable(createContainer, this, screenHeight, appBarHeight, statusBarHeight, screenWidth, value),
+
+          Padding(
+              padding: EdgeInsets.fromLTRB(screenWidth*0.13, screenHeight*0.05, screenWidth*0.13,0),
+
+              child:   timeline)
+
+        ],)
+      );}
+    );
   }
 }
 
@@ -255,9 +201,10 @@ class CustomContainer extends StatelessWidget {
   final double containerHeight;
   final double containerWidth;
   final ConcentrateAppState app;
+  final bool highlight;
 
   CustomContainer({
-    required this.text1, required this.containerHeight, required this.containerWidth, required this.app, required this.name});
+    required this.text1, required this.containerHeight, required this.containerWidth, required this.app, required this.name, required this.highlight});
 
   @override
   Widget build(BuildContext context) {
@@ -268,51 +215,11 @@ class CustomContainer extends StatelessWidget {
         child:
         OutlinedButton(
             onPressed: () {
-              if (app.sound_index < app.sounds.length) {
-                scoreLogic();
-                app.updateIndex();
-              }
-              if (app.sound_index < app.sounds.length) {
-                String filepath = app.sounds[app.sound_index];
-                app.play(filepath, app.player);
-                TimelineWidgetState.reset();
-              } else {
-                app.testFinished(app);
-              }
+              app.widget.selection.value = name;
             },
-            style: OutlinedButton.styleFrom(
-              //backgroundColor: Colors.white,
-                elevation: 3,
-                shadowColor: Colors.black,
-                backgroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0))),
+            style: style(highlight),
             child: Container(child: text1))
     );
-  }
-
-  void scoreLogic() {
-    String oldfilepath = app.sounds[app.sound_index];
-    List<String> sounds = oldfilepath.split("/");
-    String filename = sounds[sounds.length - 1];
-    List<String> sounds_2 = filename.split(".");
-    String sound_2 = sounds_2[0];
-    List<String> sound = sound_2.split("-");
-    if (sound.contains(name)) {
-      if (sound[0] == sound[1]) {
-        app.Same_sound_correct++;
-      }else if(app.testnr == 0 && sound[0] == name){
-        app.correct();
-      } else if(app.testnr == 1 && sound[1] == name){
-        app.correct();
-      }else{
-        app.incorrect();
-      }
-    } else if (sound[0] != sound[1]) {
-      app.incorrect();
-    } else {
-      app.Same_sound_incorrect++;
-    }
   }
 }
 
@@ -349,11 +256,22 @@ class TimelineWidgetState extends State<TimelineWidget>
           List<String> sounds_2 = filename.split(".");
           String sound_2 = sounds_2[0];
           List<String> sound = sound_2.split("-");
-          if(sound[0]!= sound[1]){
+          if (sound.contains(app.widget.selection.value)) {
+            if (sound[0] == sound[1]) {
+              app.Same_sound_correct++;
+            }else if(app.testnr == 0 && sound[0] == app.widget.selection.value){
+              app.correct();
+            } else if(app.testnr == 1 && sound[1] == app.widget.selection.value){
+              app.correct();
+            }else{
+              app.incorrect();
+            }
+          } else if (sound[0] != sound[1]) {
             app.incorrect();
-          }else{
+          } else {
             app.Same_sound_incorrect++;
           }
+
           if(app.sound_index != app.sounds.length-1) {
             app.updateIndex();
             app.play(app.sounds[app.sound_index], app.player);
@@ -363,6 +281,7 @@ class TimelineWidgetState extends State<TimelineWidget>
             app.updateIndex();
             app.testFinished(app);
           }
+          app.widget.selection.value = "";
         }
       }
       setState(() {});

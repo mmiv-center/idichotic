@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2022 iDichotic+ Authors <https://dichotic.app>
-//
-// SPDX-License-Identifier: AGPL-3.0-or-later
-
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'language.dart';

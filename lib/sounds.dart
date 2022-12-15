@@ -4,6 +4,7 @@
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:dichotic/data/exampledata.dart';
+import 'Practice.dart' show buildClickable, style;
 import 'package:dichotic/results.dart';
 import 'package:drift/drift.dart' hide Column;
 import 'package:flutter/cupertino.dart';
@@ -14,8 +15,10 @@ import 'data/types.dart';
 import 'db/database.dart';
 
 class ListenApp extends StatefulWidget {
-  const ListenApp({super.key, required this.title});
+  ListenApp({super.key, required this.title});
   final String title;
+
+  ValueNotifier<String> selection = ValueNotifier("");
 
   @override
   State<ListenApp> createState() => ListenAppState();
@@ -46,7 +49,7 @@ class ListenAppState extends State<ListenApp> {
   TimelineWidget? timeline;
     Widget appBar(context) {
       return AppBar(
-          title:  Text(L10n.of(context)!.listen, style: TextStyle(color: Colors.black)),
+          title:  Text(L10n.of(context)!.listen, style: TextStyle(color: Colors.black)), 
           centerTitle: true,
           shadowColor: Colors.white,
           backgroundColor: Colors.white,
@@ -59,24 +62,26 @@ class ListenAppState extends State<ListenApp> {
         ],);
     }
   @override
-  void initState(){
+  void initState() {
     // TODO: implement initState
+    sounds.shuffle();
+    sounds.shuffle();
     super.initState();
     String filepath = sounds[sound_index];
     play(filepath, player);
   }
 
-  void play(String filepath, AudioPlayer player) async{
+  void play(String filepath, AudioPlayer player) async {
     await player.play(AssetSource(filepath));
   }
 
-  void updateIndex(){
+  void updateIndex() {
     setState(() {
-      this.sound_index++;
+      sound_index++;
     });
   }
 
-  void testFinished(){
+  void testFinished() {
     List<Data> data = [
       Data(amount: Right_correct, id: Types.rightCorrect),
       Data(amount: Left_correct, id: Types.leftCorrect),
@@ -96,8 +101,6 @@ class ListenAppState extends State<ListenApp> {
     final statusBarHeight = MediaQuery.of(context).padding.top;
     final appBarHeight = appBar.preferredSize.height;
     timeline = TimelineWidget(app: this);
-    sounds.shuffle();
-    sounds.shuffle();
     return Scaffold(
         appBar: AppBar(
             title: Text(L10n.of(context)!.listen, style: TextStyle(color: Colors.black)),
@@ -112,66 +115,9 @@ class ListenAppState extends State<ListenApp> {
                 icon: const Icon(Icons.arrow_back_ios)
             ),
     ),
-        body: Center(
-        //
-        //crossAxisAlignment: CrossAxisAlignment.center,
-       child: Column( children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-        //crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget> [
-          Column(
-          children: <Widget> [
-          CustomContainer(
-            name: "Ta",
-            app: this,
-            text1: Text("TA", style: TextStyle(color: Colors.black, fontSize: 24)),
-            containerHeight: (screenHeight-appBarHeight-statusBarHeight) * 0.28,
-            containerWidth: screenWidth * 0.4),
-          CustomContainer(
-            name: "Ga",
-              app: this,
-            text1: Text("GA", style: TextStyle(color: Colors.black, fontSize: 24)),
-            containerHeight: (screenHeight-appBarHeight-statusBarHeight) * 0.28,
-            containerWidth: screenWidth * 0.4),
-          CustomContainer(
-            name: "Ka",
-              app: this,
-            text1: Text("KA", style: TextStyle(color: Colors.black, fontSize: 24)),
-            containerHeight: (screenHeight-appBarHeight-statusBarHeight) * 0.28,
-            containerWidth: screenWidth * 0.4)]),
-          Column(
-          children: <Widget> [
-          CustomContainer(
-            name: "Ba",
-              app: this,
-            text1: Text("BA", style: TextStyle(color: Colors.black, fontSize: 24)),
-            containerHeight: (screenHeight-appBarHeight-statusBarHeight) * 0.28,
-            containerWidth: screenWidth * 0.4),
-          CustomContainer(
-            name: "Da",
-              app: this,
-            text1: Text("DA", style: TextStyle(color: Colors.black, fontSize: 24)),
-            containerHeight: (screenHeight-appBarHeight-statusBarHeight) * 0.28,
-            containerWidth: screenWidth * 0.4),
-          CustomContainer(
-            text1: Text("PA", style: TextStyle(color: Colors.black, fontSize: 24)),
-            containerHeight: (screenHeight-appBarHeight-statusBarHeight) * 0.28,
-            containerWidth: screenWidth * 0.4,
-            name: "Pa",
-            app: this,)
-          
-        ],)
-          ]
-          ),
 
-          Padding(
-            padding: EdgeInsets.fromLTRB(screenWidth*0.13, screenHeight*0.05, screenWidth*0.13,0),
-
-            child:   timeline)
-
-      ],)
-    ),
+      body: buildButtons(
+          screenHeight, appBarHeight, statusBarHeight, screenWidth),
       /*
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.shifting,
@@ -195,7 +141,48 @@ class ListenAppState extends State<ListenApp> {
         ],
       ),*/
     );
+  }
 
+
+  Widget createContainer(String name, ListenAppState app, Text text1, double containerHeight, double containerWidth, bool highlight) {
+    return CustomContainer(text1: text1, containerHeight: containerHeight, containerWidth: containerWidth, app: app, name: name, highlight: highlight,);
+  }
+
+  ValueListenableBuilder buildButtons(double screenHeight, double appBarHeight,
+      double statusBarHeight, double screenWidth) {
+    return ValueListenableBuilder(valueListenable: widget.selection,
+        builder: (context, value, child) {
+          return Center(
+            //
+            //crossAxisAlignment: CrossAxisAlignment.center,
+              child: Column(children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("${this.sound_index} out of ${sounds.length}",
+                        style: TextStyle(fontSize: 25)),
+                  ],
+                ),
+                buildClickable(
+                    createContainer,
+                    this,
+                    screenHeight,
+                    appBarHeight,
+                    statusBarHeight,
+                    screenWidth,
+                    value)
+                ,
+
+                Padding(
+                    padding: EdgeInsets.fromLTRB(
+                        screenWidth * 0.13, screenHeight * 0.05,
+                        screenWidth * 0.13, 0),
+
+                    child: timeline)
+
+              ],)
+          );
+        });
   }
 }
 
@@ -205,9 +192,10 @@ class CustomContainer extends StatelessWidget {
   final double containerHeight;
   final double containerWidth;
   final ListenAppState app;
+  final bool highlight;
 
   CustomContainer({
-    required this.text1, required this.containerHeight, required this.containerWidth, required this.app, required this.name});
+    required this.text1, required this.containerHeight, required this.containerWidth, required this.app, required this.name, required this.highlight});
 
   @override
   Widget build(BuildContext context) {
@@ -218,50 +206,14 @@ class CustomContainer extends StatelessWidget {
         child:
         OutlinedButton(
             onPressed: () {
-              if (app.sound_index < app.sounds.length) {
-                scoreLogic();
-                app.updateIndex();
-              }
-              if (app.sound_index < app.sounds.length) {
-                String filepath = app.sounds[app.sound_index];
-                app.play(filepath, app.player);
-                _TimelineWidgetState.reset();
-              } else {
-                app.testFinished();
-              }
+              app.widget.selection.value = name;
             },
-            style: OutlinedButton.styleFrom(
-              //backgroundColor: Colors.white,
-                elevation: 3,
-                shadowColor: Colors.black,
-                backgroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0))),
+            style: style(highlight),
             child: Container(child: text1))
     );
   }
 
-  void scoreLogic() {
-    String oldfilepath = app.sounds[app.sound_index];
-    List<String> sounds = oldfilepath.split("/");
-    String filename = sounds[sounds.length - 1];
-    List<String> sounds_2 = filename.split(".");
-    String sound_2 = sounds_2[0];
-    List<String> sound = sound_2.split("-");
-    if (sound.contains(name)) {
-      if (sound[0] == sound[1]) {
-        app.Same_sound_correct++;
-      } else if (sound[0] == name) {
-        app.Right_correct++;
-      } else {
-        app.Left_correct++;
-      }
-    } else if (sound[0] != sound[1]) {
-      app.wrong++;
-    } else {
-      app.Same_sound_incorrect++;
-    }
-  }
+
 }
 
 
@@ -290,40 +242,47 @@ class _TimelineWidgetState extends State<TimelineWidget>
       vsync: this,
       duration: const Duration(seconds: 3),
     )..addListener(() {
-          if (app.sound_index < app.sounds.length){
-            if (controller.status == AnimationStatus.completed) {
-              String oldfilepath = app.sounds[app.sound_index];
-              List<String> sounds = oldfilepath.split("/");
-              String filename = sounds[sounds.length - 1];
-              List<String> sounds_2 = filename.split(".");
-              String sound_2 = sounds_2[0];
-              List<String> sound = sound_2.split("-");
-              if(sound[0]!= sound[1]){
-                app.wrong++;
-              }else{
-                app.Same_sound_incorrect++;
-              }
-              if(app.sound_index != app.sounds.length-1) {
-                app.updateIndex();
-                app.play(app.sounds[app.sound_index], app.player);
-                controller.reset();
-                controller.forward();
-              }else{
-                app.updateIndex();
-                app.testFinished();
-              }
-            }
+      if (controller.status == AnimationStatus.completed) {
+
+        String oldfilepath = app.sounds[app.sound_index];
+        List<String> sounds = oldfilepath.split("/");
+        String filename = sounds[sounds.length - 1];
+        List<String> sounds_2 = filename.split(".");
+        String sound_2 = sounds_2[0];
+        List<String> sound = sound_2.split("-");
+        if (sound.contains(app.widget.selection.value)) {
+          if (sound[0] == sound[1]) {
+            app.Same_sound_correct++;
+          } else if (sound[0] == app.widget.selection.value) {
+            app.Right_correct++;
+          } else {
+            app.Left_correct++;
+          }
+        } else if (sound[0] != sound[1]) {
+          app.wrong++;
+        } else {
+          app.Same_sound_incorrect++;
         }
+
+        if(app.sound_index != app.sounds.length-1) {
+          app.updateIndex();
+          app.play(app.sounds[app.sound_index], app.player);
+          controller.reset();
+          controller.forward();
+        } else {
+          app.updateIndex();
+          app.testFinished();
+        }
+
+        app.widget.selection.value = "";
+    }
         setState(() {});
       });
     //controller.repeat(reverse: false);
-    controller.forward();
+    setState(() {
+      controller.forward();
+    });
     super.initState();
-  }
-
-  static void reset(){
-    controller.reset();
-    controller.forward();
   }
 
   @override
