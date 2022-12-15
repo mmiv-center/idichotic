@@ -11,12 +11,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 
+import '../constants.dart';
 import 'practice.dart';
 
 class ConcentrateApp extends StatefulWidget {
-  ConcentrateApp({super.key, required this.title, required this.rightEar});
+  ConcentrateApp({super.key, required this.language, required this.title, required this.rightEar});
   final String title;
   final bool rightEar;
+  final String language;
 
   ValueNotifier<String> selection = ValueNotifier("");
 
@@ -33,19 +35,7 @@ class ConcentrateAppState extends State<ConcentrateApp> {
   final bool rightEar;
 
   AudioPlayer player = AudioPlayer();
-  List<String> sounds = ["audio/Ba-Ba.wav", "audio/Ba-Da.wav",
-    "audio/Ba-Ga.wav", "audio/Ba-Ka.wav", "audio/Ba-Pa.wav",
-    "audio/Ba-Ta.wav", "audio/Da-Ba.wav", "audio/Da-Da.wav",
-    "audio/Da-Ga.wav", "audio/Da-Ka.wav", "audio/Da-Pa.wav",
-    "audio/Da-Ta.wav", "audio/Ga-Ba.wav", "audio/Ga-Da.wav",
-    "audio/Ga-Ga.wav", "audio/Ga-Ka.wav", "audio/Ga-Pa.wav",
-    "audio/Ga-Ta.wav", "audio/Ka-Ba.wav", "audio/Ka-Da.wav",
-    "audio/Ka-Ga.wav", "audio/Ka-Ka.wav", "audio/Ka-Pa.wav",
-    "audio/Ka-Ta.wav", "audio/Pa-Ba.wav", "audio/Pa-Da.wav",
-    "audio/Pa-Ga.wav", "audio/Pa-Ka.wav", "audio/Pa-Pa.wav",
-    "audio/Pa-Ta.wav", "audio/Ta-Ba.wav", "audio/Ta-Da.wav",
-    "audio/Ta-Ga.wav", "audio/Ta-Ka.wav", "audio/Ta-Pa.wav",
-    "audio/Ta-Ta.wav"];
+  late List<String> sounds;
   int sound_index = 0;
   int Same_sound_correct = 0;
   int Same_sound_incorrect = 0;
@@ -59,7 +49,7 @@ class ConcentrateAppState extends State<ConcentrateApp> {
 
   @override
   void initState(){
-    // TODO: implement initState
+    sounds = soundFiles.map<String>((file) => "audio/${widget.language}/$file").toList();
     sounds.shuffle();
     sounds.shuffle();
     super.initState();

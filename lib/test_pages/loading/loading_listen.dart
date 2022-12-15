@@ -10,6 +10,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 
+import '../../db/database.dart';
+
 
 
 
@@ -21,7 +23,8 @@ class LoadingListenApp extends StatefulWidget {
   State<StatefulWidget> createState() => LoadingListenAppState();
 }
 
-class LoadingListenAppState extends State<LoadingListenApp>  {  
+class LoadingListenAppState extends State<LoadingListenApp>  {
+  late Preference prefs;
 
     @override
     void initState() {
@@ -35,13 +38,14 @@ class LoadingListenAppState extends State<LoadingListenApp>  {
 
     startTimer() async {
       var duration = Duration(seconds: 3);
+      prefs = await database.select(database.preferences).getSingle();
       return Timer(duration, route);
     }
 
     route(){
       if(this.mounted){
         Navigator.pushReplacement(context, MaterialPageRoute(
-            builder: (context) => ListenApp(title: L10n.of(context)!.listen)
+            builder: (context) => ListenApp(language: prefs.soundLanguage!.iso_639_2, title: L10n.of(context)!.listen)
         ));
       }
     }

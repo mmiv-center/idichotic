@@ -1,0 +1,13 @@
+const List<String> soundFiles = ["Ba-Ba.wav", "Ba-Da.wav",
+"Ba-Ga.wav", "Ba-Ka.wav", "Ba-Pa.wav",
+"Ba-Ta.wav", "Da-Ba.wav", "Da-Da.wav",
+"Da-Ga.wav", "Da-Ka.wav", "Da-Pa.wav",
+"Da-Ta.wav", "Ga-Ba.wav", "Ga-Da.wav",
+"Ga-Ga.wav", "Ga-Ka.wav", "Ga-Pa.wav",
+"Ga-Ta.wav", "Ka-Ba.wav", "Ka-Da.wav",
+"Ka-Ga.wav", "Ka-Ka.wav", "Ka-Pa.wav",
+"Ka-Ta.wav", "Pa-Ba.wav", "Pa-Da.wav",
+"Pa-Ga.wav", "Pa-Ka.wav", "Pa-Pa.wav",
+"Pa-Ta.wav", "Ta-Ba.wav", "Ta-Da.wav",
+"Ta-Ga.wav", "Ta-Ka.wav", "Ta-Pa.wav",
+"Ta-Ta.wav"];

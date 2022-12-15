@@ -86,7 +86,6 @@ class TestListState extends State<TestList> {
 
   @override
   Widget build(BuildContext context) {
-
     final bar = appBar(context);
     final screenHeight = MediaQuery.of(context).size.height;
     final statusBarHeight = MediaQuery.of(context).padding.top;

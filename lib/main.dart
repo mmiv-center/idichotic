@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       localizationsDelegates: L10n.localizationsDelegates,
       supportedLocales: L10n.supportedLocales,
-      title: L10n.of(context)!.iDichotic,
+      onGenerateTitle: (BuildContext context) => L10n.of(context)!.iDichotic,
       theme: ThemeData(
 
         // This is the theme of your application.

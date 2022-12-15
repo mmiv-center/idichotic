@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:dichotic/test_pages/practice.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 
+import '../../db/database.dart';
+
 
 
 class LoadingPracticeApp extends StatefulWidget {
@@ -21,6 +23,8 @@ class LoadingPracticeApp extends StatefulWidget {
 }
 
 class LoadingPracticeAppState extends State<LoadingPracticeApp>  {
+
+  late Preference prefs;
 
   @override
   void initState() {
@@ -34,13 +38,14 @@ class LoadingPracticeAppState extends State<LoadingPracticeApp>  {
 
   startTimer() async {
     var duration = Duration(seconds: 3);
+    prefs = await database.select(database.preferences).getSingle();
     return Timer(duration, route);
   }
 
   route(){
     if(this.mounted){
       Navigator.pushReplacement(context, MaterialPageRoute(
-          builder: (context) => Practice(title: L10n.of(context)!.listen)
+          builder: (context) => Practice(language: prefs.soundLanguage!.iso_639_2, title: L10n.of(context)!.listen)
       ));
     }
   }

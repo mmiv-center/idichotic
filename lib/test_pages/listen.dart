@@ -4,6 +4,7 @@
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:dichotic/data/exampledata.dart';
+import '../constants.dart';
 import 'practice.dart' show buildClickable, style;
 import 'package:dichotic/results.dart';
 import 'package:drift/drift.dart' hide Column;
@@ -15,8 +16,9 @@ import '../data/types.dart';
 import '../db/database.dart';
 
 class ListenApp extends StatefulWidget {
-  ListenApp({super.key, required this.title});
+  ListenApp({super.key, required this.language, required this.title});
   final String title;
+  final String language;
 
   ValueNotifier<String> selection = ValueNotifier("");
 
@@ -27,19 +29,8 @@ class ListenApp extends StatefulWidget {
 var pageroute_results = (List<Data> data) => MaterialPageRoute(builder: (context) => Results(title: "Results", data: data));
 class ListenAppState extends State<ListenApp> {
   AudioPlayer player = AudioPlayer();
-  List<String> sounds = ["audio/Ba-Ba.wav", "audio/Ba-Da.wav",
-    "audio/Ba-Ga.wav", "audio/Ba-Ka.wav", "audio/Ba-Pa.wav",
-    "audio/Ba-Ta.wav", "audio/Da-Ba.wav", "audio/Da-Da.wav",
-    "audio/Da-Ga.wav", "audio/Da-Ka.wav", "audio/Da-Pa.wav",
-    "audio/Da-Ta.wav", "audio/Ga-Ba.wav", "audio/Ga-Da.wav",
-    "audio/Ga-Ga.wav", "audio/Ga-Ka.wav", "audio/Ga-Pa.wav",
-    "audio/Ga-Ta.wav", "audio/Ka-Ba.wav", "audio/Ka-Da.wav",
-    "audio/Ka-Ga.wav", "audio/Ka-Ka.wav", "audio/Ka-Pa.wav",
-    "audio/Ka-Ta.wav", "audio/Pa-Ba.wav", "audio/Pa-Da.wav",
-    "audio/Pa-Ga.wav", "audio/Pa-Ka.wav", "audio/Pa-Pa.wav",
-    "audio/Pa-Ta.wav", "audio/Ta-Ba.wav", "audio/Ta-Da.wav",
-    "audio/Ta-Ga.wav", "audio/Ta-Ka.wav", "audio/Ta-Pa.wav",
-    "audio/Ta-Ta.wav"];
+
+  late List<String> sounds;
   int sound_index = 0;
   int Same_sound_correct = 0;
   int Same_sound_incorrect = 0;
@@ -64,6 +55,8 @@ class ListenAppState extends State<ListenApp> {
   @override
   void initState() {
     // TODO: implement initState
+
+    sounds = soundFiles.map<String>((file) => "audio/${widget.language}/$file").toList();
     sounds.shuffle();
     sounds.shuffle();
     super.initState();

@@ -9,6 +9,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 
+import '../../db/database.dart';
+
 
 
 
@@ -20,7 +22,9 @@ class LoadingConsApp extends StatefulWidget {
   State<StatefulWidget> createState() => LoadingConsAppState();
 }
 
-class LoadingConsAppState extends State<LoadingConsApp>  {  
+class LoadingConsAppState extends State<LoadingConsApp>  {
+
+  late Preference prefs;
 
     @override
     void initState() {
@@ -34,13 +38,14 @@ class LoadingConsAppState extends State<LoadingConsApp>  {
 
     startTimer() async {
       var duration = Duration(seconds: 3);
+      prefs = await database.select(database.preferences).getSingle();
       return Timer(duration, route);
     }
 
     route(){
       if(this.mounted) {
         Navigator.pushReplacement(context, MaterialPageRoute(
-            builder: (context) => ConcentrateApp(title: L10n.of(context)!.concentrate, rightEar: true)
+            builder: (context) => ConcentrateApp(language: prefs.soundLanguage!.iso_639_2, title: L10n.of(context)!.concentrate, rightEar: true)
         ));
       }
     }

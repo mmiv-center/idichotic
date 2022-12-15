@@ -26,7 +26,7 @@ class SettingsPage extends StatefulWidget {
   State<StatefulWidget> createState() => SettingsState();
 }
 
-final soundLanguages = ["eng", "nor", "est", "fin", "ger"];
+final soundLanguages = ["eng", "nor", "est", "fre", "ger"];
 
 var icons = [
   Icons.abc,
